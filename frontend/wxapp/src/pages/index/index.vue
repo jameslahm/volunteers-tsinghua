@@ -2,7 +2,7 @@
   <div>
     <i-panel title="申请创建">
       <view style="padding:15px;">
-        <i-card @click='bindClick(item)' v-for="(item,index) in createdItems" :key=index :title="item.title" :extra="item.extra" :thumb="item.thumb">
+        <i-card @click='bindClick(item)' v-for="(item,index) in createdItems" :key=index :title="item.title" :extra="item.extra" :thumb="item.thumb" i-class="card-thumb">
           <view slot="content">{{item.description}}</view>
           <view slot="footer">{{item.footer}}</view>
         </i-card>
@@ -10,7 +10,7 @@
     </i-panel>
     <i-panel title="申请加入">
       <view style="padding:15px;">
-        <i-card @click='bindClick(item)' v-for="(item,index) in applyedItems" :key=index :title="item.title" :extra="item.extra" :thumb="item.thumb">
+        <i-card @click='bindClick(item)' v-for="(item,index) in applyedItems" :key=index :title="item.title" :extra="item.extra" :thumb="item.thumb" i-class="card-thumb">
           <view slot="content">{{item.description}}</view>
           <view slot="footer">{{item.footer}}</view>
         </i-card>
@@ -47,7 +47,8 @@ export default {
           'location': '五道口',
           'id': '123'
         }
-      ]
+      ],
+      openid: 123
     }
   },
 
@@ -60,7 +61,10 @@ export default {
   },
   onLoad (options) {
     wx.login({
-      success: res => { console.log(res) },
+      success: res => {
+        console.log(res)
+        this.openid = 123
+      },
       fail: () => { console.log('error') },
       complete: () => {}
     })
@@ -71,5 +75,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+.card-thumb image {
+  border-radius: 50%;
+}
 </style>
