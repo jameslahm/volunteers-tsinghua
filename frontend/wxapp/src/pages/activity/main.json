@@ -1,0 +1,6 @@
+{
+    "usingComponents":{
+        "i-panel":"../../static/iview/panel/index",
+        "i-card":"../../static/iview/card/index"
+    }
+}
