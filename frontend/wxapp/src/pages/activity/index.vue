@@ -16,14 +16,13 @@
           </i-panel>
         </view>
       </i-card>
-      <view v-if="openid===item.leader" style="display:flex;justify-content:center;">
-          <i-button @click="manageActivity(item)" type="primary" inline size="large" shape="circle">管理活动</i-button>
-          <i-button @click="deleteActivity(item)" type="primary" inline size="large" shape="circle">删除活动</i-button>
+      <view v-if="openid===item.leader">
+          <i-button @click="manageActivity(item)" type="primary" size="small" shape="circle">管理活动</i-button>
       </view>
-      <div v-else style="display:flex;justify-content:center;">
+      <!-- <div v-else style="display:flex;justify-content:center;">
           <i-button type="primary" inline size="large" shape="circle" style="padding:5px" disabled>管理活动</i-button>
           <i-button type="primary" inline size="large" shape="circle" style="padding:5px" disabled>删除活动</i-button>
-      </div>
+      </div> -->
     </view>
   </div>
 </template>
@@ -33,30 +32,20 @@
 export default {
   data () {
     return {
-      item: {},
-      openid: 12
+      itemId: 123
+    }
+  },
+  computed: {
+    userId: function () {
+      return this.$store.state.userId
+    },
+    item: function () {
+      return this.$store.getters.getItemById(this.itemId)
     }
   },
   components: {},
   onLoad (options) {
-    console.log('hello')
-    this.item = {
-      'title': '五道口支教',
-      'extra': '队长：王澳',
-      'thumb': 'https://avatars3.githubusercontent.com/u/43805318?s=460&v=4',
-      'description': '我们是五道口支教团队',
-      'content': '我们是五道口团队，啦啦啦啦',
-      'footer': '10月5日 五道口',
-      'time': '10月5日',
-      'location': '五道口',
-      'id': '123', // 活动id标识
-      'leader': 123, // 活动发起人
-      'members': [
-        {'id': 123, 'avatar': 'https://avatars3.githubusercontent.com/u/43805318?s=460&v=4'},
-        {'id': 125, 'avatar': 'https://avatars3.githubusercontent.com/u/43805318?s=460&v=4'}
-      ]
-    }
-    this.opend = 123
+    this.itemId = options.id
   },
   methods: {
     'manageActivity': function (item) {

@@ -1,5 +1,8 @@
 <script>
+import store from '@/store/index'
+
 export default {
+  store,
   created () {
     // 调用API从本地缓存中获取数据
     /*
