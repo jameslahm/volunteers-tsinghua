@@ -1,7 +1,3 @@
-# mpvue-learn
-
-> A Mpvue project
-
 ## Build Setup
 
 ``` bash
