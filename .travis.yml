@@ -1,16 +1,19 @@
 language:python
 sudo:required
 
-python:
-  - "3.7"
-nodejs:
-  - "10"
-
-install:
-  - pip install -r webapp/requirements.txt
-  - cd wxapp && npm install
-
 script:
-  - cd webapp && python manage.py test
-  - cd wxapp && npm test
+  - echo "hello"
+  
+# python:
+#   - "3.7"
+# nodejs:
+#   - "10"
+
+# install:
+#   - pip install -r webapp/requirements.txt
+#   - cd wxapp && npm install
+
+# script:
+#   - cd webapp && python manage.py test
+#   - cd wxapp && npm test
 
