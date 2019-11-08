@@ -1,6 +1,11 @@
 language: python
 sudo: required
 
+branches:
+  only:
+  - master
+  - release
+
 python:
   - "3.7"
 node_js:
