@@ -1,2 +1,2 @@
-#### A mini-program for volunteer activity management
+### A mini-program for volunteer activity management
 
