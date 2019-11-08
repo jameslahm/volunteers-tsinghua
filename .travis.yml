@@ -1,19 +1,16 @@
-language:python
-sudo:required
+language: python
+sudo: required
 
-# python:
-#   - "3.7"
+python:
+  - "3.7"
 node_js:
   - "10"
 
+install:
+  - pip install -r webapp/requirements.txt
+  - cd wxapp && npm install
+
 script:
-  - echo "hello"
-
-# install:
-#   - pip install -r webapp/requirements.txt
-#   - cd wxapp && npm install
-
-# script:
-#   - cd webapp && python manage.py test
-#   - cd wxapp && npm test
+  - cd webapp && python manage.py test
+  - cd wxapp && npm test
 
