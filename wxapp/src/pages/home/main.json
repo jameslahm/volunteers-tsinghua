@@ -1,0 +1,9 @@
+{
+    "usingComponents":{
+        "i-panel":"../../static/iview/panel/index",
+        "i-card":"../../static/iview/card/index",
+        "i-icon": "../../static/iview/icon/index",
+        "i-sticky": "../../static/iview/sticky/index",
+        "i-sticky-item": "../../static/iview/sticky-item/index"
+    }
+}
