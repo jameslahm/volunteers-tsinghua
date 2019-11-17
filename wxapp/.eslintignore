@@ -1,5 +1,3 @@
 build/*.js
 config/*.js
 src/static/*
-src/pages/*
-static/*

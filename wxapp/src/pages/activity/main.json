@@ -9,7 +9,6 @@
         "i-grid-item": "../../static/iview/grid-item/index",
         "i-grid-icon": "../../static/iview/grid-icon/index",
         "i-grid-label": "../../static/iview/grid-label/index",
-        "i-button":"../../static/iview/button/index",
-        "i-message": "../../static/iview/message/index"
+        "i-button":"../../static/iview/button/index"
     }
 }
