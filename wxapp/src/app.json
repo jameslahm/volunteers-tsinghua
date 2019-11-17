@@ -1,8 +1,8 @@
 {
   "pages": [
-    "pages/index/main",
-    "pages/logs/main",
-    "pages/activity/main"
+    "pages/home/main",   
+    "pages/notice/main",
+    "pages/me/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -18,26 +18,36 @@
 
     "list": [{
       "text": "首页",
-      "pagePath": "pages/index/main",
+      "pagePath": "pages/home/main",
       "iconPath": "static/tabs/home.png",
       "selectedIconPath": "static/tabs/home-active.png"
     }, {
+      "text":"消息",
+      "pagePath":"pages/notice/main",
+      "iconPath":"static/tabs/notice.png",
+      "selectedIconPath":"static/tabs/notice-active.png"
+    },{
       "text": "我的",
-      "pagePath": "pages/logs/main",
-      "iconPath": "static/tabs/orders.png",
-      "selectedIconPath": "static/tabs/orders-active.png"
+      "pagePath": "pages/me/main",
+      "iconPath": "static/tabs/me.png",
+      "selectedIconPath": "static/tabs/me-active.png"
     }],
 
     "items": [{
-      "name": "首页",
-      "pagePath": "pages/index/main",
-      "icon": "static/tabs/home.png",
-      "activeIcon": "static/tabs/home-active.png"
+      "text": "首页",
+      "pagePath": "pages/home/main",
+      "iconPath": "static/tabs/home.png",
+      "selectedIconPath": "static/tabs/home-active.png"
     }, {
-      "name": "我的",
-      "pagePath": "pages/logs/main",
-      "icon": "static/tabs/orders.png",
-      "activeIcon": "static/tabs/orders-active.png"
+      "text":"消息",
+      "pagePath":"pages/notice/main",
+      "iconPath":"static/tabs/notice.png",
+      "selectedIconPath":"static/tabs/notice-active.png"
+    },{
+      "text": "我的",
+      "pagePath": "pages/me/main",
+      "iconPath": "static/tabs/me.png",
+      "selectedIconPath": "static/tabs/me-active.png"
     }],
     "position": "bottom"
   }
