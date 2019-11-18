@@ -5,6 +5,7 @@ branches:
   only:
     - master
     - release
+    - wx
 
 python:
   - "3.7"
