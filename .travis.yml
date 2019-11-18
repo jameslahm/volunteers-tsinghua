@@ -17,7 +17,7 @@ jobs:
       install:
         - cd wxapp && npm install
       script:
-        - cd wxapp && npm test
+        - npm test
     - install:
         - pip install -r webapp/requirements.txt
       script:
