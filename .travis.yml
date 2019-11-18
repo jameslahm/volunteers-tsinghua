@@ -3,19 +3,21 @@ sudo: required
 
 branches:
   only:
-  - master
-  - release
+    - master
+    - release
 
 python:
   - "3.7"
-node_js:
-  - "10"
 
-install:
-  - pip install -r webapp/requirements.txt
-  - cd wxapp && npm install
-
-script:
-  - cd webapp && python manage.py test
-  - cd wxapp && npm test
-
+jobs:
+  include:
+    - language: node_js
+      node_js: "10"
+      install:
+        - cd wxapp && npm install
+      script:
+        - cd wxapp && npm test
+    - install:
+        - pip install -r webapp/requirements.txt
+      script:
+        - cd webapp && python manage.py test
