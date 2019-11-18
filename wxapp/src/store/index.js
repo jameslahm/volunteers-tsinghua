@@ -9,7 +9,7 @@ const store = new Vuex.Store({
     items: [], // 用户参加的活动
     user: {},
     messages: [], // 用户消息
-    globalItems: [] // 所有活动
+    globalItems: []// 所有活动
   },
   getters: {
     'getItemById': (state) => {
@@ -73,13 +73,16 @@ const store = new Vuex.Store({
       }
       post({'url': `/users/${state.user.id}`, 'data': state.user})
     },
-    getGlobalItems (state) {
-      get({'url': '/activities'}).then(res => {
+    getGlobalItems (state, params) {
+      get({'url': '/activities', 'data': params}).then(res => {
         state.globalItems = res
       })
     },
     applyItem (state, data) {
       console.log('apply')
+    },
+    clearGlobalItems (state) {
+      state.globalItems = []
     }
   }
 })

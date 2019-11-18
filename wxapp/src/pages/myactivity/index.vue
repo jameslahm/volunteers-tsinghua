@@ -1,11 +1,11 @@
 <template>
   <div>
-    <i-tabs current="current">
-      <i-tab key=0 title="正在申请" @click='switchTab(0)'></i-tab>
-      <i-tab key=1 title="正在进行" @click='switchTab(1)'></i-tab>
-      <i-tab key=2 title="已结束" @click='switchTab(2)'></i-tab>
+    <i-tabs current="current" @change="switchTab">
+      <i-tab key='0' title="正在申请" :i-class="selected[0]"></i-tab>
+      <i-tab key='1' title="正在进行" :i-class="selected[1]"></i-tab>
+      <i-tab key='2' title="已结束" :i-class="selected[2]"></i-tab>
     </i-tabs>
-    <i-panel v-if="current===0">
+    <i-panel v-if="current==='0'">
       <view style="padding:15px;">
         <div v-for="(item,index) in applyingItems" :key=index style="padding-bottom:15px">
           <i-card full @click='bindClick(item)' :title="item.title" :extra="item.leaderName" :thumb="item.thumb" i-class="card-thumb">
@@ -15,7 +15,7 @@
         </div>
       </view>
     </i-panel>
-    <i-panel v-if="current===1">
+    <i-panel v-if="current==='1'">
       <view style="padding:15px;">
         <div v-for="(item,index) in applyedItems" :key=index style="padding-bottom:15px">
           <i-card full @click='bindClick(item)' :title="item.title" :extra="item.leaderName" :thumb="item.thumb" i-class="card-thumb">
@@ -25,7 +25,7 @@
         </div>
       </view>
     </i-panel>
-    <i-panel v-if="current===2">
+    <i-panel v-if="current==='2'">
       <view style="padding:15px;">
         <div v-for="(item,index) in endedItems" :key=index style="padding-bottom:15px">
           <i-card full @click='bindClick(item)' :title="item.title" :extra="item.leaderName" :thumb="item.thumb" i-class="card-thumb">
@@ -43,7 +43,12 @@
 export default {
   data(){
     return {
-      current:0
+      current:'0',
+      selected:[
+        'selected',
+        '',
+        ''
+      ]
     }
   },
   computed: {
@@ -73,8 +78,12 @@ export default {
     'bindClick': function (item) {
       wx.navigateTo({ url: '/pages/activity/main?id=' + item.id })
     },
-    'switchTab':function(key){
-      this.current=key
+    'switchTab':function({target}) {
+      this.current=target.key
+      for(let i=0;i<this.selected.length;i++){
+        this.selected[i]=''
+      }
+      this.selected[parseInt(this.current)]='selected'
     }
   },
   onLoad (options) {
@@ -96,5 +105,8 @@ export default {
 <style>
 .card-thumb image {
   border-radius: 50%;
+}
+.selected{
+  color:#2d8cf0;
 }
 </style>

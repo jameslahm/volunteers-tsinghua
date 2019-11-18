@@ -5,6 +5,7 @@
         "i-input": "../../static/iview/input/index",
         "i-button": "../../static/iview/button/index",
         "i-card":"../../static/iview/card/index",
-        "i-panel":"../../static/iview/panel/index"
+        "i-panel":"../../static/iview/panel/index",
+        "i-message": "../../static/iview/message/index"
     }
 }
