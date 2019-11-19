@@ -150,7 +150,7 @@
                          <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="information.html" aria-expanded="false">
                                 <i class="mdi mdi-information-outline"></i>
-                                <span class="hide-menu">志愿者消息</span>
+                                <span class="hide-menu">消息中心</span>
                             </a>
 
                     </ul>
@@ -166,13 +166,10 @@
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
-            <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
-                        <h4 class="page-title">志愿者消息</h4>
+                        <h4 class="page-title">消息中心</h4>
                     </div>
                     <div class="col-7 align-self-center">
                         <div class="d-flex align-items-center justify-content-end">
@@ -181,7 +178,7 @@
                                     <li class="breadcrumb-item">
                                         <a href="#">主页</a>
                                     </li>
-                                    <li class="breadcrumb-item active" aria-current="page">志愿者消息</li>
+                                    <li class="breadcrumb-item active" aria-current="page">消息中心</li>
                                 </ol>
                             </nav>
                         </div>
@@ -189,16 +186,271 @@
                 </div>
             </div>
             <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
             <!-- End Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
+
+
             <div class="container-fluid">
+                        <div class="tab-content">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist" style="padding-left: 10px;">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">所有消息</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">志愿者申请</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">志愿者留言</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">管理员消息</a>
+                                        </li>
+                                    </ul>
+                            <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="col-12">
+                                    <div class="card">
+
+                                        <div class="card-body">
+                                            <h4 class="card-title">所有消息</h4>
+                                            <h6 class="card-subtitle">在这里查看所有您收到的消息。</h6>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">消息类型</th>
+                                                        <th scope="col">用户类型</th>
+                                                        <th scope="col">用户名称</th>
+                                                        <th scope="col">相关项目</th>
+                                                        <th scope="col">时间</th>
+                                                        <th scope="col">消息状态</th>
+                                                        <th scope="col">操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="table-success">
+                                                        <th scope="row">志愿申请</th>
+                                                        <td>志愿者</td>
+                                                        <td>奥巴马</td>
+                                                        <td>校园志愿讲解</td>
+                                                        <td>2019.11.20 22:36</td>
+                                                        <td>未读</td>
+                                                        <td>回复</td>
+                                                    </tr>
+                                                    <tr class="table-success">
+                                                        <th scope="row">志愿申请</th>
+                                                        <td>志愿者</td>
+                                                        <td>特朗普</td>
+                                                        <td>校园志愿讲解</td>
+                                                        <td>2019.11.20 12:36</td>
+                                                        <td>未读</td>
+                                                        <td>回复</td>
+                                                    </tr>
+                                                    <tr class="table-primary">
+                                                        <th scope="row">志愿者留言</th>
+                                                        <td>志愿者</td>
+                                                        <td>希拉里</td>
+                                                        <td>校园志愿讲解</td>
+                                                        <td>2019.11.20 22:36</td>
+                                                        <td>未读</td>
+                                                        <td>回复</td>
+                                                    </tr>
+                                                    <tr class="table-danger">
+                                                        <th scope="row">管理员消息</th>
+                                                        <td>管理员</td>
+                                                        <td>清华大学团委志愿组</td>
+                                                        <td>校园志愿讲解</td>
+                                                        <td>2019.11.20 12:36</td>
+                                                        <td>未读</td>
+                                                        <td>回复</td>
+                                                    </tr>
+            
+                                                    <tr>
+                                                        <th scope="row">志愿申请</th>
+                                                        <td>志愿者</td>
+                                                        <td>马克思</td>
+                                                        <td>校园志愿讲解</td>
+                                                        <td>2019.11.20 22:36</td>
+                                                        <td>已读</td>
+                                                        <td>回复</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">志愿者留言</th>
+                                                        <td>志愿者</td>
+                                                        <td>恩格斯</td>
+                                                        <td>校园志愿讲解</td>
+                                                        <td>2019.11.20 22:36</td>
+                                                        <td>已读</td>
+                                                        <td>回复</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+            
+                            <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">所有消息</h4>
+                                            <h6 class="card-subtitle">在这里查看所有您收到的消息。</h6>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">消息类型</th>
+                                                        <th scope="col">用户类型</th>
+                                                        <th scope="col">用户名称</th>
+                                                        <th scope="col">相关项目</th>
+                                                        <th scope="col">时间</th>
+                                                        <th scope="col">消息状态</th>
+                                                        <th scope="col">操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="table-success">
+                                                        <th scope="row">志愿申请</th>
+                                                        <td>志愿者</td>
+                                                        <td>奥巴马</td>
+                                                        <td>校园志愿讲解</td>
+                                                        <td>2019.11.20 22:36</td>
+                                                        <td>未读</td>
+                                                        <td>回复</td>
+                                                    </tr>
+                                                    <tr class="table-success">
+                                                        <th scope="row">志愿申请</th>
+                                                        <td>志愿者</td>
+                                                        <td>特朗普</td>
+                                                        <td>校园志愿讲解</td>
+                                                        <td>2019.11.20 12:36</td>
+                                                        <td>未读</td>
+                                                        <td>回复</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">志愿申请</th>
+                                                        <td>志愿者</td>
+                                                        <td>马克思</td>
+                                                        <td>校园志愿讲解</td>
+                                                        <td>2019.11.20 22:36</td>
+                                                        <td>已读</td>
+                                                        <td>回复</td>
+                                                    </tr>
+             
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+            
+                            <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">所有消息</h4>
+                                            <h6 class="card-subtitle">在这里查看所有您收到的消息。</h6>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">消息类型</th>
+                                                        <th scope="col">用户类型</th>
+                                                        <th scope="col">用户名称</th>
+                                                        <th scope="col">相关项目</th>
+                                                        <th scope="col">时间</th>
+                                                        <th scope="col">消息状态</th>
+                                                        <th scope="col">操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="table-primary">
+                                                        <th scope="row">志愿者留言</th>
+                                                        <td>志愿者</td>
+                                                        <td>希拉里</td>
+                                                        <td>校园志愿讲解</td>
+                                                        <td>2019.11.20 22:36</td>
+                                                        <td>未读</td>
+                                                        <td>回复</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">志愿者留言</th>
+                                                        <td>志愿者</td>
+                                                        <td>恩格斯</td>
+                                                        <td>校园志愿讲解</td>
+                                                        <td>2019.11.20 22:36</td>
+                                                        <td>已读</td>
+                                                        <td>回复</td>
+                                                    </tr>
+                
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+            
+                            <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                                <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h4 class="card-title">所有消息</h4>
+                                                <h6 class="card-subtitle">在这里查看所有您收到的消息。</h6>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">消息类型</th>
+                                                            <th scope="col">用户类型</th>
+                                                            <th scope="col">用户名称</th>
+                                                            <th scope="col">相关项目</th>
+                                                            <th scope="col">时间</th>
+                                                            <th scope="col">消息状态</th>
+                                                            <th scope="col">操作</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+            
+                                                        <tr class="table-danger">
+                                                            <th scope="row">管理员消息</th>
+                                                            <td>管理员</td>
+                                                            <td>清华大学团委志愿者</td>
+                                                            <td>校园志愿讲解</td>
+                                                            <td>2019.11.20 12:36</td>
+                                                            <td>未读</td>
+                                                            <td>回复</td>
+                                                        </tr>
+            
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            
+                        <script>
+                        $(function () {
+                            $('#myTab li:last-child a').tab('show')
+                        })
+                        </script>
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                敬请关注
+
+                
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
