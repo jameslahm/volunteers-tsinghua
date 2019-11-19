@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="myactivity/img/tsinghua.png">
+    <title>志在清华</title>
+    <!-- Custom CSS -->
+    <link href="bootstrap-4.3.1-dist/css/style.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-navbarbg="skin6" data-theme="light" data-layout="vertical" data-sidebartype="full" data-boxed-layout="full">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar" data-navbarbg="skin6">
+            <nav class="navbar top-navbar navbar-expand-md navbar-light">
+                <div class="navbar-header" data-logobg="skin5">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)">
+                        <i class="ti-menu ti-close"></i>
+                    </a>
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <div class="navbar-brand">
+                        <a href="index.html" class="logo">
+                            <!-- Logo icon -->
+                            <b class="logo-icon">
+                                <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                                <i class="mdi mdi-heart"></i>
+                            </b>
+                            <!--End Logo icon -->
+                            <!-- Logo text -->
+                            <span class="logo-text">
+                                    志在清华
+                            </span>
+                        </a>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Toggle which is visible on mobile only -->
+                    <!-- ============================================================== -->
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="ti-more"></i>
+                    </a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin6">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-left mr-auto">
+                        <!-- ============================================================== -->
+                        <!-- Search -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item search-box">
+                            <a class="nav-link waves-effect waves-dark" href="javascript:void(0)">
+                                <div class="d-flex align-items-center">
+                                    <i class="mdi mdi-magnify font-20 mr-1"></i>
+                                    <div class="ml-1 d-none d-sm-block">
+                                        <span>搜索</span>
+                                    </div>
+                                </div>
+                            </a>
+                            <form class="app-search position-absolute">
+                                <input type="text" class="form-control" placeholder="Search &amp; enter">
+                                <a class="srh-btn">
+                                    <i class="ti-close"></i>
+                                </a>
+                            </form>
+                        </li>
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-right">
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="myactivity/img/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated">
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> 设置</a>
+                                <a class="dropdown-item" href="https://www.google.com/"><i class="ti-email m-r-5 m-l-5"></i> 退出</a>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar" data-sidebarbg="skin5">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="myactivity.html" aria-expanded="false">
+                                <i class="mdi mdi-clipboard-account"></i>
+                                <span class="hide-menu">我的项目</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="createactivity.html" aria-expanded="false">
+                                <i class="mdi mdi-new-box"></i>
+                                <span class="hide-menu">新建项目</span>
+                            </a>
+                        </li>
+                         <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="information.html" aria-expanded="false">
+                                <i class="mdi mdi-information-outline"></i>
+                                <span class="hide-menu">志愿者消息</span>
+                            </a>
+
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-5 align-self-center">
+                        <h4 class="page-title">我的项目</h4>
+                    </div>
+                    <div class="col-7 align-self-center">
+                        <div class="d-flex align-items-center justify-content-end">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="#">主页</a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">我的项目</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">项目列表</h4>
+                                <h6 class="card-subtitle">您可以查看您的志愿活动信息</h6>
+                                <h6 class="card-title m-t-40"><i class="m-r-5 font-18 mdi mdi-numeric-1-box-multiple-outline"></i> 志愿活动</h6>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" style='text-align: center;'>项目</th>
+                                                <th scope="col" >项目编号</th>
+                                                <th scope="col">申请人/单位</th>
+                                                <th scope="col">活动类别</th>
+                                                <th scope="col">负责人</th>
+                                                <th scope="col">状态</th>
+                                                <th scope="col">操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr >
+                                                <td class=“w-25”>
+                                                        <div class="card mb-3" style="max-width: 450px;">
+                                                                <div class="row no-gutters">
+                                                                  <div class="col-md-4">
+                                                                        <img src="myactivity/img/thu2.jpeg" class="d-block w-100" alt="...">
+                                                                  </div>
+                                                                  <div class="col-md-8">
+                                                                    <div class="card-body">
+                                                                      <h5 class="card-title">校园志愿讲解</h5>
+                                                                      <p class="card-text">招募校园讲解志愿者，在国庆期间提供讲解服务，每年参与的人数超过1000人。</p>
+                                                                      <p class="card-text"><small class="text-muted">更新于3分钟之前</small></p>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                    
+                                                </td>
+                                                <td style='vertical-align: middle;'>XSWL12345</td>
+                                                <td style='vertical-align: middle;'>校团委志愿组</td>
+                                                <td style='vertical-align: middle;'>公益</td>
+                                                <td style='vertical-align: middle;'>小王子</td>
+                                                <td style='vertical-align: middle;'>待审核</td>
+                                                <td style='vertical-align: middle;'><a href="url">查看</a></td>
+                                            </tr>
+                                            <tr>
+                                                    <td class=“w-25”>
+                                                            <div class="card mb-3" style="max-width: 450px;">
+                                                                    <div class="row no-gutters">
+                                                                      <div class="col-md-4">
+                                                                            <img src="myactivity/img/thu1.jpg" class="d-block w-100" alt="...">
+                                                                      </div>
+                                                                      <div class="col-md-8">
+                                                                        <div class="card-body">
+                                                                          <h5 class="card-title">敬老院服务</h5>
+                                                                          <p class="card-text">招募敬老院服务志愿者，预计将前往XX敬老院，持续时间1整天，招募人数10人左右。</p>
+                                                                          <p class="card-text"><small class="text-muted">更新于3分钟之前</small></p>
+                                                                        </div>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                        
+                                                    </td>
+                                                    <td style='vertical-align: middle;'>XSWL12346</td>
+                                                    <td style='vertical-align: middle;'>软件学院志愿组</td>
+                                                    <td style='vertical-align: middle;'>公益</td>
+                                                    <td style='vertical-align: middle;'>小王子</td>
+                                                    <td style='vertical-align: middle;'>审核通过</td>
+                                                    <td style='vertical-align: middle;'><a href="url">查看</a></td>
+                                            </tr>
+                                            <tr>
+                                                    <td class=“w-25”>
+                                                            <div class="card mb-3" style="max-width: 450px;">
+                                                                    <div class="row no-gutters">
+                                                                      <div class="col-md-4">
+                                                                            <img src="myactivity/img/thu3.jpg" class="d-block w-100" alt="...">
+                                                                      </div>
+                                                                      <div class="col-md-8">
+                                                                        <div class="card-body">
+                                                                          <h5 class="card-title">校庆嘉宾接待</h5>
+                                                                          <p class="card-text">招募校庆嘉宾接待志愿者，在校庆期间期间接待外宾，需要经过1天的培训。</p>
+                                                                          <p class="card-text"><small class="text-muted">更新于3分钟之前</small></p>
+                                                                        </div>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                        
+                                                    </td>
+                                                    <td style='vertical-align: middle;'>XSWL12347</td>
+                                                    <td style='vertical-align: middle;'>校学生会</td>
+                                                    <td style='vertical-align: middle;'>公益</td>
+                                                    <td style='vertical-align: middle;'>王五</td>
+                                                    <td style='vertical-align: middle;'>待审核</td>
+                                                    <td style='vertical-align: middle;'><a href="url">查看</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="assets/extra-libs/sparkline/sparkline.js"></script>
+    <!--Wave Effects -->
+    <script src="bootstrap-4.3.1-dist/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="bootstrap-4.3.1-dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="bootstrap-4.3.1-dist/js/custom.min.js"></script>
+</body>
+
+</html>
