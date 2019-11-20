@@ -1,0 +1,10 @@
+{
+    "type": "mysql",
+    "driver": "mysqlconnector",
+    "username": "root",
+    "password": "shen838343608",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "dbname": "volunteers",
+    "charset": "utf8"
+}

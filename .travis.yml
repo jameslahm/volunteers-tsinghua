@@ -22,4 +22,3 @@ jobs:
       script:
         - cd webapp && python manage.py test
 
-
