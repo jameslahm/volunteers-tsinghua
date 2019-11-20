@@ -1,0 +1,203 @@
+[33mcommit b425b04aab87d3ea0f0581daff7d2bd6441e734b[m[33m ([m[1;36mHEAD -> [m[1;32mweb[m[33m, [m[1;31morigin/web[m[33m, [m[1;32mmaster[m[33m)[m
+Author: 李胜锐 <462114286@qq.com>
+Date:   Sun Nov 10 13:35:52 2019 +0800
+
+            deleted:    webapp/html/.DS_Store
+
+[33mcommit 9ec139f08e3654059371d1064accd403e0cf233b[m
+Author: 李胜锐 <462114286@qq.com>
+Date:   Sun Nov 10 00:35:41 2019 +0800
+
+    test for ignore documents
+
+[33mcommit 33b0a68722257a7d5dca8c3142990b31cbab4511[m
+Author: 李胜锐 <462114286@qq.com>
+Date:   Sun Nov 10 00:09:17 2019 +0800
+
+    feat:新增了志愿团体登陆和注册的页面
+
+[33mcommit b06ac88ce4e6e826d2d814eaab29b465b24b2806[m[33m ([m[1;31morigin/wx[m[33m, [m[1;31morigin/release[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: wangao <1366463855@qq.com>
+Date:   Fri Nov 8 20:43:08 2019 +0800
+
+    chore(CI): change CI only for release and master
+
+[33mcommit 2b22559c8deb0de3d2ded4fd72051adc33990230[m
+Merge: c57ae6b b2c1a96
+Author: wangao <1366463855@qq.com>
+Date:   Fri Nov 8 20:42:01 2019 +0800
+
+    Merge branch 'master' of github.com:jameslahm/volunteers-tsinghua
+
+[33mcommit c57ae6b06fde3b11c0e23760e1e531e801056aea[m
+Author: wangao <1366463855@qq.com>
+Date:   Fri Nov 8 20:26:02 2019 +0800
+
+    modify CI
+
+[33mcommit b2c1a96e2b00f6451cb2792c9f9e9833c7dc4b9d[m
+Author: wangao <1366463855@qq.com>
+Date:   Fri Nov 8 20:34:45 2019 +0800
+
+    modify CI
+
+[33mcommit 281c2693a60a5920d2147c5e936208962a65ca84[m
+Author: wangao <1366463855@qq.com>
+Date:   Fri Nov 8 20:31:47 2019 +0800
+
+    modify CI
+
+[33mcommit ce205b6eda2808acaf181086ef0fe9516c5ffb96[m
+Author: wangao <1366463855@qq.com>
+Date:   Fri Nov 8 20:26:02 2019 +0800
+
+    modify CI
+
+[33mcommit 5ed0b64bfd06548043c58f40bcac55f4a8c72d84[m
+Author: wangao <1366463855@qq.com>
+Date:   Fri Nov 8 15:59:44 2019 +0800
+
+    test CI
+
+[33mcommit da950406411f6445bdf6b746ddca7f6a54b5aef2[m
+Author: wangao <1366463855@qq.com>
+Date:   Fri Nov 8 15:57:35 2019 +0800
+
+    modify CI
+
+[33mcommit c27e32415dc515eee1182015b066d36ea747b527[m
+Author: wangao <1366463855@qq.com>
+Date:   Fri Nov 8 15:38:42 2019 +0800
+
+    modify CI
+
+[33mcommit 7194034aaae3635ccebfcff2b2b04d3c389edba9[m
+Author: wangao <1366463855@qq.com>
+Date:   Fri Nov 8 15:20:17 2019 +0800
+
+    modify CI
+
+[33mcommit 917eeff4dc6d08eb4dae3446823de09b4f4f1abc[m
+Author: wangao <1366463855@qq.com>
+Date:   Fri Nov 8 15:11:45 2019 +0800
+
+    Update README.md
+
+[33mcommit a48cba9db3fa7106e6ceb812a1b55f95a463f82b[m
+Author: wangao <1366463855@qq.com>
+Date:   Fri Nov 8 14:56:49 2019 +0800
+
+    add CI
+
+[33mcommit 4e10191bbff5f5445ad9c91e4b15307bdd4190e4[m
+Author: wangao <1366463855@qq.com>
+Date:   Thu Nov 7 11:00:56 2019 +0800
+
+    add CI
+
+[33mcommit 7d5c1bd880e3341103ee173e07e9309a7114793f[m
+Author: wangao <1366463855@qq.com>
+Date:   Thu Nov 7 10:19:25 2019 +0800
+
+    modify dir structure
+
+[33mcommit 802ef94635e532188e1e76e2d463a3335ebf4822[m
+Author: wangao <1366463855@qq.com>
+Date:   Thu Nov 7 10:17:38 2019 +0800
+
+    modify dir structure
+
+[33mcommit abc9e8c54265152961fb902679ed6d2465bf9518[m
+Author: wangao <1366463855@qq.com>
+Date:   Sun Nov 3 18:18:29 2019 +0800
+
+    Update README.md
+
+[33mcommit 93980a1109f91b7ab525db3dea95a50b9e51ac12[m
+Author: wangao <1366463855@qq.com>
+Date:   Mon Oct 7 22:54:30 2019 +0800
+
+    adapt to Vuex
+
+[33mcommit 4128b952abf096b7669d349d9b06fe3b69fc2cf1[m
+Author: wangao <1366463855@qq.com>
+Date:   Mon Oct 7 22:54:06 2019 +0800
+
+    add fly and mock
+
+[33mcommit bd865a83e0cf3ce4db4bea2bc4f1980b4343b1c6[m
+Author: wangao <1366463855@qq.com>
+Date:   Mon Oct 7 22:53:48 2019 +0800
+
+    add Vuex
+
+[33mcommit d928d9e2d0ee1254ad4463e1e6777523b565a3c2[m
+Author: wangao <1366463855@qq.com>
+Date:   Mon Oct 7 22:53:18 2019 +0800
+
+    global config
+
+[33mcommit a9b7be59ac3aeac617c50a61e798f86d4c82557a[m
+Author: wangao <1366463855@qq.com>
+Date:   Mon Oct 7 22:53:06 2019 +0800
+
+    package.json
+
+[33mcommit fa3543464bb2052029f5b2fd3fec19d485f1fd0b[m
+Author: wangao <1366463855@qq.com>
+Date:   Mon Oct 7 17:55:25 2019 +0800
+
+    add activity page
+
+[33mcommit d0fc8ddf74399b693f39a6988fa4ceaf72af120b[m
+Merge: c1f7414 d494a11
+Author: wangao <1366463855@qq.com>
+Date:   Mon Oct 7 14:57:07 2019 +0800
+
+    Merge branch 'master' of github.com:jameslahm/volunteers-tsinghua
+
+[33mcommit c1f7414e4e9270a08ecf0796eccca11ebaf7272e[m
+Author: wangao <1366463855@qq.com>
+Date:   Mon Oct 7 14:56:52 2019 +0800
+
+    README
+
+[33mcommit d494a112811983161b4d4b04be7eb005f7cfa53c[m
+Merge: b8fa596 0d6461b
+Author: wangao <1366463855@qq.com>
+Date:   Mon Oct 7 14:51:50 2019 +0800
+
+    Merge pull request #1 from jameslahm/dependabot/npm_and_yarn/frontend/wxapp/webpack-bundle-analyzer-3.3.2
+    
+    Bump webpack-bundle-analyzer from 2.13.1 to 3.3.2 in /frontend/wxapp
+
+[33mcommit 0d6461bc31e75e17d3b104087c7b12930b197960[m
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Mon Oct 7 06:50:19 2019 +0000
+
+    Bump webpack-bundle-analyzer from 2.13.1 to 3.3.2 in /frontend/wxapp
+    
+    Bumps [webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer) from 2.13.1 to 3.3.2.
+    - [Release notes](https://github.com/webpack-contrib/webpack-bundle-analyzer/releases)
+    - [Changelog](https://github.com/webpack-contrib/webpack-bundle-analyzer/blob/master/CHANGELOG.md)
+    - [Commits](https://github.com/webpack-contrib/webpack-bundle-analyzer/compare/v2.13.1...v3.3.2)
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+
+[33mcommit b8fa596aceac25ccb2d08704f8fdc7a605dbbf93[m
+Author: wangao <1366463855@qq.com>
+Date:   Mon Oct 7 14:47:58 2019 +0800
+
+    init project
+
+[33mcommit 2be67822001108fc38dd3b7c3da7614fc9017a7b[m
+Author: wangao <1366463855@qq.com>
+Date:   Mon Oct 7 14:44:18 2019 +0800
+
+    .gitignore
+
+[33mcommit 1aaccdb01462a20ff121469e75e92f4b4284ff44[m
+Author: wangao <1366463855@qq.com>
+Date:   Mon Oct 7 14:43:38 2019 +0800
+
+    README
