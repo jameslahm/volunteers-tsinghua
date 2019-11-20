@@ -3,15 +3,15 @@
     <i-message id="message"/>
     <i-card :thumb="item.thumb" title="item.title">
       <view slot="content">
-        <i-input title="姓名" v-model="info.userName" type="text" placeholder="name"></i-input>
-        <i-input title="院系" v-model="info.department" type="text" placeholder="department"></i-input>
-        <i-input title="微信号" v-model="info.wx" type="text" placeholder="wx"></i-input>
-        <i-input title="邮箱" v-model="info.email" type="text" placeholder="email"></i-input>
-        <i-input title="联系电话" v-model="info.phone" type="number" placeholder="phone"></i-input>
+        <i-input title="姓名" id="userName" :value="info.userName" type="text" placeholder="name" @change="changeInput"></i-input>
+        <i-input title="院系" id="department" :value="info.department" type="text" placeholder="department" @change="changeInput"></i-input>
+        <i-input title="微信号" id="wx" :value="info.wx" type="text" placeholder="wx" @change="changeInput"></i-input>
+        <i-input title="邮箱" id="email" :value="info.email" type="text" placeholder="email" @change="changeInput"></i-input>
+        <i-input title="联系电话" id="phone" :value="info.phone" type="number" placeholder="phone" @change="changeInput"></i-input>
       </view>
       <view slot="footer">
         <i-panel title="报名原因" hide-border hide-top>
-          <i-input v-model="content" type="textarea"></i-input>
+          <i-input :value="content" id="content" type="textarea" @change="changeInput"></i-input>
           <i-button @click="bindClick()" size="small" type="primary">提交</i-button>
         </i-panel>
       </view>
@@ -39,12 +39,16 @@ export default {
     }
   },
   methods: {
-    bindClick: function() {
+    'bindClick': function() {
       this.$store.commit('applyItem',{'content':this.content})
       $Message({
         content:"报名成功",
         type:'success'
       })
+    },
+    'changeInput':function(event){
+      if(event.target.id==='content') this.content=event.target.detail.value
+      else this.info[event.target.id]=event.target.detail.value
     }
   },
   onLoad (options) {

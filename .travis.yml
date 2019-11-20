@@ -21,4 +21,3 @@ jobs:
         - pip install -r webapp/requirements.txt
       script:
         - cd webapp && python manage.py test
-

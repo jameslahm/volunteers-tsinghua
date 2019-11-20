@@ -7,6 +7,8 @@
         "i-panel":"../../static/iview/panel/index",
         "i-input": "../../static/iview/input/index",
         "i-icon": "../../static/iview/icon/index",
-        "i-row": "../../static/iview/row/index"
+        "i-row": "../../static/iview/row/index",
+        "i-toast": "../../static/iview/toast/index",
+        "i-card":"../../static/iview/card/index"
     }
 }
