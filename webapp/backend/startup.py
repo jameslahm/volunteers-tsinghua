@@ -5,20 +5,17 @@ web启动入口文件，封装flask-app全局设置
 '''
 from flask import Flask
 
-from flask_admin import Admin, BaseView, expose
+from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 
-from .model import User, Team, Activity, UserActivity, TeamActivity
+
 
 from flask_login import UserMixin, LoginManager, current_user, login_user
 
-from .app_map import blueprints
 from .app_env import get_config
 
-from .utils import get_engine
-
-from .core.database import db
-
+from .database import db
+from .model import User, Team, Activity, UserActivity, TeamActivity
 
 def create_app(config):
 
@@ -36,15 +33,11 @@ def create_app(config):
 
 	# 配置数据库
 	db_config = env_config['db_config']
-	# 数据库类型
-	db_type = db_config['type']
-	db_config.pop('type')
-	db_kwargs = config.get('db_kwargs', {})
-	engine = get_engine(db_type, user_config=db_config, **db_kwargs)
-	# Flask-SQLAlchemy配置
-	app.config['SQLALCHEMY_DATABASE_URI'] = engine.url
+	app.config['SQLALCHEMY_DATABASE_URI'] = '{}+{}://{}:{}@{}:{}/{}?charset={}'.format(
+		db_config['type'], db_config['driver'], db_config['username'], db_config['password'],
+		db_config['host'], db_config['port'], db_config['dbname'], db_config['charset']
+	)
 	app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-	# 关联Flask-SQLAlchemy到当前app
 	db.init_app(app)
 	app.db = db
 	with app.app_context():
@@ -52,7 +45,6 @@ def create_app(config):
 
 	# flask-login
 	login = LoginManager(app)
-
 
 	# flask-admin
 	# app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
@@ -63,18 +55,5 @@ def create_app(config):
 	admin.add_view(ModelView(UserActivity, db.session))
 	admin.add_view(ModelView(TeamActivity, db.session))
 
-
-
-	# @app.route('/login')
-	# def login():
-	# 	admin_user = AdminUser.query.get(1)
-
-
-
-
-
-	# 注册蓝图(子应用)
-	for item in blueprints:
-		app.register_blueprint(item[1], url_prefix=item[0])
 
 	return app
