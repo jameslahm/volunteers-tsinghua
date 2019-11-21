@@ -1,7 +1,19 @@
 # -*- coding: utf-8 -*-
 '''模型'''
 
-from .database import db
+from core.database import db
+from flask import url_for
+from flask import request
+from datetime import datetime
+
+# class AdminUser(db.Model):
+#     '''后台操作人员'''
+#     __tablename__ = 'Administrator'
+#
+#     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
+#     email = db.Column("email", db.String(64), index=True, nullable=False)
+#     name = db.Column("name", db.String(64))
+#     password = db.Column("password", db.String(32))
 
 
 class User(db.Model):
@@ -10,15 +22,54 @@ class User(db.Model):
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     # TODO: how to get openId?
-    # openId = db.Column("openId", db.String(64), unique=True, nullable=False)
+    openId = db.Column("openId", db.String(64), unique=True, nullable=False)
     userName = db.Column("userName", db.String(16), unique=False, nullable=False)
     wx = db.Column("wx", db.String(64), unique=True, nullable=False)
-    email = db.Column("email", db.String(64))
+    email = db.Column("email", db.String(64), unique=True)
     avatar = db.Column("avatar", db.String(128))
-    schoolId = db.Column("schoolId", db.Integer, unique=True, nullable=False)
-    phone = db.Column("phone", db.Integer, unique=True, nullable=False)
-    department = db.Column("department", db.String(16), unique=False, nullable=False)
-    profile = db.Column("profile", db.String(16), unique=False, nullable=True)
+    schoolID = db.Column('schoolID', db.Integer, unique=True)
+    phone = db.Column('phone', db.Integer)
+    department = db.Column('department', db.Text)
+    profile = db.Column('profile', db.Text)
+
+    def generate_fake(count=100):
+        from random import seed, randint
+        import forgery_py as fp
+        seed()
+        for i in range(count):
+            u = User(
+                    openId=i,
+                    email=fp.internet.email_address(),
+                    userName=fp.internet.user_name(True),
+                    wx=fp.lorem_ipsum.word(),
+                    phone=fp.address.phone(),
+                    schoolID=fp.basic.number(),
+                    department=fp.lorem_ipsum.sentence(),
+                    profile=fp.lorem_ipsum.sentence(),
+            )
+            db.session.add(u)
+            db.session.commit()
+
+    def to_json(self):
+        json_user={
+            'url':url_for('api.get_user',id=self.id,_external=True),
+            'openId':self.openId,
+            'userName':self.userName,
+            'wx':self.wx,
+            'email': self.email,
+            'avatar': self.avatar,
+            'schoolID': self.schoolID,
+            'phone':self.phone,
+            'department':self.department,
+            'profile': self.profile,
+        }
+        return json_user
+
+    def applyedActivities(self):
+        return self.UserActivity.filter_by(type='applyed').Activity.all()
+
+    def applyingActivities(self):
+        return self.UserActivity.filter_by(type='applying').Activity.all()
 
 
 class Team(db.Model):
@@ -27,8 +78,35 @@ class Team(db.Model):
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     userName = db.Column("userName", db.String(64), unique=False, nullable=False)
-    email = db.Column("email", db.String(64))
+    email = db.Column("email", db.String(64), unique=True)
     avatar = db.Column("avatar", db.String(128))
+
+    def generate_fake(count=100):
+        from random import seed, randint
+        import forgery_py as fp
+        seed()
+        for i in range(count):
+            t = Team(
+                    email=fp.internet.email_address(),
+                    userName=fp.internet.user_name(True),
+            )
+            db.session.add(t)
+            db.session.commit()
+
+    def to_json(self):
+        json_team={
+            'url':url_for('api.get_team',id=self.id,_external=True),
+            'userName':self.userName,
+            'email':self.email,
+            'avatar':self.avatar,
+        }
+        return json_team
+
+    def createdActivities(self):
+        return self.TeamActivity.filter_by(type='created').Activity.all()
+
+    def creatingActivities(self):
+        return self.TeamActivity.filter_by(type='creating').Activity.all()
 
 
 class Activity(db.Model):
@@ -36,31 +114,102 @@ class Activity(db.Model):
     __tablename__ = 'Activity'
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    # TODO: how to set AId?
-    # AID = db.Column('AID', db.Integer, primary_key=True)
+    AID = db.Column('AID', db.Integer, primary_key=True)
     thumb = db.Column('thumb', db.String(128), nullable=False)
     time = db.Column('time', db.DateTime, nullable=False)
     location = db.Column('location', db.String(20), nullable=False)
     title = db.Column('title', db.String(16), nullable=False)
     description = db.Column('description', db.String(50), nullable=False)
     content = db.Column('content', db.String(128), nullable=False)
-    totalRecruits = db.Column('totalRecruits', db.Integer, nullable=False)
-    applyedRecruits = db.Column('applyedRecruits', db.Integer, nullable=False)
-    # qrCode = db.Column('qrCode')
+    totalRecruits = db.Column('totalRecruits', db.Integer)
+    appliedRecruits = db.Column('appliedRecruits', db.Integer)
+    qrcode = db.Column('qrcode',db.String(128))
+
+    def generate_fake(count=100):
+        from random import seed, randint
+        import forgery_py as fp
+        seed()
+        for i in range(count):
+            a = Activity(
+                AID=i,
+                thumb=fp.internet.domain_name(),
+                time=fp.date.date(),
+                location=fp.address.city(),
+                title=fp.lorem_ipsum.title(),
+                description=fp.lorem_ipsum.sentence(),
+                content=fp.lorem_ipsum.sentence(),
+                totalRecruits=fp.basic.number(at_least=20, at_most=100),
+                appliedRecruits=fp.basic.number(at_least=0, at_most=20),
+            )
+            db.session.add(a)
+            db.session.commit()
+
+    def to_json(self):
+        json_activity={
+            'url':url_for('api.get_activity',id=self.id,_external=True),
+            'AID':self.AID,
+            'time':self.time,
+            'location':self.location,
+            'title':self.title,
+            'description':self.description,
+            'content':self.content,
+            'totalRecruits':self.totalRecruits,
+            'appliedRecruits':self.appliedRecruits,
+        }
+        return json_activity
+
+    def leader(self):
+        return self.TeamActivity.User.first()
+
+    def members(self):
+        return self.UserActivity.filter_by(type='applyed').User.all()
 
 
 class Message(db.Model):
     '''消息'''
     __tablename__ = 'Message'
+
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     userId = db.Column('userId', db.Integer, db.ForeignKey('User.id'))
     notifier = db.Column('notifier', db.Integer, db.ForeignKey('Team.id'))
     activityId = db.Column('activityId', db.Integer, db.ForeignKey('Activity.id'))
-    content = db.Column('content', db.String(128), nullable=False)
+    content = db.Column('content', db.Text)
+    qrCode = db.Column('qrCode', db.String(64))
+    time = db.Column('time', db.DateTime)
+    isRead = db.Column('isRead', db.Boolean)
 
-    user = db.relationship('User', backref='message_receiver', foreign_keys=[userId])
-    team = db.relationship('Team', backref='message_sender', foreign_keys=[notifier])
-    activity = db.relationship('Activity', backref='message_activity', foreign_keys=[activityId])
+    Sender = db.relationship('User', backref='UserMessage',lazy='dynamic')
+    Notifier = db.relationship('Team', backref='TeamMessage',lazy='dynamic')
+    Activity = db.relationship('Activity',backref='ActivityMessage',lazy='dynamic')
+    def generate_fake(count=100):
+        from random import seed,randint
+        import forgery_py as fp
+
+        seed()
+        user_count=User.query.count()
+        notifier_count=Team.query.count()
+        activity_count=Activity.query.count()
+        for i in range(count):
+            u=User.query.offset(randint(0,user_count-1)).first()
+            t=Team.query.offset(randint(0,notifier_count-1)).first()
+            a=Activity.query.offset(randint(0,activity_count-1)).first()
+            m=Message(Sender=u,Notifier=t,Activity=a,content = fp.lorem_ipsum.sentence(),
+                      time = fp.date.date(),isRead = fp.basic.boolean())
+            db.session.add(m)
+            db.session.commit()
+
+    def to_json(self):
+        json_message={
+            'url':url_for('api.get_message',id=self.id,_external=True),
+            'sender': url_for('api.get_user', id=self.userId, _external=True),
+            'notifier':url_for('api.get_notifier',id=self.notifier,_external=True),
+            'activity':url_for('api.get_activity',id=self.notifier,_external=True),
+            'content':self.content,
+            'qrcode':self.qrCode,
+            'time':self.time,
+            'isRead':self.isRead,
+        }
+        return json_message
 
 class UserActivity(db.Model):
     '''个人活动'''
@@ -71,8 +220,23 @@ class UserActivity(db.Model):
     activityId = db.Column('activityId', db.Integer, db.ForeignKey('Activity.id'))
     type = db.Column('type', db.Enum('applying', 'applyed', 'creating', 'created'))
 
-    user = db.relationship('User', backref='user', foreign_keys=[userId])
-    activity = db.relationship('Activity', backref='participator', foreign_keys=[activityId])
+    User = db.relationship('User', backref='UserActivity',lazy='dynamic')
+    Activity = db.relationship('Activity', backref='UserActivity',lazy='dynamic')
+    def generate_fake(count=100):
+        from random import seed,randint
+        import forgery_py as fp
+
+        seed()
+        user_count=User.query.count()
+        activity_count=Activity.query.count()
+        for i in range(count):
+            u=User.query.offset(randint(0,user_count-1)).first()
+            a=Activity.query.offset(randint(0,activity_count-1)).first()
+            t=randint(0,1)
+            u_activity=UserActivity(User=u,Activity=a,type='applying'if t==0 else 'applyed')
+            db.session.add(u_activity)
+            db.session.commit()
+
 
 
 class TeamActivity(db.Model):
@@ -84,5 +248,20 @@ class TeamActivity(db.Model):
     activityId = db.Column('activityId', db.Integer, db.ForeignKey('Activity.id'))
     type = db.Column('type', db.Enum('applying', 'applyed', 'creating', 'created'))
 
-    team = db.relationship('Team', backref='team', foreign_keys=[teamId])
-    activity = db.relationship('Activity', backref='activity', foreign_keys=[activityId])
+    Team = db.relationship('Team', backref='TeamActivity',lazy='dynamic')
+    Activity = db.relationship('Activity', backref='TeamActivity',lazy='dynamic')
+    def generate_fake(count=100):
+        from random import seed,randint
+        import forgery_py as fp
+
+        seed()
+        team_count=Team.query.count()
+        activity_count=Activity.query.count()
+        for i in range(count):
+            team=Team.query.offset(randint(0,user_count-1)).first()
+            a=Activity.query.offset(randint(0,activity_count-1)).first()
+            t=randint(2,3)
+            t_activity=TeamActivity(Team=u,Activity=a,type='creating'if t==2 else 'created')
+            db.session.add(t_activity)
+            db.session.commit()
+
