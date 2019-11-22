@@ -8,9 +8,9 @@ from flask import Flask
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 
+from .Users import users
 
-
-from flask_login import UserMixin, LoginManager, current_user, login_user
+from flask_login import LoginManager
 
 from .app_env import get_config
 
@@ -47,7 +47,6 @@ def create_app(config):
 	login = LoginManager(app)
 
 	# flask-admin
-	# app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
 	admin = Admin(app)
 	admin.add_view(ModelView(User, db.session))
 	admin.add_view(ModelView(Team, db.session))
@@ -55,5 +54,6 @@ def create_app(config):
 	admin.add_view(ModelView(UserActivity, db.session))
 	admin.add_view(ModelView(TeamActivity, db.session))
 
+	app.register_blueprint(users, url_prefix="/users")
 
 	return app

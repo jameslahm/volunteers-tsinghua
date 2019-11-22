@@ -9,52 +9,12 @@ from backend.startup import create_app
 from backend.utils import touch, md5
 
 
-def get_site_version(root):
-    # 获取网站版本
-    vf = os.path.join(root, 'site.version')
-    if not os.path.exists(vf):
-        touch(vf)
-    v = None
-    with open(vf, 'r+') as f:
-        v = f.read().strip()
-        if not bool(v):
-            v = '0.0.0'
-            f.write(v)
-    return v
-
-
-def init_admin(app):
-    '''初始化管理员用户'''
-
-    with app.test_request_context():
-        from backend.model import AdminUser
-
-        db = app.db
-        default_email = 'volunteers@tsinghua.edu.cn'
-        default_name = 'spb17'
-        default_password = 'admin'
-
-        if AdminUser.query.filter_by(email=default_email).count() < 1:
-            user_obj = AdminUser()
-            user_obj.name = default_name
-            user_obj.email = default_email
-            user_obj.password = default_password
-            db.session.add(user_obj)
-            db.session.commit()
-        # else:
-        #     user_obj = AdminUser.query.first().to_dict()
-        # if isinstance(user_obj, AdminUser):
-        #     print(user_obj)
-
-
 def start_server(run_cfg=None, is_deploy=False):
     '''启动web服务器'''
     if not bool(run_cfg):
         run_cfg = {}
     proj_root = os.path.abspath(os.path.dirname(__file__))
     os.environ['PROJ_ROOT'] = proj_root
-    site_version = get_site_version(proj_root)
-    os.environ['SITE_VERSION'] = site_version
     config = {
         'use_cdn': False,
         'debug': run_cfg.get('debug', False),
@@ -64,14 +24,6 @@ def start_server(run_cfg=None, is_deploy=False):
     }
     app = create_app(config)
     app.proj_root = proj_root
-    app.site_version = site_version
-
-    @app.before_first_request
-    def init_user(*args, **kwargs):
-        pass
-        # print(args)
-        # print(kwargs)
-        # init_admin(app)
 
     if 'host' in run_cfg and 'port' in run_cfg:
         print_host = run_cfg['host']
