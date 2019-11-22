@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 '''模型'''
 
-<<<<<<< HEAD
 from .database import db
-=======
-from database import db
->>>>>>> b734697291125a3afdce6061ec76e7d5c8f24ba7
 from flask import url_for,Flask
 import flask_sqlalchemy
 from flask import request
@@ -283,10 +279,3 @@ class TeamActivity(db.Model):
             db.session.commit()
 
 
-
-
-
-<<<<<<< HEAD
-=======
-
->>>>>>> b734697291125a3afdce6061ec76e7d5c8f24ba7
