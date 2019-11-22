@@ -8,14 +8,13 @@ from flask import Flask
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 
-from .Users import users
-
 from flask_login import LoginManager
 
 from .app_env import get_config
 
 from .database import db
 from .model import User, Team, Activity, UserActivity, TeamActivity
+
 
 def create_app(config):
 
@@ -54,6 +53,7 @@ def create_app(config):
 	admin.add_view(ModelView(UserActivity, db.session))
 	admin.add_view(ModelView(TeamActivity, db.session))
 
-	app.register_blueprint(users, url_prefix="/users")
+	from .interface import interface as interface_blueprint
+	app.register_blueprint(interface_blueprint)
 
 	return app

@@ -7,17 +7,6 @@ import flask_sqlalchemy
 from flask import request
 from datetime import datetime
 
-# class AdminUser(db.Model):
-#     '''后台操作人员'''
-#     __tablename__ = 'Administrator'
-#
-#     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-#     email = db.Column("email", db.String(64), index=True, nullable=False)
-#     name = db.Column("name", db.String(64))
-#     password = db.Column("password", db.String(32))
-
-
-
 
 class User(db.Model):
     '''用户'''
@@ -25,7 +14,7 @@ class User(db.Model):
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     # TODO: how to get openId?
-    openId = db.Column("openId", db.String(64), unique=False, nullable=False) # 改
+    # openId = db.Column("openId", db.String(64), unique=False, nullable=False) # 改
     userName = db.Column("userName", db.String(16), unique=False, nullable=False)
     wx = db.Column("wx", db.String(64), unique=False, nullable=False) # 改
     email = db.Column("email", db.String(64), unique=False) # 改
@@ -126,7 +115,7 @@ class Activity(db.Model):
     __tablename__ = 'Activity'
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    AID = db.Column('AID', db.Integer)
+    # AID = db.Column('AID', db.Integer)
     thumb = db.Column('thumb', db.String(128), nullable=False)
     time = db.Column('time', db.DateTime, nullable=False)
     location = db.Column('location', db.String(20), nullable=False)
