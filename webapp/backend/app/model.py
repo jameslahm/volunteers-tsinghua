@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''模型'''
 
-from database import db
+from . import db
 from flask import url_for,Flask
 import flask_sqlalchemy
 from flask import request
@@ -17,8 +17,6 @@ from datetime import datetime
 #     password = db.Column("password", db.String(32))
 
 
-
-
 class User(db.Model):
     '''用户'''
     __tablename__ = 'User'
@@ -30,8 +28,8 @@ class User(db.Model):
     wx = db.Column("wx", db.String(64), unique=False, nullable=False) # 改
     email = db.Column("email", db.String(64), unique=False) # 改
     avatar = db.Column("avatar", db.String(128))
-    schoolID = db.Column('schoolID', db.Integer, unique=False)  # 改
-    phone = db.Column('phone', db.Integer)
+    schoolId = db.Column('schoolID', db.String(30), unique=False)  # 改
+    phone = db.Column('phone', db.String(20))
     department = db.Column('department', db.Text)
     profile = db.Column('profile', db.Text)
     UserActivity = db.relationship('UserActivity', backref='User',lazy='dynamic')
@@ -47,8 +45,8 @@ class User(db.Model):
                     userName=fp.internet.user_name(True),
                     wx=fp.lorem_ipsum.word(),
                     phone=fp.address.phone(),
-                    schoolID=fp.basic.number(),
-                    department=fp.lorem_ipsum.sentence(),
+                    schoolId=str(fp.credit_card.number()),
+                    department=fp.lorem_ipsum.word(),
                     profile=fp.lorem_ipsum.sentence(),
             )
             db.session.add(u)

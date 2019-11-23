@@ -1,23 +1,18 @@
 # -*- coding: utf-8 -*-
-'''后端启动文件
-
+'''
 web启动入口文件，封装flask-app全局设置
 '''
 from flask import Flask
-
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-
-
-
 from flask_login import UserMixin, LoginManager, current_user, login_user
-
 from .app_env import get_config
+from flask_sqlalchemy import SQLAlchemy
 
-from .database import db
-from .model import User, Team, Activity, UserActivity, TeamActivity
+db = SQLAlchemy()
 
-def create_app(config):
+
+def create_app():
 
 	env_config = get_config()
 	template_folder = env_config.get('template_folder', None)
@@ -48,6 +43,9 @@ def create_app(config):
 
 	# flask-admin
 	# app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
+
+	from .model import User,Team,Activity,UserActivity,TeamActivity
+
 	admin = Admin(app)
 	admin.add_view(ModelView(User, db.session))
 	admin.add_view(ModelView(Team, db.session))
@@ -57,3 +55,4 @@ def create_app(config):
 
 
 	return app
+
