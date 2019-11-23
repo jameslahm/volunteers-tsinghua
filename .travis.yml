@@ -18,8 +18,8 @@ jobs:
       script:
         - npm test
     - install:
-        - pip install -r webapp/requirements.txt
+        - pip install -r webapp/backend/requirements.txt
       script:
-        - cd webapp && python manage.py test
+        - python webapp/backend/manage.py test
 
 
