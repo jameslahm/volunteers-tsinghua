@@ -19,7 +19,7 @@ from datetime import datetime
 
 class User(db.Model):
     '''用户'''
-    __tablename__ = 'User'
+    __tablename__ = 'users'
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     # TODO: how to get openId?
@@ -32,7 +32,9 @@ class User(db.Model):
     phone = db.Column('phone', db.String(20))
     department = db.Column('department', db.Text)
     profile = db.Column('profile', db.Text)
-    UserActivity = db.relationship('UserActivity', backref='User',lazy='dynamic')
+    useractivities = db.relationship('UserActivity', backref='user',lazy='dynamic')
+    messages = db.relationship('Message', backref='user')
+
 
     def generate_fake(count=100):
         from random import seed, randint
@@ -79,13 +81,14 @@ class User(db.Model):
 
 class Team(db.Model):
     '''志愿团体'''
-    __tablename__ = 'Team'
+    __tablename__ = 'teams'
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     userName = db.Column("userName", db.String(64), unique=False, nullable=False)
     email = db.Column("email", db.String(64), unique=False) #改
     avatar = db.Column("avatar", db.String(128))
-    TeamActivity = db.relationship('TeamActivity', backref='Team',lazy='dynamic')
+    teamactivities = db.relationship('TeamActivity', backref='team',lazy='dynamic')
+    messages = db.relationship('Message', backref='team')
 
     def generate_fake(count=100):
         from random import seed, randint
@@ -121,7 +124,7 @@ class Team(db.Model):
 
 class Activity(db.Model):
     '''活动'''
-    __tablename__ = 'Activity'
+    __tablename__ = 'activities'
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     # AID = db.Column('AID', db.Integer)
@@ -134,8 +137,10 @@ class Activity(db.Model):
     totalRecruits = db.Column('totalRecruits', db.Integer)
     appliedRecruits = db.Column('appliedRecruits', db.Integer)
     qrcode = db.Column('qrcode',db.String(128))
-    UserActivity = db.relationship('UserActivity', backref='Activity',lazy='dynamic')
-    TeamActivity = db.relationship('TeamActivity', backref='Activity',lazy='dynamic')
+    userActivities = db.relationship('UserActivity', backref='activity',lazy='dynamic')
+    teamActivities = db.relationship('TeamActivity', backref='activity',lazy='dynamic')
+    messages = db.relationship('Message',backref='activity')
+
     def generate_fake(count=100):
         from random import seed, randint
         import forgery_py as fp
@@ -181,20 +186,17 @@ class Activity(db.Model):
 
 class Message(db.Model):
     '''消息'''
-    __tablename__ = 'Message'
+    __tablename__ = 'messages'
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    userId = db.Column('userId', db.Integer, db.ForeignKey('User.id'))
-    notifier = db.Column('notifier', db.Integer, db.ForeignKey('Team.id'))
-    activityId = db.Column('activityId', db.Integer, db.ForeignKey('Activity.id'))
+    userId = db.Column('userId', db.Integer, db.ForeignKey('users.id'))
+    notifier = db.Column('notifier', db.Integer, db.ForeignKey('teams.id'))
+    activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id'))
     content = db.Column('content', db.Text)
     qrCode = db.Column('qrCode', db.String(64))
     time = db.Column('time', db.DateTime)
     isRead = db.Column('isRead', db.Boolean)
 
-    Sender = db.relationship('User', backref='UserMessage')
-    Notifier = db.relationship('Team', backref='TeamMessage')
-    Activity = db.relationship('Activity',backref='ActivityMessage')
     def generate_fake(count=100):
         from random import seed,randint
         import forgery_py as fp
@@ -227,12 +229,12 @@ class Message(db.Model):
 
 class UserActivity(db.Model):
     '''个人活动'''
-    __tablename__ = 'UserActivity'
+    __tablename__ = 'useractivities'
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    userId = db.Column('userId', db.Integer, db.ForeignKey('User.id'))
-    activityId = db.Column('activityId', db.Integer, db.ForeignKey('Activity.id'))
-    type = db.Column('type', db.Enum('applying', 'applyed', 'creating', 'created'))
+    userId = db.Column('userId', db.Integer, db.ForeignKey('users.id'))
+    activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id'))
+    type = db.Column('type', db.Enum('applying', 'applyed'))
 
 
     def generate_fake(count=100):
@@ -254,12 +256,12 @@ class UserActivity(db.Model):
 
 class TeamActivity(db.Model):
     '''团队活动'''
-    __tablename__ = 'TeamActivity'
+    __tablename__ = 'teamactivities'
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    teamId = db.Column('teamId', db.Integer, db.ForeignKey('Team.id'))
-    activityId = db.Column('activityId', db.Integer, db.ForeignKey('Activity.id'))
-    type = db.Column('type', db.Enum('applying', 'applyed', 'creating', 'created'))
+    teamId = db.Column('teamId', db.Integer, db.ForeignKey('teams.id'))
+    activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id'))
+    type = db.Column('type', db.Enum('creating', 'created'))
 
     def generate_fake(count=100):
         from random import seed,randint
