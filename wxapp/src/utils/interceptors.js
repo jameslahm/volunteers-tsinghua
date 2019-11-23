@@ -19,21 +19,78 @@ fly.interceptors.request.use((request) => {
         res.push(Mock.mock({
           'id': Mock.Random.id(),
           'title': Mock.Random.csentence(4),
-          'thumb': Mock.Random.image(),
+          'thumb': Mock.Random.image('28x28'),
           'description': Mock.Random.cparagraph(1),
           'content': Mock.Random.cparagraph(5),
-          'time': Mock.Random.date(),
+          'time': Mock.Random.datetime(),
           'location': Mock.Random.county(),
           'leaderName': Mock.Random.cname(),
           'leaderID': Mock.Random.guid(),
-          'type|1': ['applying', 'applyed', 'created', 'creating'],
+          'type|1': ['applying', 'applyed'],
+          'totalRecruits': Mock.Random.integer(1),
+          'applyedRecruits': Mock.Random.integer(1),
           'members': [
-            {'userid': Mock.Random.id(), 'avatar': Mock.Random.image()},
-            {'userid': Mock.Random.id(), 'avatar': Mock.Random.image()}
+            { 'userid': Mock.Random.id(), 'avatar': Mock.Random.image() },
+            { 'userid': Mock.Random.id(), 'avatar': Mock.Random.image() }
           ]
         }))
       }
       return Promise.resolve(res)
+    }
+    if (request.url === `${host}/users/123/messages`) {
+      let res = []
+      for (let i = 0; i < 5; i++) {
+        res.push(Mock.mock({
+          'id': Mock.Random.id(),
+          'qrCode': Mock.Random.image('28x28'),
+          'content': Mock.Random.cparagraph(5),
+          'time': Mock.Random.datetime(),
+          'team': {
+            'id': Mock.Random.id(),
+            'avatar': Mock.Random.image(),
+            'name': Mock.Random.cname()
+          },
+          'isRead': Mock.Random.boolean()
+        }))
+      }
+      return res
+    }
+    if (request.url === `${host}/users/123`) {
+      let res = {}
+      res.id = Mock.Random.id()
+      res.openId = Mock.Random.guid()
+      res.userName = Mock.Random.cname()
+      res.wx = Mock.Random.id()
+      res.email = Mock.Random.email()
+      res.avatar = Mock.Random.image('28x28')
+      res.department = Mock.Random.name()
+      res.phone = Mock.Random.string('number')
+      res.profile = Mock.Random.cparagraph()
+      return res
+    }
+    if (request.url === `${host}/activities`) {
+      let res = []
+      for (let i = 0; i < 20; i++) {
+        res.push(Mock.mock({
+          'id': Mock.Random.id(),
+          'title': Mock.Random.csentence(4),
+          'thumb': Mock.Random.image('28x28'),
+          'description': Mock.Random.cparagraph(1),
+          'content': Mock.Random.cparagraph(5),
+          'time': Mock.Random.datetime(),
+          'location': Mock.Random.county(),
+          'leaderName': Mock.Random.cname(),
+          'leaderID': Mock.Random.guid(),
+          'type|1': ['applying', 'applyed'],
+          'totalRecruits': Mock.Random.integer(1),
+          'applyedRecruits': Mock.Random.integer(1),
+          'members': [
+            { 'userid': Mock.Random.id(), 'avatar': Mock.Random.image() },
+            { 'userid': Mock.Random.id(), 'avatar': Mock.Random.image() }
+          ]
+        }))
+      }
+      return res
     }
     return Promise.resolve('123')
   }
