@@ -43,9 +43,11 @@ Component({
 
     methods: {
         handleInputChange(event) {
-            const { detail = {} } = event;
-            const { value = '' } = detail;
-            this.setData({ value });
+            // const { detail = {} } = event;
+            // const { value = '' } = detail;
+            // this.setData({ value });
+
+            console.log("input")
 
             this.triggerEvent('change', event);
         },
@@ -56,6 +58,10 @@ Component({
 
         handleInputBlur(event) {
             this.triggerEvent('blur', event);
+        },
+
+        handleInputConfirm(event){
+            this.triggerEvent('confirm', event);
         }
     }
 });
