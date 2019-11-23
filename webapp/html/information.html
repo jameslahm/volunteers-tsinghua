@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="myactivity/img/tsinghua.png">
+    <title>志在清华</title>
+    <!-- Custom CSS -->
+    <link href="bootstrap-4.3.1-dist/css/style.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-navbarbg="skin6" data-theme="light" data-layout="vertical" data-sidebartype="full"
+        data-boxed-layout="full">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar" data-navbarbg="skin6">
+            <nav class="navbar top-navbar navbar-expand-md navbar-light">
+                <div class="navbar-header" data-logobg="skin5">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)">
+                        <i class="ti-menu ti-close"></i>
+                    </a>
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <div class="navbar-brand">
+                        <a href="main.html" class="logo">
+                            <!-- Logo icon -->
+                            <b class="logo-icon">
+                                <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                                <i class="mdi mdi-heart"></i>
+                            </b>
+                            <!--End Logo icon -->
+                            <!-- Logo text -->
+                            <span class="logo-text">
+                                志在清华
+                            </span>
+                        </a>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Toggle which is visible on mobile only -->
+                    <!-- ============================================================== -->
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
+                        data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="ti-more"></i>
+                    </a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin6">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-left mr-auto">
+                        <!-- ============================================================== -->
+                        <!-- Search -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item search-box">
+                            <a class="nav-link waves-effect waves-dark" href="javascript:void(0)">
+                                <div class="d-flex align-items-center">
+                                    <i class="mdi mdi-magnify font-20 mr-1"></i>
+                                    <div class="ml-1 d-none d-sm-block">
+                                        <span>搜索</span>
+                                    </div>
+                                </div>
+                            </a>
+                            <form class="app-search position-absolute">
+                                <input type="text" class="form-control" placeholder="Search &amp; enter">
+                                <a class="srh-btn">
+                                    <i class="ti-close"></i>
+                                </a>
+                            </form>
+                        </li>
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-right">
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href=""
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
+                                    src="myactivity/img/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated">
+                                <a class="dropdown-item" href="main.html"><i class="ti-user m-r-5 m-l-5"></i>
+                                    主页</a>
+                                <a class="dropdown-item" href="https://www.google.com/"><i
+                                        class="ti-close m-r-5 m-l-5"></i> 退出</a>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar" data-sidebarbg="skin5">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="myactivity.html"
+                                aria-expanded="false">
+                                <i class="mdi mdi-clipboard-account"></i>
+                                <span class="hide-menu">我的项目</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="createactivity.html"
+                                aria-expanded="false">
+                                <i class="mdi mdi-new-box"></i>
+                                <span class="hide-menu">新建项目</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="information.html"
+                                aria-expanded="false">
+                                <i class="mdi mdi-information-outline"></i>
+                                <span class="hide-menu">消息中心</span>
+                            </a>
+
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-5 align-self-center">
+                        <h4 class="page-title">消息中心</h4>
+                    </div>
+                    <div class="col-7 align-self-center">
+                        <div class="d-flex align-items-center justify-content-end">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="main.html">主页</a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">消息中心</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">消息详情</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="card" style="width: 45rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">项目：校园志愿讲解</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">消息时间：2019.11.20 19:56</h6>
+
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">申请项目</th>
+                                                <th scope="col">申请职位</th>
+                                                <th scope="col">申请日期</th>
+                                                <th scope="col">姓名</th>
+                                                <th scope="col">学号</th>
+                                                <th scope="col">院系</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="table-success">
+                                                <th scope="row">校园志愿讲解</th>
+                                                <td>流动志愿者</td>
+                                                <td>2019.11.20</td>
+                                                <td>王俊凯</td>
+                                                <td>201919991999</td>
+                                                <td>软件学院</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p class="card-text">申请理由：我爱志愿，我真的很爱志愿，希望你们可以收留我这个可怜的孩子嘤嘤嘤。</p>
+                                    <a href="#" class="card-link">志愿者详情</a>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-success">同意申请</button>
+                            <button type="button" class="btn btn-danger">拒绝申请</button>
+                            <button type="button" class="btn btn-info">回复</button>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container-fluid">
+                <div class="tab-content">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist" style="padding-left: 10px;">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                aria-controls="home" aria-selected="true">所有消息</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                aria-controls="profile" aria-selected="false">志愿者申请</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab"
+                                aria-controls="messages" aria-selected="false">志愿者留言</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab"
+                                aria-controls="settings" aria-selected="false">管理员消息</a>
+                        </li>
+                    </ul>
+                    <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="col-12">
+                            <div class="card">
+
+                                <div class="card-body">
+                                    <h4 class="card-title">所有消息</h4>
+                                    <h6 class="card-subtitle">在这里查看所有您收到的消息。</h6>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">消息类型</th>
+                                                <th scope="col">用户类型</th>
+                                                <th scope="col">用户名称</th>
+                                                <th scope="col">相关项目</th>
+                                                <th scope="col">时间</th>
+                                                <th scope="col">消息状态</th>
+                                                <th scope="col">操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="table-success" style="cursor:pointer;"
+                                                onclick="$('#exampleModal').modal('toggle')">
+                                                <th scope="row">志愿申请</th>
+                                                <td>志愿者</td>
+                                                <td>奥巴马</td>
+                                                <td>校园志愿讲解</td>
+                                                <td>2019.11.20 22:36</td>
+                                                <td>未读</td>
+                                                <td>回复</td>
+                                            </tr>
+                                            <tr class="table-success" style="cursor:pointer;"
+                                                onclick="$('#exampleModal').modal('toggle')">
+                                                <th scope="row">志愿申请</th>
+                                                <td>志愿者</td>
+                                                <td>特朗普</td>
+                                                <td>校园志愿讲解</td>
+                                                <td>2019.11.20 12:36</td>
+                                                <td>未读</td>
+                                                <td>回复</td>
+                                            </tr>
+                                            <tr class="table-primary" style="cursor:pointer;"
+                                                onclick="$('#exampleModal').modal('toggle')">
+                                                <th scope="row">志愿者留言</th>
+                                                <td>志愿者</td>
+                                                <td>希拉里</td>
+                                                <td>校园志愿讲解</td>
+                                                <td>2019.11.20 22:36</td>
+                                                <td>未读</td>
+                                                <td>回复</td>
+                                            </tr>
+                                            <tr class="table-danger" style="cursor:pointer;"
+                                                onclick="$('#exampleModal').modal('toggle')">
+                                                <th scope="row">管理员消息</th>
+                                                <td>管理员</td>
+                                                <td>清华大学团委志愿组</td>
+                                                <td>校园志愿讲解</td>
+                                                <td>2019.11.20 12:36</td>
+                                                <td>未读</td>
+                                                <td>回复</td>
+                                            </tr>
+
+                                            <tr style="cursor:pointer;" onclick="$('#exampleModal').modal('toggle')">
+                                                <th scope="row">志愿申请</th>
+                                                <td>志愿者</td>
+                                                <td>马克思</td>
+                                                <td>校园志愿讲解</td>
+                                                <td>2019.11.20 22:36</td>
+                                                <td>已读</td>
+                                                <td>回复</td>
+                                            </tr>
+                                            <tr style="cursor:pointer;" onclick="$('#exampleModal').modal('toggle')">
+                                                <th scope="row">志愿者留言</th>
+                                                <td>志愿者</td>
+                                                <td>恩格斯</td>
+                                                <td>校园志愿讲解</td>
+                                                <td>2019.11.20 22:36</td>
+                                                <td>已读</td>
+                                                <td>回复</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">志愿者申请</h4>
+                                    <h6 class="card-subtitle">在这里查看志愿者加入您的项目的申请。</h6>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">消息类型</th>
+                                                <th scope="col">用户类型</th>
+                                                <th scope="col">用户名称</th>
+                                                <th scope="col">相关项目</th>
+                                                <th scope="col">时间</th>
+                                                <th scope="col">消息状态</th>
+                                                <th scope="col">操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="table-success" style="cursor:pointer;"
+                                                onclick="$('#exampleModal').modal('toggle')">
+                                                <th scope="row">志愿申请</th>
+                                                <td>志愿者</td>
+                                                <td>奥巴马</td>
+                                                <td>校园志愿讲解</td>
+                                                <td>2019.11.20 22:36</td>
+                                                <td>未读</td>
+                                                <td>回复</td>
+                                            </tr>
+                                            <tr class="table-success" style="cursor:pointer;"
+                                                onclick="$('#exampleModal').modal('toggle')">
+                                                <th scope="row">志愿申请</th>
+                                                <td>志愿者</td>
+                                                <td>特朗普</td>
+                                                <td>校园志愿讲解</td>
+                                                <td>2019.11.20 12:36</td>
+                                                <td>未读</td>
+                                                <td>回复</td>
+                                            </tr>
+                                            <tr style="cursor:pointer;" onclick="$('#exampleModal').modal('toggle')">
+                                                <th scope="row">志愿申请</th>
+                                                <td>志愿者</td>
+                                                <td>马克思</td>
+                                                <td>校园志愿讲解</td>
+                                                <td>2019.11.20 22:36</td>
+                                                <td>已读</td>
+                                                <td>回复</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">志愿者留言</h4>
+                                    <h6 class="card-subtitle">在这里查看您收到的来自志愿者的留言和反馈。</h6>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">消息类型</th>
+                                                <th scope="col">用户类型</th>
+                                                <th scope="col">用户名称</th>
+                                                <th scope="col">相关项目</th>
+                                                <th scope="col">时间</th>
+                                                <th scope="col">消息状态</th>
+                                                <th scope="col">操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="table-primary" style="cursor:pointer;"
+                                                onclick="$('#exampleModal').modal('toggle')">
+                                                <th scope="row">志愿者留言</th>
+                                                <td>志愿者</td>
+                                                <td>希拉里</td>
+                                                <td>校园志愿讲解</td>
+                                                <td>2019.11.20 22:36</td>
+                                                <td>未读</td>
+                                                <td>回复</td>
+                                            </tr>
+                                            <tr style="cursor:pointer;" onclick="$('#exampleModal').modal('toggle')">
+                                                <th scope="row">志愿者留言</th>
+                                                <td>志愿者</td>
+                                                <td>恩格斯</td>
+                                                <td>校园志愿讲解</td>
+                                                <td>2019.11.20 22:36</td>
+                                                <td>已读</td>
+                                                <td>回复</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">管理员消息</h4>
+                                    <h6 class="card-subtitle">在这里查看管理员的留言和系统消息。</h6>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">消息类型</th>
+                                                <th scope="col">用户类型</th>
+                                                <th scope="col">用户名称</th>
+                                                <th scope="col">相关项目</th>
+                                                <th scope="col">时间</th>
+                                                <th scope="col">消息状态</th>
+                                                <th scope="col">操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr class="table-danger" style="cursor:pointer;"
+                                                onclick="$('#exampleModal').modal('toggle')">
+                                                <th scope="row">管理员消息</th>
+                                                <td>管理员</td>
+                                                <td>清华大学团委志愿者</td>
+                                                <td>校园志愿讲解</td>
+                                                <td>2019.11.20 12:36</td>
+                                                <td>未读</td>
+                                                <td>回复</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    $(function () {
+                        $('#myTab li:last-child a').tab('show')
+                    })
+                </script>
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+
+
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="assets/extra-libs/sparkline/sparkline.js"></script>
+    <!--Wave Effects -->
+    <script src="bootstrap-4.3.1-dist/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="bootstrap-4.3.1-dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="bootstrap-4.3.1-dist/js/custom.min.js"></script>
+</body>
+
+</html>
