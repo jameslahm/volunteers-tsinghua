@@ -53,7 +53,7 @@ def create_app():
     admin.add_view(ModelView(UserActivity, db.session))
     admin.add_view(ModelView(TeamActivity, db.session))
 
-    from .interface import interface as interface_blueprint
-    app.register_blueprint(interface_blueprint)
+    from .api import api as api_blueprint
+    app.register_blueprint(api_blueprint)
 
     return app
