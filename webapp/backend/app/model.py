@@ -127,7 +127,7 @@ class Activity(db.Model):
     __tablename__ = 'activities'
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    # AID = db.Column('AID', db.Integer)
+    AID = db.Column('AID', db.Integer)
     thumb = db.Column('thumb', db.String(128), nullable=False)
     time = db.Column('time', db.DateTime, nullable=False)
     location = db.Column('location', db.String(20), nullable=False)
