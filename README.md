@@ -1,12 +1,12 @@
 ## A mini-program for volunteer activity management
 
 - Run:
-  - `PC`: 
-    ```bash
+  - PC: 
+    ```
     cd webapp && make runserver
     ```
-  - `WX`:
-    ```bash
+  - WX:
+    ```
     cd wxapp && npm run build
     ```
 
