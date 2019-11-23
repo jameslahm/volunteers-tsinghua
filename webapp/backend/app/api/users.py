@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, redirect, jsonify
 from ..model import User
-from . import interface
+from . import api
 
 
-@interface.route('/users/<int:id>', methods=['GET'])
+@api.route('/users/<int:id>', methods=['GET'])
 def query_by_id(id):
     user_info = User.query.filter(User.id == id).first()
     if user_info is None:
@@ -23,6 +23,6 @@ def query_by_id(id):
     return jsonify(info)
 
 
-@interface.route('/users/<int:id>/activities', methods=['GET'])
+@api.route('/users/<int:id>/activities', methods=['GET'])
 def get_activities(user_id):
     pass

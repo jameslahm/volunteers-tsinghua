@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, jsonify
 from ..model import Activity
-from . import interface
+from . import api
 
 
 @api.route('/activities/<int:id>', methods=['GET'])

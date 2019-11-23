@@ -24,6 +24,4 @@ def get_config():
         #'cdn_list': cdn_list,
         'db_config': db_config,
         'admin_config': admin_config, 
-        'template_folder': os.path.join(root, 'html', 'templates'),
-        'static_folder': os.path.join(root, 'static')
     }

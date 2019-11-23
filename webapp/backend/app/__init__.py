@@ -15,13 +15,9 @@ db = SQLAlchemy()
 def create_app():
 
     env_config = get_config()
-    template_folder = env_config.get('template_folder', None)
-    static_folder = env_config.get('static_folder', None)
 
     app = Flask(
-        __name__,
-        template_folder=template_folder,
-        static_folder=static_folder
+        __name__
     )
 
     app.secret_key = b'admin'
@@ -54,6 +50,12 @@ def create_app():
     admin.add_view(ModelView(TeamActivity, db.session))
 
     from .api import api as api_blueprint
-    app.register_blueprint(api_blueprint)
+    app.register_blueprint(api_blueprint, url_prefix='/api')
+
+    from .main import main as main_blueprint
+    app.register_blueprint(main_blueprint)
+
+    from .auth import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
     return app
