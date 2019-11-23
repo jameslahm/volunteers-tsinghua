@@ -47,6 +47,10 @@ migrate=Migrate(app,db)
 manager.add_command('shell', Shell(make_context=make_shell_context))
 manager.add_command('db', MigrateCommand)
 
+@manager.command
+def test(coverage=False):
+    return
+
 
 if __name__ == '__main__':
     manager.run()
