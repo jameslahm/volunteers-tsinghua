@@ -2,11 +2,11 @@
 
 - Run:
   - PC: 
-    ```
+    ```bash
     cd webapp && make runserver
     ```
   - WX:
-    ```
+    ```bash
     cd wxapp && npm run build
     ```
 
