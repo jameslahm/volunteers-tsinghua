@@ -3,18 +3,24 @@
 
 from . import db
 from flask import url_for,Flask
+from flask_user import UserMixin
 import flask_sqlalchemy
 from flask import request
 from datetime import datetime
 
-# class AdminUser(db.Model):
-#     '''后台操作人员'''
-#     __tablename__ = 'Administrator'
-#
-#     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-#     email = db.Column("email", db.String(64), index=True, nullable=False)
-#     name = db.Column("name", db.String(64))
-#     password = db.Column("password", db.String(32))
+
+class AdminUser(db.Model, UserMixin):
+    '''后台操作人员'''
+    __tablename__ = 'AdminUser'
+
+    id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column("username", db.String(64), nullable=False)
+    # email = db.Column("email", db.String(64), nullable=False)
+    password = db.Column("password", db.String(255))
+    active = db.Column("active", db.Boolean(64), nullable=False)
+
+    def is_active(self):
+        return True
 
 
 class User(db.Model):

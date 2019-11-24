@@ -3,7 +3,7 @@
     "driver": "mysqlconnector",
     "username": "root",
     "password": "zhizaitsinghua",
-    "host": "mysql",
+    "host": "localhost",
     "port": 3306,
     "dbname": "volunteers",
     "charset": "utf8"
