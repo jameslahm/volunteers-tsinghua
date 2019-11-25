@@ -3,18 +3,24 @@
 
 from . import db
 from flask import url_for,Flask
+from flask_user import UserMixin
 import flask_sqlalchemy
 from flask import request
 from datetime import datetime
 
-# class AdminUser(db.Model):
-#     '''后台操作人员'''
-#     __tablename__ = 'Administrator'
-#
-#     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-#     email = db.Column("email", db.String(64), index=True, nullable=False)
-#     name = db.Column("name", db.String(64))
-#     password = db.Column("password", db.String(32))
+
+class AdminUser(db.Model, UserMixin):
+    '''后台操作人员'''
+    __tablename__ = 'AdminUser'
+
+    id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column("username", db.String(64), nullable=False)
+    # email = db.Column("email", db.String(64), nullable=False)
+    password = db.Column("password", db.String(255))
+    active = db.Column("active", db.Boolean(64), nullable=False)
+
+    def is_active(self):
+        return True
 
 
 class User(db.Model):
@@ -127,13 +133,13 @@ class Activity(db.Model):
     __tablename__ = 'activities'
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    # AID = db.Column('AID', db.Integer)
+    AID = db.Column('AID', db.Integer)
     thumb = db.Column('thumb', db.String(128), nullable=False)
     time = db.Column('time', db.DateTime, nullable=False)
-    location = db.Column('location', db.String(20), nullable=False)
-    title = db.Column('title', db.String(16), nullable=False)
-    description = db.Column('description', db.String(50), nullable=False)
-    content = db.Column('content', db.String(128), nullable=False)
+    location = db.Column('location', db.String(50), nullable=False)
+    title = db.Column('title', db.String(70), nullable=False)
+    description = db.Column('description', db.String(400), nullable=False)
+    content = db.Column('content', db.String(400), nullable=False)
     totalRecruits = db.Column('totalRecruits', db.Integer)
     appliedRecruits = db.Column('appliedRecruits', db.Integer)
     qrcode = db.Column('qrcode',db.String(128))
@@ -248,7 +254,7 @@ class UserActivity(db.Model):
             u=User.query.offset(randint(0,user_count-1)).first()
             a=Activity.query.offset(randint(0,activity_count-1)).first()
             t=randint(0,1)
-            u_activity=UserActivity(User=u,Activity=a,type='applying'if t==0 else 'applyed')
+            u_activity=UserActivity(user=u,activity=a,type='applying'if t==0 else 'applyed')
             db.session.add(u_activity)
             db.session.commit()
 
@@ -274,7 +280,7 @@ class TeamActivity(db.Model):
             team=Team.query.offset(randint(0,team_count-1)).first()
             a=Activity.query.offset(randint(0,activity_count-1)).first()
             t=randint(2,3)
-            t_activity=TeamActivity(Team=team,Activity=a,type='creating'if t==2 else 'created')
+            t_activity=TeamActivity(team=team,activity=a,type='creating'if t==2 else 'created')
             db.session.add(t_activity)
             db.session.commit()
 

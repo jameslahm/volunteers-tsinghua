@@ -2,15 +2,18 @@
 '''
 web启动入口文件，封装flask-app全局设置
 '''
-from flask import Flask
+from flask import Flask, url_for
+
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from flask_login import UserMixin, LoginManager, current_user, login_user
+
+from flask_user import UserManager, SQLAlchemyAdapter, current_user
+
 from .app_env import get_config
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
-
+user_manager = UserManager()
 
 def create_app():
 
@@ -22,7 +25,7 @@ def create_app():
 
     app.secret_key = b'admin'
 
-    # 配置数据库
+    # Database
     db_config = env_config['db_config']
     app.config['SQLALCHEMY_DATABASE_URI'] = '{}+{}://{}:{}@{}:{}/{}?charset={}'.format(
         db_config['type'], db_config['driver'], db_config['username'], db_config['password'],
@@ -31,21 +34,32 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
     app.db = db
+    with app.app_context():
+        db.create_all()
 
-    # flask-login
-    login = LoginManager(app)
 
     # flask-admin
-    # app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
+    from .model import User, Team, Activity, UserActivity, TeamActivity, AdminUser
 
-    from .model import User, Team, Activity, UserActivity, TeamActivity
+    # flask-user
+    from .model import AdminUser
+    db_adapter = SQLAlchemyAdapter(db, AdminUser)
+    user_manager.init_app(app, db_adapter)
+
+    class MyUserView(ModelView):
+        def is_accessible(self):
+            # return True
+            return current_user.is_authenticated
+
+        def inaccessible_callback(self, name, **kwargs):
+            return url_for("admin.index")
 
     admin = Admin(app)
-    admin.add_view(ModelView(User, db.session))
-    admin.add_view(ModelView(Team, db.session))
-    admin.add_view(ModelView(Activity, db.session))
-    admin.add_view(ModelView(UserActivity, db.session))
-    admin.add_view(ModelView(TeamActivity, db.session))
+    admin.add_view(MyUserView(User, db.session))
+    admin.add_view(MyUserView(Team, db.session))
+    admin.add_view(MyUserView(Activity, db.session))
+    admin.add_view(MyUserView(UserActivity, db.session))
+    admin.add_view(MyUserView(TeamActivity, db.session))
 
     from .api import api as api_blueprint
     app.register_blueprint(api_blueprint, url_prefix='/api')
