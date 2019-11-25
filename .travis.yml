@@ -24,7 +24,7 @@ before_install:
 - chmod 600 ~/.ssh/id_rsa
 
 addons:
-  ssh_known_hosts: '$IP'
+  ssh_known_hosts: "$IP"
 
 after_success:
 - ssh ubuntu@$IP 'cd volunteers-tsinghua && git checkout release && git pull'
