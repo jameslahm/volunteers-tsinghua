@@ -27,4 +27,4 @@ addons:
   ssh_known_hosts: 62.234.7.17
 
 after_success:
-- ssh ubuntu@$IP 'cd volunteers-tsinghua && git checkout release && git pull'
+- ssh ubuntu@$IP 'cd volunteers-tsinghua && git checkout release && git pull && cd webapp && sudo docker-compose restart'
