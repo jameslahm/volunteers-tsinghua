@@ -8,7 +8,6 @@ from flask_migrate import Migrate,MigrateCommand
 from werkzeug.routing import EndpointPrefix
 
 from app import create_app,db
-from app.model import AdminUser
 
 
 def make_shell_context():
@@ -19,22 +18,16 @@ def init_admin(app):
 
     with app.test_request_context():
         db = app.db
-        default_email = 'volunteers@tsinghua.edu.cn'
-        default_name = 'spb17'
-        default_password = 'Aa123456'
+        email = app.config['FLASK_ADMIN']
+        name = 'admin'
+        password = app.config['FLASK_ADMIN_PASSWORD']
 
-        if AdminUser.query.filter_by(username=default_name).count() < 1:
-            user_obj = AdminUser()
-            user_obj.username = default_name
-            # user_obj.email = default_email
-            user_obj.password = default_password
-            user_obj.active = True
-            db.session.add(user_obj)
+        from app.model import Team
+
+        if Team.query.filter_by(email=email).count() < 1:
+            admin=Team(userName=name,email=email,password=password)
+            db.session.add(admin)
             db.session.commit()
-        # else:
-        #     user_obj = AdminUser.query.first().to_dict()
-        # if isinstance(user_obj, AdminUser):
-        #     print(user_obj)
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 manager = Manager(app)

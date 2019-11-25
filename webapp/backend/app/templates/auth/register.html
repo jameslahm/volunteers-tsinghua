@@ -1,44 +1,13 @@
-<!doctype html>
-<html lang="zh-cn">
+{% extends "auth/authbase.html" %}
 
-<head>
-  <meta charset="utf-8">
-  <meta name="description" content="">
-  <meta name="author" content="李胜锐">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-
-  <link rel="stylesheet" type="text/css" href="../static/css/verify.css">
-  <link rel="stylesheet" href="../static/css/bootstrap.css">
-  <link href="../static/css/floating-labels.css" rel="stylesheet">
-
-  <title>志在清华——志愿团体注册</title>
-
-  <script src="../static/js/bootstrap.min.js"></script>
-  <script src="http://code.jquery.com/jquery.js"></script>
-  <script type="text/javascript" src="../static/js/verify.js"></script>
-
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <form class="form-signin">
+{% block page%}
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-warning" style="position: absolute;left: 43%;top: 3px;">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+  {% endfor %}
+  <form class="form-signin" method="POST">
     <div class="jumbotron" style=background-color:rgba(219,177,247,0.336);>
 
       <div class="text-center mb-4">
@@ -48,18 +17,23 @@
 
       <div class="form-group">
         <label for="introcode">邀请码</label>
-        <input class="form-control" id="introcode" aria-describedby="emailHelp" placeholder="请输入邀请码">
+        <input name='introcode' class="form-control" id="introcode" aria-describedby="emailHelp" placeholder="请输入邀请码">
         <small id="emailHelp" class="form-text text-muted">请注意保管自己的邀请码，邀请码在24小时之内有效。</small>
       </div>
 
       <div class="form-group">
         <label for="username">用户名</label>
-        <input class="form-control" id="username" placeholder="请输入用户名">
+        <input name="username" class="form-control" id="username" placeholder="请输入用户名">
+      </div>
+
+      <div class="form-group">
+        <label for="email">邮箱</label>
+        <input name="email" class="form-control" id="email" placeholder="请输入邮箱">
       </div>
 
       <div class="form-group">
         <label for="exampleInputPassword1">密码</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="请输入密码">
+        <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="请输入密码">
       </div>
 
       <div class="form-group">
@@ -71,7 +45,7 @@
       <div id="mpanel3">
       </div>
 
-      <button id="check-btn2" class="btn btn-lg btn-primary btn-block">提交</button>
+      <button id="check-btn2" class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
       <a class="btn btn-lg btn-secondary btn-block" href="login" role="button">返回</a>
 
       <p class="mt-5 mb-3 text-muted text-center">&copy; 2019-2029</p>
@@ -79,7 +53,9 @@
     </div>
 
   </form>
+{% endblock %}
 
+{% block script %}
   <script>
     $('#mpanel3').codeVerify({
       type: 2,
@@ -99,7 +75,4 @@
       }
     });
   </script>
-
-</body>
-
-</html>
+{% endblock %}

@@ -2,25 +2,12 @@
 '''模型'''
 
 from . import db
-from flask import url_for,Flask
-from flask_user import UserMixin
+from flask import url_for,current_app
+from flask_login import AnonymousUserMixin,UserMixin
 import flask_sqlalchemy
 from flask import request
 from datetime import datetime
 
-
-class AdminUser(db.Model, UserMixin):
-    '''后台操作人员'''
-    __tablename__ = 'AdminUser'
-
-    id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column("username", db.String(64), nullable=False)
-    # email = db.Column("email", db.String(64), nullable=False)
-    password = db.Column("password", db.String(255))
-    active = db.Column("active", db.Boolean(64), nullable=False)
-
-    def is_active(self):
-        return True
 
 
 class User(db.Model):
@@ -38,10 +25,10 @@ class User(db.Model):
     phone = db.Column('phone', db.String(20))
     department = db.Column('department', db.Text)
     profile = db.Column('profile', db.Text)
-    useractivities = db.relationship('UserActivity', backref='user',lazy='dynamic')
+    userActivities = db.relationship('UserActivity', backref='user',lazy='dynamic')
     messages = db.relationship('Message', backref='user')
 
-
+    @staticmethod
     def generate_fake(count=100):
         from random import seed, randint
         import forgery_py as fp
@@ -85,7 +72,8 @@ class User(db.Model):
         res=[x.Activity for x in l]
         return res
 
-class Team(db.Model):
+
+class Team(db.Model,UserMixin):
     '''志愿团体'''
     __tablename__ = 'teams'
 
@@ -93,9 +81,18 @@ class Team(db.Model):
     userName = db.Column("userName", db.String(64), unique=False, nullable=False)
     email = db.Column("email", db.String(64), unique=False) #改
     avatar = db.Column("avatar", db.String(128))
-    teamactivities = db.relationship('TeamActivity', backref='team',lazy='dynamic')
+    password=db.Column('password',db.String(128))
+    teamActivities = db.relationship('TeamActivity', backref='team',lazy='dynamic')
     messages = db.relationship('Message', backref='team')
 
+
+    def verify_password(self,password):
+        return self.password==password
+
+    def is_administrator(self):
+        return self.email==current_app.config['FLASK_ADMIN']
+
+    @staticmethod
     def generate_fake(count=100):
         from random import seed, randint
         import forgery_py as fp
@@ -147,6 +144,7 @@ class Activity(db.Model):
     teamActivities = db.relationship('TeamActivity', backref='activity',lazy='dynamic')
     messages = db.relationship('Message',backref='activity')
 
+    @staticmethod
     def generate_fake(count=100):
         from random import seed, randint
         import forgery_py as fp
@@ -203,6 +201,7 @@ class Message(db.Model):
     time = db.Column('time', db.DateTime)
     isRead = db.Column('isRead', db.Boolean)
 
+    @staticmethod
     def generate_fake(count=100):
         from random import seed,randint
         import forgery_py as fp
@@ -242,7 +241,7 @@ class UserActivity(db.Model):
     activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id'))
     type = db.Column('type', db.Enum('applying', 'applyed'))
 
-
+    @staticmethod
     def generate_fake(count=100):
         from random import seed,randint
         import forgery_py as fp
@@ -269,6 +268,7 @@ class TeamActivity(db.Model):
     activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id'))
     type = db.Column('type', db.Enum('creating', 'created'))
 
+    @staticmethod
     def generate_fake(count=100):
         from random import seed,randint
         import forgery_py as fp
@@ -285,3 +285,24 @@ class TeamActivity(db.Model):
             db.session.commit()
 
 
+from . import login_manager
+
+@login_manager.user_loader
+def load_user(user_id):
+    return Team.query.get(user_id)
+
+class AnonymousUser(AnonymousUserMixin):
+    def is_administrator(self):
+        return False
+    
+
+login_manager.anonymous_user=AnonymousUser
+
+class IntroCode(db.Model):
+    __tablename__="introcodes"
+    id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
+    code=db.Column('code',db.String(30))
+
+    @staticmethod
+    def verify_code(code):
+        return IntroCode.query.filter_by(code=code).first()

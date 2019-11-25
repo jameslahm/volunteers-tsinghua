@@ -1,568 +1,260 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../static/img/myactivity/tsinghua.png">
-    <title>志在清华</title>
-    <!-- Custom CSS -->
-    <link href="../static/css/style.min.css" rel="stylesheet">
-    <link href="../static/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
-    <link rel="stylesheet" href="../static/css/bootstrap-fileinput.css">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script-->
-    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="../static/js/bootstrap-fileinput.js"></script>
-    <!--[endif]-->
-
-</head>
-
-<body>
+{% block page %}
+<div class="page-wrapper">
     <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
+    <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
-    <div class="preloader">
-        <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-5 align-self-center">
+                <h4 class="page-title">新建项目</h4>
+            </div>
+            <div class="col-7 align-self-center">
+                <div class="d-flex align-items-center justify-content-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="profile">主页</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">新建项目</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
         </div>
     </div>
     <!-- ============================================================== -->
-    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- End Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
-    <div id="main-wrapper" data-navbarbg="skin6" data-theme="light" data-layout="vertical" data-sidebartype="full"
-        data-boxed-layout="full">
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
         <!-- ============================================================== -->
-        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- Start Page Content -->
         <!-- ============================================================== -->
-        <header class="topbar" data-navbarbg="skin6">
-            <nav class="navbar top-navbar navbar-expand-md navbar-light">
-                <div class="navbar-header" data-logobg="skin5">
-                    <!-- This is for the sidebar toggle which is visible on mobile only -->
-                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)">
-                        <i class="ti-menu ti-close"></i>
-                    </a>
-                    <!-- ============================================================== -->
-                    <!-- Logo -->
-                    <!-- ============================================================== -->
-                    <div class="navbar-brand">
-                        <a href="profile" class="logo">
-                            <!-- Logo icon -->
-                            <b class="logo-icon">
-                                <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                                <i class="mdi mdi-heart"></i>
-                            </b>
-                            <!--End Logo icon -->
-                            <!-- Logo text -->
-                            <span class="logo-text">
-                                志在清华
-                            </span>
-                        </a>
-                    </div>
-                    <!-- ============================================================== -->
-                    <!-- End Logo -->
-                    <!-- ============================================================== -->
-                    <!-- ============================================================== -->
-                    <!-- Toggle which is visible on mobile only -->
-                    <!-- ============================================================== -->
-                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
-                        data-toggle="collapse" data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="ti-more"></i>
-                    </a>
-                </div>
-                <!-- ============================================================== -->
-                <!-- End Logo -->
-                <!-- ============================================================== -->
-                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin6">
-                    <!-- ============================================================== -->
-                    <!-- toggle and nav items -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav float-left mr-auto">
-                        <!-- ============================================================== -->
-                        <!-- Search -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item search-box">
-                            <a class="nav-link waves-effect waves-dark" href="javascript:void(0)">
-                                <div class="d-flex align-items-center">
-                                    <i class="mdi mdi-magnify font-20 mr-1"></i>
-                                    <div class="ml-1 d-none d-sm-block">
-                                        <span>搜索</span>
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-body">
+                    <h4 class="card-title">项目申请</h4>
+                    <h5 class="card-subtitle"> 请您填写项目申请表，管理员会尽快回复您的申请 </h5>
+                    <form class="form-horizontal m-t-30">
+                        <div class="form-group">
+                            <label for="name">项目名称</label>
+                            <input type="text" class="form-control" placeholder="请填写志愿项目的名称">
+                        </div>
+                        <div class="form-group">
+                            <label for="location">项目地点</label>
+                            <input type="text" class="form-control" placeholder="请填写项目具体地点">
+                        </div>
+                        <div class="form-group">
+                            <label>项目时间</label>
+                            <form action="" class="form-horizontal" role="form">
+                                <fieldset>
+                                    <div class="row">
+                                        <div class='col-sm-6'>
+                                            <div class="form-group">
+                                                <label for="dtp_input1"
+                                                    class="col-md-4 control-label">招募开始日期</label>
+                                                <div class="input-group date form_date col-md-5" data-date=""
+                                                    data-date-format="yyyy MM dd" data-link-field="dtp_input1"
+                                                    data-link-format="yyyy-mm-dd">
+                                                    <input class="form-control" size="16" type="text" value=""
+                                                        readonly>
+                                                    <span class="input-group-addon"><span
+                                                            class="glyphicon glyphicon-remove"></span></span>
+                                                    <span class="input-group-addon"><span
+                                                            class="glyphicon glyphicon-calendar"></span></span>
+                                                </div>
+                                                <input type="hidden" id="dtp_input1" value="" /><br />
+                                            </div>
+                                        </div>
+                                        <div class='col-sm-6'>
+                                            <div class="form-group">
+                                                <label for="dtp_input2"
+                                                    class="col-md-4 control-label">招募结束日期</label>
+                                                <div class="input-group date form_date col-md-5" data-date=""
+                                                    data-date-format="yyyy MM dd" data-link-field="dtp_input2"
+                                                    data-link-format="yyyy-mm-dd">
+                                                    <input class="form-control" size="16" type="text" value=""
+                                                        readonly>
+                                                    <span class="input-group-addon"><span
+                                                            class="glyphicon glyphicon-remove"></span></span>
+                                                    <span class="input-group-addon"><span
+                                                            class="glyphicon glyphicon-calendar"></span></span>
+                                                </div>
+                                                <input type="hidden" id="dtp_input2" value="" /><br />
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                            <form class="app-search position-absolute">
-                                <input type="text" class="form-control" placeholder="Search &amp; enter">
-                                <a class="srh-btn">
-                                    <i class="ti-close"></i>
-                                </a>
+
+                                    <div class="row">
+                                        <div class='col-sm-6'>
+                                            <div class="form-group">
+                                                <label for="dtp_input3"
+                                                    class="col-md-4 control-label">项目开始日期</label>
+                                                <div class="input-group date form_date col-md-5" data-date=""
+                                                    data-date-format="yyyy MM dd" data-link-field="dtp_input3"
+                                                    data-link-format="yyyy-mm-dd">
+                                                    <input class="form-control" size="16" type="text" value=""
+                                                        readonly>
+                                                    <span class="input-group-addon"><span
+                                                            class="glyphicon glyphicon-remove"></span></span>
+                                                    <span class="input-group-addon"><span
+                                                            class="glyphicon glyphicon-calendar"></span></span>
+                                                </div>
+                                                <input type="hidden" id="dtp_input3" value="" /><br />
+                                            </div>
+                                        </div>
+                                        <div class='col-sm-6'>
+                                            <div class="form-group">
+                                                <label for="dtp_input4"
+                                                    class="col-md-4 control-label">项目结束日期</label>
+                                                <div class="input-group date form_date col-md-5" data-date=""
+                                                    data-date-format="yyyy MM dd" data-link-field="dtp_input4"
+                                                    data-link-format="yyyy-mm-dd">
+                                                    <input class="form-control" size="16" type="text" value=""
+                                                        readonly>
+                                                    <span class="input-group-addon"><span
+                                                            class="glyphicon glyphicon-remove"></span></span>
+                                                    <span class="input-group-addon"><span
+                                                            class="glyphicon glyphicon-calendar"></span></span>
+                                                </div>
+                                                <input type="hidden" id="dtp_input4" value="" /><br />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class='col-sm-6'>
+                                            <div class="form-group">
+                                                <label for="dtp_time1" class="col-md-2 control-label">每日开始时间</label>
+                                                <div class="input-group date form_time col-md-5" data-date=""
+                                                    data-date-format="hh:ii" data-link-field="dtp_time1"
+                                                    data-link-format="hh:ii">
+                                                    <input class="form-control" size="16" type="text" value=""
+                                                        readonly>
+                                                    <span class="input-group-addon"><span
+                                                            class="glyphicon glyphicon-remove"></span></span>
+                                                    <span class="input-group-addon"><span
+                                                            class="glyphicon glyphicon-time"></span></span>
+                                                </div>
+                                                <input type="hidden" id="dtp_time1" value="" /><br />
+                                            </div>
+                                        </div>
+                                        <div class='col-sm-6'>
+                                            <div class="form-group">
+                                                <label for="dtp_time2" class="col-md-2 control-label">每日结束时间</label>
+                                                <div class="input-group date form_time col-md-5" data-date=""
+                                                    data-date-format="hh:ii" data-link-field="dtp_time2"
+                                                    data-link-format="hh:ii">
+                                                    <input class="form-control" size="16" type="text" value=""
+                                                        readonly>
+                                                    <span class="input-group-addon"><span
+                                                            class="glyphicon glyphicon-remove"></span></span>
+                                                    <span class="input-group-addon"><span
+                                                            class="glyphicon glyphicon-time"></span></span>
+                                                </div>
+                                                <input type="hidden" id="dtp_time2" value="" /><br />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
                             </form>
-                        </li>
-                    </ul>
-                    <!-- ============================================================== -->
-                    <!-- Right side toggle and nav items -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav float-right">
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href=""
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                                    src="../static/img/myactivity/users/1.jpg" alt="user" class="rounded-circle"
-                                    width="31"></a>
-                            <div class="dropdown-menu dropdown-menu-right user-dd animated">
-                                <a class="dropdown-item" href="profile"><i class="ti-user m-r-5 m-l-5"></i> 主页</a>
-                                <a class="dropdown-item" href="https://www.google.com/"><i
-                                        class="ti-close m-r-5 m-l-5"></i> 退出</a>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location">招募人数</label>
+                            <input type="number" class="form-control" placeholder="请输入预计招募人数">
+                        </div>
+
+                        <div class="form-group">
+                            <label>项目简介</label>
+                            <textarea class="form-control" rows="5" placeholder="请简要描述一下您的志愿项目"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>申请理由</label>
+                            <textarea class="form-control" rows="5"
+                                placeholder="您可以在这里填写具体的申请理由，以方便审核"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="instituion">管理单位</label>
+                            <input type="text" class="form-control" placeholder="请填写项目负责单位名称">
+                        </div>
+
+                        <div class="card">
+                            <label for="person1">负责人</label>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="name-person1">姓名</label>
+                                    <input type="text" class="form-control" placeholder="请填写负责人姓名">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">邮箱</label>
+                                    <input type="email" id="email" name="email" class="form-control"
+                                        placeholder="请填写负责人邮箱">
+                                </div>
+                                <div class="form-group">
+                                    <label for="name-person1">联系电话</label>
+                                    <input type="number" class="form-control" placeholder="请填写负责人联系电话">
+                                </div>
                             </div>
-                        </li>
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
-                    </ul>
-                </div>
-            </nav>
-        </header>
-        <!-- ============================================================== -->
-        <!-- End Topbar header -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <aside class="left-sidebar" data-sidebarbg="skin5">
-            <!-- Sidebar scroll-->
-            <div class="scroll-sidebar">
-                <!-- Sidebar navigation-->
-                <nav class="sidebar-nav">
-                    <ul id="sidebarnav">
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="myactivity"
-                                aria-expanded="false">
-                                <i class="mdi mdi-clipboard-account"></i>
-                                <span class="hide-menu">我的项目</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="createactivity"
-                                aria-expanded="false">
-                                <i class="mdi mdi-new-box"></i>
-                                <span class="hide-menu">新建项目</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="information"
-                                aria-expanded="false">
-                                <i class="mdi mdi-information-outline"></i>
-                                <span class="hide-menu">消息中心</span>
-                            </a>
-
-                    </ul>
-                </nav>
-                <!-- End Sidebar navigation -->
-            </div>
-            <!-- End Sidebar scroll-->
-        </aside>
-        <!-- ============================================================== -->
-        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Page wrapper  -->
-        <!-- ============================================================== -->
-        <div class="page-wrapper">
-            <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <div class="page-breadcrumb">
-                <div class="row">
-                    <div class="col-5 align-self-center">
-                        <h4 class="page-title">新建项目</h4>
-                    </div>
-                    <div class="col-7 align-self-center">
-                        <div class="d-flex align-items-center justify-content-end">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item">
-                                        <a href="profile">主页</a>
-                                    </li>
-                                    <li class="breadcrumb-item active" aria-current="page">新建项目</li>
-                                </ol>
-                            </nav>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
-            <div class="container-fluid">
-                <!-- ============================================================== -->
-                <!-- Start Page Content -->
-                <!-- ============================================================== -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card card-body">
-                            <h4 class="card-title">项目申请</h4>
-                            <h5 class="card-subtitle"> 请您填写项目申请表，管理员会尽快回复您的申请 </h5>
-                            <form class="form-horizontal m-t-30">
-                                <div class="form-group">
-                                    <label for="name">项目名称</label>
-                                    <input type="text" class="form-control" placeholder="请填写志愿项目的名称">
-                                </div>
-                                <div class="form-group">
-                                    <label for="location">项目地点</label>
-                                    <input type="text" class="form-control" placeholder="请填写项目具体地点">
-                                </div>
-                                <div class="form-group">
-                                    <label>项目时间</label>
-                                    <form action="" class="form-horizontal" role="form">
-                                        <fieldset>
-                                            <div class="row">
-                                                <div class='col-sm-6'>
-                                                    <div class="form-group">
-                                                        <label for="dtp_input1"
-                                                            class="col-md-4 control-label">招募开始日期</label>
-                                                        <div class="input-group date form_date col-md-5" data-date=""
-                                                            data-date-format="yyyy MM dd" data-link-field="dtp_input1"
-                                                            data-link-format="yyyy-mm-dd">
-                                                            <input class="form-control" size="16" type="text" value=""
-                                                                readonly>
-                                                            <span class="input-group-addon"><span
-                                                                    class="glyphicon glyphicon-remove"></span></span>
-                                                            <span class="input-group-addon"><span
-                                                                    class="glyphicon glyphicon-calendar"></span></span>
-                                                        </div>
-                                                        <input type="hidden" id="dtp_input1" value="" /><br />
-                                                    </div>
-                                                </div>
-                                                <div class='col-sm-6'>
-                                                    <div class="form-group">
-                                                        <label for="dtp_input2"
-                                                            class="col-md-4 control-label">招募结束日期</label>
-                                                        <div class="input-group date form_date col-md-5" data-date=""
-                                                            data-date-format="yyyy MM dd" data-link-field="dtp_input2"
-                                                            data-link-format="yyyy-mm-dd">
-                                                            <input class="form-control" size="16" type="text" value=""
-                                                                readonly>
-                                                            <span class="input-group-addon"><span
-                                                                    class="glyphicon glyphicon-remove"></span></span>
-                                                            <span class="input-group-addon"><span
-                                                                    class="glyphicon glyphicon-calendar"></span></span>
-                                                        </div>
-                                                        <input type="hidden" id="dtp_input2" value="" /><br />
-                                                    </div>
-                                                </div>
-                                            </div>
+                        <div class="form-group">
+                            <label>上传图片</label> <br>
 
-                                            <div class="row">
-                                                <div class='col-sm-6'>
-                                                    <div class="form-group">
-                                                        <label for="dtp_input3"
-                                                            class="col-md-4 control-label">项目开始日期</label>
-                                                        <div class="input-group date form_date col-md-5" data-date=""
-                                                            data-date-format="yyyy MM dd" data-link-field="dtp_input3"
-                                                            data-link-format="yyyy-mm-dd">
-                                                            <input class="form-control" size="16" type="text" value=""
-                                                                readonly>
-                                                            <span class="input-group-addon"><span
-                                                                    class="glyphicon glyphicon-remove"></span></span>
-                                                            <span class="input-group-addon"><span
-                                                                    class="glyphicon glyphicon-calendar"></span></span>
-                                                        </div>
-                                                        <input type="hidden" id="dtp_input3" value="" /><br />
-                                                    </div>
-                                                </div>
-                                                <div class='col-sm-6'>
-                                                    <div class="form-group">
-                                                        <label for="dtp_input4"
-                                                            class="col-md-4 control-label">项目结束日期</label>
-                                                        <div class="input-group date form_date col-md-5" data-date=""
-                                                            data-date-format="yyyy MM dd" data-link-field="dtp_input4"
-                                                            data-link-format="yyyy-mm-dd">
-                                                            <input class="form-control" size="16" type="text" value=""
-                                                                readonly>
-                                                            <span class="input-group-addon"><span
-                                                                    class="glyphicon glyphicon-remove"></span></span>
-                                                            <span class="input-group-addon"><span
-                                                                    class="glyphicon glyphicon-calendar"></span></span>
-                                                        </div>
-                                                        <input type="hidden" id="dtp_input4" value="" /><br />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class='col-sm-6'>
-                                                    <div class="form-group">
-                                                        <label for="dtp_time1" class="col-md-2 control-label">每日开始时间</label>
-                                                        <div class="input-group date form_time col-md-5" data-date=""
-                                                            data-date-format="hh:ii" data-link-field="dtp_time1"
-                                                            data-link-format="hh:ii">
-                                                            <input class="form-control" size="16" type="text" value=""
-                                                                readonly>
-                                                            <span class="input-group-addon"><span
-                                                                    class="glyphicon glyphicon-remove"></span></span>
-                                                            <span class="input-group-addon"><span
-                                                                    class="glyphicon glyphicon-time"></span></span>
-                                                        </div>
-                                                        <input type="hidden" id="dtp_time1" value="" /><br />
-                                                    </div>
-                                                </div>
-                                                <div class='col-sm-6'>
-                                                    <div class="form-group">
-                                                        <label for="dtp_time2" class="col-md-2 control-label">每日结束时间</label>
-                                                        <div class="input-group date form_time col-md-5" data-date=""
-                                                            data-date-format="hh:ii" data-link-field="dtp_time2"
-                                                            data-link-format="hh:ii">
-                                                            <input class="form-control" size="16" type="text" value=""
-                                                                readonly>
-                                                            <span class="input-group-addon"><span
-                                                                    class="glyphicon glyphicon-remove"></span></span>
-                                                            <span class="input-group-addon"><span
-                                                                    class="glyphicon glyphicon-time"></span></span>
-                                                        </div>
-                                                        <input type="hidden" id="dtp_time2" value="" /><br />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </fieldset>
-                                    </form>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="location">招募人数</label>
-                                    <input type="number" class="form-control" placeholder="请输入预计招募人数">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>项目简介</label>
-                                    <textarea class="form-control" rows="5" placeholder="请简要描述一下您的志愿项目"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label>申请理由</label>
-                                    <textarea class="form-control" rows="5"
-                                        placeholder="您可以在这里填写具体的申请理由，以方便审核"></textarea>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="instituion">管理单位</label>
-                                    <input type="text" class="form-control" placeholder="请填写项目负责单位名称">
-                                </div>
-
-                                <div class="card">
-                                    <label for="person1">负责人</label>
-                                    <div class="card-body">
-                                        <div class="form-group">
-                                            <label for="name-person1">姓名</label>
-                                            <input type="text" class="form-control" placeholder="请填写负责人姓名">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">邮箱</label>
-                                            <input type="email" id="email" name="email" class="form-control"
-                                                placeholder="请填写负责人邮箱">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="name-person1">联系电话</label>
-                                            <input type="number" class="form-control" placeholder="请填写负责人联系电话">
-                                        </div>
+                            <div class="col-md-8">
+                                <div class="fileinput fileinput-new" data-provides="fileinput"
+                                    id="uploadImageDiv">
+                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                        <img src="${companyInfo.image}" alt="" />
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>上传图片</label> <br>
-
-                                    <div class="col-md-8">
-                                        <div class="fileinput fileinput-new" data-provides="fileinput"
-                                            id="uploadImageDiv">
-                                            <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                                <img src="${companyInfo.image}" alt="" />
-                                            </div>
-                                            <div class="fileinput-preview fileinput-exists thumbnail"
-                                                style="max-width: 200px; max-height: 150px;"></div>
-                                            <div class="row">
-                                                <span class="btn default btn-file" class='col-sm-6'>
-                                                    <button class="btn btn-secondary btn-file"
-                                                        class="fileinput-new">选择图片</button>
-                                                    <input type="file" name="uploadImage" id="uploadImage" />
-                                                </span>
-                                            </div>
-                                            <a href="#" class="btn default fileinput-exists"
-                                                data-dismiss="fileinput">移除</a>
-                                            <span>您可以选择一张图片用于志愿项目的宣传</span>
-                                        </div>
-                                        <div id="titleImageError" style="color: #a94442"></div>
+                                    <div class="fileinput-preview fileinput-exists thumbnail"
+                                        style="max-width: 200px; max-height: 150px;"></div>
+                                    <div class="row">
+                                        <span class="btn default btn-file" class='col-sm-6'>
+                                            <button class="btn btn-secondary btn-file"
+                                                class="fileinput-new">选择图片</button>
+                                            <input type="file" name="uploadImage" id="uploadImage" />
+                                        </span>
                                     </div>
+                                    <a href="#" class="btn default fileinput-exists"
+                                        data-dismiss="fileinput">移除</a>
+                                    <span>您可以选择一张图片用于志愿项目的宣传</span>
                                 </div>
-                            </form>
+                                <div id="titleImageError" style="color: #a94442"></div>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
-                <!-- ============================================================== -->
-                <!-- End Right sidebar -->
-                <!-- ============================================================== -->
-                <button class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
             </div>
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            <!-- End PAge Content -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Right sidebar -->
-            <!-- ============================================================== -->
-            <!-- .right-sidebar -->
-            <!-- ============================================================== -->
-            <!-- End Right sidebar -->
-            <!-- ============================================================== -->
         </div>
         <!-- ============================================================== -->
-        <!-- End Container fluid  -->
+        <!-- End PAge Content -->
         <!-- ============================================================== -->
         <!-- ============================================================== -->
-        <!-- footer -->
+        <!-- Right sidebar -->
         <!-- ============================================================== -->
+        <!-- .right-sidebar -->
         <!-- ============================================================== -->
-        <!-- End footer -->
+        <!-- End Right sidebar -->
         <!-- ============================================================== -->
+        <button class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
     </div>
     <!-- ============================================================== -->
-    <!-- End Page wrapper  -->
+    <!-- End Container fluid  -->
     <!-- ============================================================== -->
-    </div>
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
+    <!-- End PAge Content -->
     <!-- ============================================================== -->
     <!-- ============================================================== -->
-    <!-- All Jquery -->
+    <!-- Right sidebar -->
     <!-- ============================================================== -->
-    <script src="../static/assets/libs/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="../static/assets/libs/popper.js/dist/umd/popper.min.js"></script>
-    <script src="../static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="../static/assets/extra-libs/sparkline/sparkline.js"></script>
-    <!--Wave Effects -->
-    <script src="../static/js/waves.js"></script>
-    <!--Menu sidebar -->
-    <script src="../static/js/sidebarmenu.js"></script>
-    <!--Custom JavaScript -->
-    <script src="../static/js/custom.min.js"></script>
-    <!--script type="text/javascript" src="./jquery/jquery-1.8.3.min.js" charset="UTF-8"></script-->
-    <!--script type="text/javascript" src="./bootstrap/js/bootstrap.min.js"></script-->
-    <script type="text/javascript" src="../static/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="../static/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
-    <script type="text/javascript">
-        $('.form_datetime').datetimepicker({
-            language: 'zh-CN',
-            weekStart: 1,
-            todayBtn: 1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 2,
-            forceParse: 0,
-            showMeridian: 1
-        });
-        $('.form_date').datetimepicker({
-            language: 'zh-CN',
-            weekStart: 1,
-            todayBtn: 1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 2,
-            minView: 2,
-            forceParse: 0
-        });
-        $('.form_time').datetimepicker({
-            language: 'zh-CN',
-            weekStart: 1,
-            todayBtn: 1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 1,
-            minView: 0,
-            maxView: 1,
-            forceParse: 0
-        });
-    </script>
-
-    <script>
-        var url = '';
-        $("#uploadImage").fileupload({
-            url: ROOT + "/security/company/uploadFile",
-            dataType: 'json',
-            autoUpload: false,
-            acceptFileTypes: /(gif|jpe?g|png)$/i,
-            maxFileSize: 1000000, // 1 MB
-            imageMaxWidth: 100,
-            imageMaxHeight: 100,
-            messages: {
-                acceptFileTypes: '文件类型不匹配',
-                maxFileSize: '文件过大',
-                minFileSize: '文件过小'
-            }
-        }).on("fileuploadadd", function (e, data) {
-            // 当文件添加上去时候调用
-            $("#titleImageError")("");
-            data.submit()
-        }).on("fileuploaddone", function (e, data) {
-            // 上传完成时调用
-            if (data.result.returnState == "ERROR") {
-                alert("上传失败")
-                return;
-            }
-            url = data.result.returnData.url;
-        });
-
-        function updateMsg() {
-            $.ajax({
-                url: ROOT + "/security/company/updateInfo",
-                data: {
-                    id: $("#companyId").val(),
-                    image: url,
-                    companyName: $("#companyName").val(),
-                    companySite: $("#companySite").val(),
-                    companyLinker: $("#companyLinker").val(),
-                    companyTel: $("#companyTel").val()
-                },
-                type: "post",
-                success: function (data) {
-                    if (data.returnState == "OK") {
-                        layer.msg('操作成功', {
-                            icon: 6,
-                            shade: 0.01,
-                            offset: ['57px', '1100px']
-                        });
-                        $table.bootstrapTable('refresh');
-                    } else {
-                        layer.msg('操作失败', {
-                            icon: 5,
-                            shade: 0.01,
-                            offset: ['90px', '900px']
-                        });
-                    }
-                }
-            });
-        }
-    </script>
-</body>
-
-</html>
+    <!-- .right-sidebar -->
+    <!-- ============================================================== -->
+    <!-- End Right sidebar -->
+    <!-- ============================================================== -->
+</div>
+{% endblock %}
