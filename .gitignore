@@ -3,6 +3,6 @@
 /.idea
 /__pycache__
 .vscode
-webapp/backend/cache
-webapp/backend/__pycache__
+webapp/backend/cache/
+webapp/backend/__pycache__/
 
