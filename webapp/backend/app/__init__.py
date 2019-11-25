@@ -25,8 +25,6 @@ def create_app(config_name):
     bootstrap.init_app(app)
     app.db = db
 
-    with app.app_context():
-        db.create_all()
 
     # flask-admin
     from .model import User, Team, Activity, UserActivity, TeamActivity,IntroCode

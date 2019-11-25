@@ -9,7 +9,7 @@ services:
     volumes:
       - ~/data:/var/lib/mysql
   flask:
-    image: flask-nginx-uwsgi
+    build: ./
     restart: always
     ports:
       - "1080:80"

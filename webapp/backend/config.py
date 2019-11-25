@@ -29,7 +29,7 @@ class Development(Config):
     MAIL_USERNAME = os.getenv('MAIL_USERNAME') 
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD') 
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://  \
-                            root:Waqing121!@localhost:3306/volunteers?charset=utf8'
+                            root:zhizaitsinghua@localhost:3306/volunteers?charset=utf8'
 
 class TestConfig(Config):
     TESTING = True

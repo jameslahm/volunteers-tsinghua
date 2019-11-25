@@ -31,10 +31,15 @@ def init_admin(app):
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 manager = Manager(app)
-init_admin(app)
 migrate=Migrate(app,db)
 manager.add_command('shell', Shell(make_context=make_shell_context))
 manager.add_command('db', MigrateCommand)
+
+@manager.command
+def init_db():
+    db.create_all()
+    init_admin(app)
+
 
 @manager.command
 def test(coverage=False):
