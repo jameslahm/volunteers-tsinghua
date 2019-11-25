@@ -3,40 +3,24 @@
 web启动入口文件，封装flask-app全局设置
 '''
 from flask import Flask, url_for
-
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-
 from flask_user import UserManager, SQLAlchemyAdapter, current_user
-
-from .app_env import get_config
 from flask_sqlalchemy import SQLAlchemy
+from config import config
 
 db = SQLAlchemy()
 user_manager = UserManager()
 
-def create_app():
+def create_app(config_name):
+    app = Flask(__name__)
+    app.config.from_object(config[config_name])
 
-    env_config = get_config()
-
-    app = Flask(
-        __name__
-    )
-
-    app.secret_key = b'admin'
-
-    # Database
-    db_config = env_config['db_config']
-    app.config['SQLALCHEMY_DATABASE_URI'] = '{}+{}://{}:{}@{}:{}/{}?charset={}'.format(
-        db_config['type'], db_config['driver'], db_config['username'], db_config['password'],
-        db_config['host'], db_config['port'], db_config['dbname'], db_config['charset']
-    )
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
     app.db = db
+
     with app.app_context():
         db.create_all()
-
 
     # flask-admin
     from .model import User, Team, Activity, UserActivity, TeamActivity, AdminUser

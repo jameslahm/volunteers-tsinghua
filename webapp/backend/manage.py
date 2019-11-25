@@ -36,11 +36,7 @@ def init_admin(app):
         # if isinstance(user_obj, AdminUser):
         #     print(user_obj)
 
-
-proj_root = os.path.abspath(os.path.dirname(__file__))
-os.environ['PROJ_ROOT'] = proj_root
-app = create_app()
-app.proj_root = proj_root
+app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 manager = Manager(app)
 init_admin(app)
 migrate=Migrate(app,db)
