@@ -4,5 +4,5 @@
 /__pycache__
 .vscode
 webapp/backend/cache
-webapp/backend/__pycache_/*_
+webapp/backend/__pycache__
 
