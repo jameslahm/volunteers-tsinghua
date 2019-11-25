@@ -1,24 +1,29 @@
 language: python
 sudo: required
-
 branches:
   only:
-    - master
-    - release
-
+  - master
+  - release
 python:
-  - "3.7"
-
+- '3.7'
 jobs:
   include:
-    - language: node_js
-      node_js: "10"
-      install:
-        - cd wxapp && npm install
-      script:
-        - npm test
-    - install:
-        - pip install -r webapp/backend/requirements.txt
-      script:
-        - python webapp/backend/manage.py test
+  - language: node_js
+    node_js: '10'
+    install:
+    - cd wxapp && npm install
+    script:
+    - npm test
+  - install:
+    - pip install -r webapp/backend/requirements.txt
+    script:
+    - python webapp/backend/manage.py test
+before_install:
+- openssl aes-256-cbc -K $encrypted_fc68b59f2946_key -iv $encrypted_fc68b59f2946_iv
+  -in id_rsa_deploy.enc -out ~\/.ssh/id_rsa_deploy -d
 
+addons:
+  ssh_known_hosts: "$IP"
+
+after_success:
+- ssh ubuntu@$IP 'cd volunteers-tsinghua && git checkout release && git pull'
