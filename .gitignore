@@ -1,8 +1,16 @@
 .DS_Store
-*/.DS_Store
-/.idea
-*/__pycache__/
-**/__pycache__/
-.vscode
-webapp/backend/cache/
-webapp/backend/__pycache__/
+node_modules/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+__pycache__/
+.vscode/
+
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
