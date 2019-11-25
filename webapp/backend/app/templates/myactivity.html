@@ -203,6 +203,248 @@
             <!-- ============================================================== -->
             <!-- ============================================================== -->
             <!-- Modal -->
+            {% for activity in activities %}
+            <div class="modal fade" id="{{activity.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">项目详情</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+
+                            <div class="tab-content">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist" style="padding-left: 10px;">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home"
+                                            role="tab" aria-controls="home" aria-selected="true">项目信息</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile"
+                                            role="tab" aria-controls="profile" aria-selected="false">成员管理</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages"
+                                            role="tab" aria-controls="messages" aria-selected="false">招募消息</a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                                    <div class="card" style="width: 45rem;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{activity.title}}</h5>
+                                            <h6 class="card-subtitle mb-2 text-muted">项目编号：{{activity.id}}</h6>
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <div class="card">
+                                                        <img src="../static/img/myactivity/thu2.jpeg"
+                                                            class="card-img-top" alt="...">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">项目简介</h5>
+                                                            <p class="card-text">{{activity.description}}
+                                                                <a href="#" class="btn btn-success"
+                                                                    style="float:right">修改
+                                                                </a>
+                                                            </p>
+                                                        </div>
+                                                        <button class="btn btn-lg btn-info btn-block">招募公告</button>
+                                                        <button class="btn btn-lg btn-primary btn-block">导入成员</button>
+                                                        <button class="btn btn-lg btn-secondary btn-block"
+                                                            disabled>申请结项</button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-7">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <ul class="list-group list-group-flush">
+                                                                <li class="list-group-item">状态：待审核 <a href="#"
+                                                                        class="btn btn-success"
+                                                                        style="float:right">修改</a></li>
+                                                                <li class="list-group-item">招募日期：{{activity.time}}-{{activity.time}}<a
+                                                                        href="#" class="btn btn-success"
+                                                                        style="float:right">修改</a></li>
+                                                                <li class="list-group-item">活动日期：{{activity.time}}-{{activity.time}}<a
+                                                                        href="#" class="btn btn-success"
+                                                                        style="float:right">修改</a></li>
+                                                                <li class="list-group-item">活动时间：{{activity.time}}<a href="#"
+                                                                        class="btn btn-success"
+                                                                        style="float:right">修改</a></li>
+                                                                <li class="list-group-item">活动类别：公益 <a href="#"
+                                                                        class="btn btn-success"
+                                                                        style="float:right">修改</a></li>
+                                                                <li class="list-group-item">管理单位：{{activity.manager}} <a href="#"
+                                                                        class="btn btn-success"
+                                                                        style="float:right">修改</a></li>
+                                                                <li class="list-group-item">负责人：{{activity.managerperson}}<a href="#"
+                                                                        class="btn btn-success"
+                                                                        style="float:right">修改</a></li>
+                                                                <li class="list-group-item">联系电话：{{activity.phone}}<a href="#"
+                                                                        class="btn btn-success"
+                                                                        style="float:right">修改</a></li>
+                                                                <li class="list-group-item">邮箱：{{activity.email}} <a
+                                                                        href="#" class="btn btn-success"
+                                                                        style="float:right">修改</a></li>
+                                                                <li class="list-group-item"><a href="#"
+                                                                        class="btn btn-danger"
+                                                                        style="float:right">删除项目</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h4 class="card-title">成员列表(3/20)</h4>
+                                                <h6 class="card-subtitle">在这里查看已经加入您项目的志愿者。</h6>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">姓名</th>
+                                                            <th scope="col">学号</th>
+                                                            <th scope="col">院系</th>
+                                                            <th scope="col">工作职位</th>
+                                                            <th scope="col">工作时间</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="table-success" style="cursor:pointer;"
+                                                            onclick="$('#personModal').modal('toggle')">
+                                                            <th scope="row">王俊凯</th>
+                                                            <td>2017323283</td>
+                                                            <td>经管学院</td>
+                                                            <td>流动志愿者</td>
+                                                            <td>2019.11.20</td>
+                                                        </tr>
+                                                        <tr class="table-success" style="cursor:pointer;"
+                                                            onclick="$('#personModal').modal('toggle')">
+                                                            <th scope="row">王源</th>
+                                                            <td>2017523283</td>
+                                                            <td>辆载学院</td>
+                                                            <td>流动志愿者</td>
+                                                            <td>2019.11.20</td>
+                                                        </tr>
+                                                        <tr style="cursor:pointer;"
+                                                            onclick="$('#personModal').modal('toggle')">
+                                                            <th scope="row">马云</th>
+                                                            <td>2017326673</td>
+                                                            <td>土木系</td>
+                                                            <td>固定志愿者</td>
+                                                            <td>2019.11.20</td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h4 class="card-title">志愿者申请</h4>
+                                                <h6 class="card-subtitle">在这里查看志愿者加入您的项目的申请。</h6>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">消息类型</th>
+                                                            <th scope="col">用户类型</th>
+                                                            <th scope="col">用户名称</th>
+                                                            <th scope="col">相关项目</th>
+                                                            <th scope="col">时间</th>
+                                                            <th scope="col">消息状态</th>
+                                                            <th scope="col">操作</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="table-success" style="cursor:pointer;"
+                                                            onclick="$('#messageModal').modal('toggle')">
+                                                            <th scope="row">志愿申请</th>
+                                                            <td>志愿者</td>
+                                                            <td>奥巴马</td>
+                                                            <td>校园志愿讲解</td>
+                                                            <td>2019.11.20 22:36</td>
+                                                            <td>未读</td>
+                                                            <td>回复</td>
+                                                        </tr>
+                                                        <tr class="table-success" style="cursor:pointer;"
+                                                            onclick="$('#messageModal').modal('toggle')">
+                                                            <th scope="row">志愿申请</th>
+                                                            <td>志愿者</td>
+                                                            <td>特朗普</td>
+                                                            <td>校园志愿讲解</td>
+                                                            <td>2019.11.20 12:36</td>
+                                                            <td>未读</td>
+                                                            <td>回复</td>
+                                                        </tr>
+                                                        <tr style="cursor:pointer;"
+                                                            onclick="$('#messageModal').modal('toggle')">
+                                                            <th scope="row">志愿申请</th>
+                                                            <td>志愿者</td>
+                                                            <td>马克思</td>
+                                                            <td>校园志愿讲解</td>
+                                                            <td>2019.11.20 22:36</td>
+                                                            <td>已读</td>
+                                                            <td>回复</td>
+                                                        </tr>
+                                                        <tr style="cursor:pointer;"
+                                                            onclick="$('#messageModal').modal('toggle')">
+                                                            <th scope="row">志愿申请</th>
+                                                            <td>志愿者</td>
+                                                            <td>马克思</td>
+                                                            <td>校园志愿讲解</td>
+                                                            <td>2019.11.20 22:36</td>
+                                                            <td>已读</td>
+                                                            <td>回复</td>
+                                                        </tr>
+                                                        <tr style="cursor:pointer;"
+                                                            onclick="$('#messageModal').modal('toggle')">
+                                                            <th scope="row">志愿申请</th>
+                                                            <td>志愿者</td>
+                                                            <td>马克思</td>
+                                                            <td>校园志愿讲解</td>
+                                                            <td>2019.11.20 22:36</td>
+                                                            <td>已读</td>
+                                                            <td>回复</td>
+                                                        </tr>
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-lg">
@@ -270,13 +512,13 @@
                                                                 <li class="list-group-item">活动日期：2019.11.23-2019.11.23<a
                                                                         href="#" class="btn btn-success"
                                                                         style="float:right">修改</a></li>
-                                                                <li class="list-group-item">活动时间：8:00-17:00<a
-                                                                        href="#" class="btn btn-success"
+                                                                <li class="list-group-item">活动时间：8:00-17:00<a href="#"
+                                                                        class="btn btn-success"
                                                                         style="float:right">修改</a></li>
                                                                 <li class="list-group-item">活动类别：公益 <a href="#"
                                                                         class="btn btn-success"
                                                                         style="float:right">修改</a></li>
-                                                                <li class="list-group-item">负责单位：校团委志愿组 <a href="#"
+                                                                <li class="list-group-item">管理单位：校团委志愿组 <a href="#"
                                                                         class="btn btn-success"
                                                                         style="float:right">修改</a></li>
                                                                 <li class="list-group-item">负责人：董明珠<a href="#"
@@ -303,8 +545,8 @@
                                     <div class="col-12">
                                         <div class="card">
                                             <div class="card-body">
-                                                <h4 class="card-title">志愿者申请</h4>
-                                                <h6 class="card-subtitle">在这里查看志愿者加入您的项目的申请。</h6>
+                                                <h4 class="card-title">成员列表(3/20)</h4>
+                                                <h6 class="card-subtitle">在这里查看已经加入您项目的志愿者。</h6>
                                             </div>
                                             <div class="table-responsive">
                                                 <table class="table">
@@ -582,14 +824,44 @@
                                             <tr>
                                                 <th scope="col" style='text-align: center;'>项目</th>
                                                 <th scope="col">项目编号</th>
-                                                <th scope="col">负责单位</th>
+                                                <th scope="col">管理单位</th>
                                                 <th scope="col">活动类别</th>
                                                 <th scope="col">负责人</th>
                                                 <th scope="col">状态</th>
-                                                <th scope="col">操作</th>
+                                                <th scope="col">开始日期</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            {% for activity in activities %}
+                                            <tr style="cursor:pointer;" onclick="$('#{{activity.id}}').modal('toggle')">
+                                                <td class=“w-25”>
+                                                    <div class="card mb-3" style="max-width: 450px;">
+                                                        <div class="row no-gutters">
+                                                            <div class="col-md-4">
+                                                                <img src="../static/img/myactivity/thu2.jpeg"
+                                                                    class="d-block w-100" alt="...">
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">{{activity.title}}</h5>
+                                                                    <p class="card-text">
+                                                                        {{activity.title}}</p>
+                                                                    <p class="card-text"><small
+                                                                            class="text-muted">更新于3分钟之前</small></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                                <td style='vertical-align: middle;'>{{activity.id}}</td>
+                                                <td style='vertical-align: middle;'>{{activity.manager}}</td>
+                                                <td style='vertical-align: middle;'>公益</td>
+                                                <td style='vertical-align: middle;'>{{activity.manager}}</td>
+                                                <td style='vertical-align: middle;'>{{activity.state}}</td>
+                                                <td style='vertical-align: middle;'>{{activity.time}}</td>
+                                            </tr>
+                                            {% endfor %}
                                             <tr style="cursor:pointer;" onclick="$('#exampleModal').modal('toggle')">
                                                 <td class=“w-25”>
                                                     <div class="card mb-3" style="max-width: 450px;">
@@ -616,7 +888,7 @@
                                                 <td style='vertical-align: middle;'>公益</td>
                                                 <td style='vertical-align: middle;'>小王子</td>
                                                 <td style='vertical-align: middle;'>待审核</td>
-                                                <td style='vertical-align: middle;'><a href="url">查看</a></td>
+                                                <td style='vertical-align: middle;'>2019.11.24</td>
                                             </tr>
                                             <tr style="cursor:pointer;" onclick="$('#exampleModal').modal('toggle')">
                                                 <td class=“w-25”>
@@ -644,7 +916,7 @@
                                                 <td style='vertical-align: middle;'>公益</td>
                                                 <td style='vertical-align: middle;'>小王子</td>
                                                 <td style='vertical-align: middle;'>审核通过</td>
-                                                <td style='vertical-align: middle;'><a href="url">查看</a></td>
+                                                <td style='vertical-align: middle;'>2019.11.24</td>
                                             </tr>
                                             <tr style="cursor:pointer;" onclick="$('#exampleModal').modal('toggle')">
                                                 <td class=“w-25”>
@@ -672,7 +944,7 @@
                                                 <td style='vertical-align: middle;'>公益</td>
                                                 <td style='vertical-align: middle;'>王五</td>
                                                 <td style='vertical-align: middle;'>待审核</td>
-                                                <td style='vertical-align: middle;'><a href="url">查看</a></td>
+                                                <td style='vertical-align: middle;'>2019.11.24</td>
                                             </tr>
                                         </tbody>
                                     </table>
