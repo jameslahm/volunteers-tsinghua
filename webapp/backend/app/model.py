@@ -72,7 +72,7 @@ class User(db.Model):
         res=[x.Activity for x in l]
         return res
 
-   def finishedActivities(self):
+    def finishedActivities(self):
         l=self.UserActivity.filter_by(type='finished').all()
         res=[x.Activity for x in l]
         return res

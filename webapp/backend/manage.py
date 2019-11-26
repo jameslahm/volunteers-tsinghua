@@ -6,12 +6,13 @@ import sys
 from flask_script import Manager, Shell
 from flask_migrate import Migrate,MigrateCommand
 from werkzeug.routing import EndpointPrefix
-
 from app import create_app,db
+from app.model import User,Team
+
 
 
 def make_shell_context():
-    return dict(app=app, db=db, User=User)
+    return dict(app=app, db=db, User=User,Team=Team)
 
 def init_admin(app):
     '''初始化管理员用户'''
