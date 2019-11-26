@@ -36,11 +36,11 @@
                             <div class="row text-center justify-content-md-center">
                                 <div class="col-4"><a href="javascript:void(0)" class="link"><i
                                             class="icon-people"></i>
-                                        <font class="font-medium">{{len(team.finishedActivities())}}</font>
+                                        <font class="font-medium">{{team.finishedActivities().__len__()}}</font>
                                     </a></div>
                                 <div class="col-4"><a href="javascript:void(0)" class="link"><i
                                             class="icon-picture"></i>
-                                        <font class="font-medium">{{len(team.createdActivities())+len(team.creatingActivities())}}</font>
+                                        <font class="font-medium">{{team.createdActivities().__len__()+team.creatingActivities().__len__()}}</font>
                                     </a></div>
                             </div>
                         </center>

@@ -63,17 +63,17 @@ class User(db.Model):
         return json_user
 
     def applyedActivities(self):
-        l=self.UserActivity.filter_by(type='applyed').all()
+        l=self.userActivities.filter_by(type='applyed').all()
         res=[x.Activity for x in l]
         return res
 
     def applyingActivities(self):
-        l=self.UserActivity.filter_by(type='applying').all()
+        l=self.userActivities.filter_by(type='applying').all()
         res=[x.Activity for x in l]
         return res
 
     def finishedActivities(self):
-        l=self.UserActivity.filter_by(type='finished').all()
+        l=self.userActivities.filter_by(type='finished').all()
         res=[x.Activity for x in l]
         return res
 
@@ -128,17 +128,17 @@ class Team(db.Model,UserMixin):
         return json_team
 
     def createdActivities(self):
-        l=self.TeamActivity.filter_by(type='created').all()
+        l=self.teamActivities.filter_by(type='created').all()
         res=[x.Activity for x in l]
         return res
 
     def creatingActivities(self):
-        l=self.TeamActivity.filter_by(type='creating').all()
+        l=self.teamActivities.filter_by(type='creating').all()
         res=[x.Activity for x in l]
         return res
 
     def finishedActivities(self):
-        l=self.TeamActivity.filter_by(type='finished').all()
+        l=self.teamActivities.filter_by(type='finished').all()
         res=[x.Activity for x in l]
         return res
 
@@ -200,10 +200,10 @@ class Activity(db.Model):
 
 
     def leader(self):
-        return self.TeamActivity.first().User
+        return self.teamActivities.first().team
 
     def members(self):
-        l=self.UserActivity.filter_by(type='applyed').all()
+        l=self.userActivities.filter_by(type='applyed').all()
         res=[x.User for x in l]
         return res
 
