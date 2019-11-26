@@ -32,15 +32,15 @@
                     <div class="card-body">
                         <center class="m-t-30"> <img src="../static/img/myactivity/users/agent.jpg"
                                 class="rounded-circle" width="150" />
-                            <h4 class="card-title m-t-10">软件学院志愿团队</h4>
+                            <h4 class="card-title m-t-10">{{team.teamname}}</h4>
                             <div class="row text-center justify-content-md-center">
                                 <div class="col-4"><a href="javascript:void(0)" class="link"><i
                                             class="icon-people"></i>
-                                        <font class="font-medium">完成项目：24</font>
+                                        <font class="font-medium">{{len(team.finishedActivities())}}</font>
                                     </a></div>
                                 <div class="col-4"><a href="javascript:void(0)" class="link"><i
                                             class="icon-picture"></i>
-                                        <font class="font-medium">当前项目：4</font>
+                                        <font class="font-medium">{{len(team.createdActivities())+len(team.creatingActivities())}}</font>
                                     </a></div>
                             </div>
                         </center>
@@ -48,12 +48,12 @@
                     <div>
                         <hr>
                     </div>
-                    <div class="card-body"> <small class="text-muted">用户名 </small>
-                        <h6>ok1234324</h6> <small class="text-muted p-t-30 db">成立时间</small>
-                        <h6>2019.11.23</h6> <small class="text-muted p-t-30 db">管理单位</small>
+                    <div class="card-body"> <small class="text-muted">用户名： </small>
+                        <h6>{{team.username}}</h6> <small class="text-muted p-t-30 db">成立时间</small>
+                        <h6>{{team.establishedtime}}</h6> <small class="text-muted p-t-30 db">管理单位</small>
                         <h6>校团委志愿组</h6>
                                 <small class="text-muted">团队简介</small>
-                                <p class="card-text">这里是XXXX，我们是一个XXXXXXXXXXXXXXXXXXXXX的团队，我们运营的项目包括XXXXXXXX。
+                                <p class="card-text">{{team.description}}
                                 </p>
                     </div>
                 </div>
