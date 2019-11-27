@@ -89,20 +89,20 @@
                                                     <ul class="list-group list-group-flush">
                                                         <li class="list-group-item">状态：待审核 <a href="#"
                                                                 class="btn btn-success" style="float:right">修改</a></li>
-                                                        <li class="list-group-item">
+                                                        <!--li class="list-group-item">
                                                             招募日期：{{activity.time}}-{{activity.time}}<a href="#"
-                                                                class="btn btn-success" style="float:right">修改</a></li>
+                                                                class="btn btn-success" style="float:right">修改</a></li-->
                                                         <li class="list-group-item">
-                                                            活动日期：{{activity.time}}-{{activity.time}}<a href="#"
+                                                            活动日期：{{activity.date}}-{{activity.enddate}}<a href="#"
                                                                 class="btn btn-success" style="float:right">修改</a></li>
-                                                        <li class="list-group-item">活动时间：{{activity.time}}-{{activity.time}}<a href="#"
+                                                        <li class="list-group-item">活动时间：{{activity.time}}-{{activity.endtime}}<a href="#"
                                                                 class="btn btn-success" style="float:right">修改</a></li>
                                                         <li class="list-group-item">活动类别：公益 <a href="#"
                                                                 class="btn btn-success" style="float:right">修改</a></li>
-                                                        <li class="list-group-item">管理单位：{{activity.manager}} <a
+                                                        <li class="list-group-item">管理单位：{{activity.teamActivities.Team.teamname}} <a
                                                                 href="#" class="btn btn-success"
                                                                 style="float:right">修改</a></li>
-                                                        <li class="list-group-item">负责人：{{activity.managerperson}}<a
+                                                        <li class="list-group-item">负责人：{{activity.manageperson}}<a
                                                                 href="#" class="btn btn-success"
                                                                 style="float:right">修改</a></li>
                                                         <li class="list-group-item">联系电话：{{activity.phone}}<a href="#"
@@ -133,7 +133,7 @@
                                                     <th scope="col">姓名</th>
                                                     <th scope="col">学号</th>
                                                     <th scope="col">院系</th>
-                                                    <th scope="col">工作职位</th>
+                                                    <!--th scope="col">工作职位</th-->
                                                     <th scope="col">工作时间</th>
                                                 </tr>
                                             </thead>
@@ -144,7 +144,7 @@
                                                     <th scope="row">{{userActivity.user.name}}</th>
                                                     <td>{{userActivity.user.schoolId}}</td>
                                                     <td>{{userActivity.user.department}}</td>
-                                                    <td>{{userActivity.user.job}}</td>
+                                                    <!--td>{{userActivity.user.job}}</td-->
                                                     <td>2019.11.20</td>
                                                 </tr>
                                                 {% endfor %}
@@ -472,7 +472,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">申请项目</th>
-                                        <th scope="col">申请职位</th>
+                                        <!--th scope="col">申请职位</th-->
                                         <th scope="col">申请日期</th>
                                         <th scope="col">姓名</th>
                                         <th scope="col">学号</th>
@@ -481,10 +481,10 @@
                                 </thead>
                                 <tbody>
                                     <tr class="table-success">
-                                        <th scope="row">{{userActivity.activity.name}}</th>
-                                        <td>工作职位</td>
-                                        <td>申请工作的时间</td>
-                                        <td>{{userActivity.user.name}}</td>
+                                        <th scope="row">{{userActivity.activity.title}}</th>
+                                        <!--td>工作职位</td-->
+                                        <td>{{userActivity.workdate}}</td>
+                                        <td>{{userActivity.user.title}}</td>
                                         <td>{{userActivity.user.schoolId}}</td>
                                         <td>{{userActivity.user.department}}</td>
                                     </tr>
@@ -567,7 +567,7 @@
     </div-->
 
     <!-- Modal person-->
-    {% for userActivitiy in activity.userActivities %}
+    {% for userActivity in activity.userActivities %}
     <div class="modal fade" id="{{member.id}}" tabindex="-1" role="dialog" aria-labelledby="personModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -583,14 +583,14 @@
 
                     <div class="card" style="width: 45rem;">
                         <div class="card-body">
-                            <h5 class="card-title">{{userActivitiy.user.name}}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">{{userActivitiy.user.schoolId}}</h6>
+                            <h5 class="card-title">{{userActivity.user.name}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{userActivity.user.schoolId}}</h6>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="card">
                                         <div class="card-body">
                                             <h5 class="card-title">个人简介</h5>
-                                            <p class="card-text" rows="10">{{userActivitiy.user.profile}}
+                                            <p class="card-text" rows="10">{{userActivity.user.profile}}
                                             </p>
                                         </div>
                                         <button class="btn btn-lg btn-info btn-block">发送消息</button>
@@ -602,11 +602,11 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <ul class="list-group list-group-flush">
-                                                <li class="list-group-item">院系：{{userActivitiy.user.department}} </li>
-                                                <li class="list-group-item">微信号：{{userActivitiy.user.wx}}</li>
-                                                <li class="list-group-item">邮箱：{{userActivitiy.user.email}}</li>
-                                                <li class="list-group-item">联系电话：{{userActivitiy.user.phone}} </li>
-                                                <li class="list-group-item">加入项目：{{activity.name}}（{{activity.id}}）</li>
+                                                <li class="list-group-item">院系：{{userActivity.user.department}} </li>
+                                                <li class="list-group-item">微信号：{{userActivity.user.wx}}</li>
+                                                <li class="list-group-item">邮箱：{{userActivity.user.email}}</li>
+                                                <li class="list-group-item">联系电话：{{userActivity.user.phone}} </li>
+                                                <li class="list-group-item">加入项目：{{activity.title}}（{{activity.id}}）</li>
                                                 <li class="list-group-item">工作职位：工作岗位</li>
                                                 <li class="list-group-item">工作时间：工作时间</li>
                                                 <li class="list-group-item"><a href="#" class="btn btn-danger"
@@ -739,11 +739,11 @@
 
                                     </td>
                                     <td style='vertical-align: middle;'>{{activity.id}}</td>
-                                    <td style='vertical-align: middle;'>{{activity.manager}}</td>
+                                    <td style='vertical-align: middle;'>{{activity.managerperson}}</td>
                                     <td style='vertical-align: middle;'>公益</td>
                                     <td style='vertical-align: middle;'>{{activity.manager}}</td>
                                     <td style='vertical-align: middle;'>{{activity.state}}</td>
-                                    <td style='vertical-align: middle;'>{{activity.time}}</td>
+                                    <td style='vertical-align: middle;'>{{activity.date}}</td>
                                 </tr>
                                 {% endfor %}
                                 <!--tr style="cursor:pointer;" onclick="$('#exampleModal').modal('toggle')">

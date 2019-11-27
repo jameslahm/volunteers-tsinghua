@@ -149,14 +149,20 @@ class Activity(db.Model):
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     AID = db.Column('AID', db.Integer)
     thumb = db.Column('thumb', db.String(128), nullable=False)
+    date = db.Column('date', db.DateTime, nullable=False) # 增加
+    enddate = db.Column('enddate',db.DateTime,nullable=False) # 增加
     time = db.Column('time', db.DateTime, nullable=False)
     endtime = db.Column('endtime',db.DateTime,nullable=False)
     location = db.Column('location', db.String(50), nullable=False)
     title = db.Column('title', db.String(70), nullable=False)
+    state = db.Column('state', db.String(70), nullable=False) # 增加
     description = db.Column('description', db.String(400), nullable=False)
     content = db.Column('content', db.String(400), nullable=False)
     totalRecruits = db.Column('totalRecruits', db.Integer)
     appliedRecruits = db.Column('appliedRecruits', db.Integer)
+    manageperson = db.Column('manageperson', db.String(70), nullable=False) # 增加
+    managephone = db.Column('managephone', db.String(70), nullable=False) # 增加
+    manageemail = db.Column('manageemail', db.String(70), nullable=False) # 增加
     qrcode = db.Column('qrcode',db.String(128))
     userActivities = db.relationship('UserActivity', backref='activity',lazy='dynamic')
     teamActivities = db.relationship('TeamActivity', backref='activity',lazy='dynamic')
@@ -259,7 +265,10 @@ class UserActivity(db.Model):
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     userId = db.Column('userId', db.Integer, db.ForeignKey('users.id'))
     activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id'))
-    type = db.Column('type', db.Enum('applying', 'applyed','finished'))
+    workdate = db.Column('workdate', db.DateTime, nullable=False) # 增加
+    content = db.Column('content', db.String(400), nullable=False) # 增加
+    applytime = db.Column('applytime', db.DateTime, nullable=False) # 增加
+    type = db.Column('type', db.Enum('applying', 'applyed','finished')) # 志愿团体是否已阅申请消息？
 
     @staticmethod
     def generate_fake(count=100):

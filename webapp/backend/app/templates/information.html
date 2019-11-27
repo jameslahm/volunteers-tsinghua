@@ -34,7 +34,7 @@
 
     <!-- Message Modal -->
     {% for activity in activities %}
-    {% for userActivitiy in activity.userActivities %}
+    {% for userActivity in activity.userActivities %}
     <div class="modal fade" id="{{message.id}}" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -49,7 +49,7 @@
                 <div class="modal-body">
                     <div class="card" style="width: 45rem;">
                         <div class="card-body">
-                            <h5 class="card-title">项目：{{userActivity.activity.name}}</h5>
+                            <h5 class="card-title">项目：{{userActivity.activity.title}}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">消息时间：时间</h6>
 
                             <table class="table">
@@ -65,7 +65,7 @@
                                 </thead>
                                 <tbody>
                                     <tr class="table-success">
-                                        <th scope="row">{{userActivity.activity.name}}</th>
+                                        <th scope="row">{{userActivity.activity.title}}</th>
                                         <td>工作职位</td>
                                         <td>申请工作的时间</td>
                                         <td>{{userActivity.user.name}}</td>
@@ -193,14 +193,14 @@
                                 </thead>
                                 <tbody>
                                     {% for activity in activities %}
-                                    {% for userActivitiy in activity.userActivities %}
+                                    {% for userActivity in activity.userActivities %}
                                     <tr class="table-success" style="cursor:pointer;"
                                         onclick="$('#{{userActivity.id}}').modal('toggle')">
                                         <th scope="row">志愿申请</th>
                                         <td>志愿者</td>
                                         <td>{{userActivity.user.name}}</td>
-                                        <td>{{userActivity.activity.name}}</td>
-                                        <td>{{userActivity.time}}</td>
+                                        <td>{{userActivity.activity.title}}</td>
+                                        <td>{{userActivity.applytime}}</td>
                                         <td>未读</td>
                                         <td>回复</td>
                                     </tr>
@@ -272,20 +272,6 @@
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
-                                    {% for activity in activities %}
-                                    {% for userActivitiy in activity.userActivities %}
-                                    <tr class="table-success" style="cursor:pointer;"
-                                        onclick="$('#{{userActivity.id}}').modal('toggle')">
-                                        <th scope="row">志愿申请</th>
-                                        <td>志愿者</td>
-                                        <td>{{userActivity.user.name}}</td>
-                                        <td>{{userActivity.activity.name}}</td>
-                                        <td>{{userActivity.time}}</td>
-                                        <td>未读</td>
-                                        <td>回复</td>
-                                    </tr>
-                                    {% endfor %}
-                                    {% endfor %}
                                     <tr>
                                         <th scope="col">消息类型</th>
                                         <th scope="col">用户类型</th>
@@ -297,6 +283,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for activity in activities %}
+                                    {% for userActivity in activity.userActivities %}
+                                    <tr class="table-success" style="cursor:pointer;"
+                                        onclick="$('#{{userActivity.id}}').modal('toggle')">
+                                        <th scope="row">志愿申请</th>
+                                        <td>志愿者</td>
+                                        <td>{{userActivity.user.name}}</td>
+                                        <td>{{userActivity.activity.title}}</td>
+                                        <td>{{userActivity.applytime}}</td>
+                                        <td>未读</td>
+                                        <td>回复</td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% endfor %}
                                     <!--tr class="table-success" style="cursor:pointer;"
                                         onclick="$('#exampleModal').modal('toggle')">
                                         <th scope="row">志愿申请</th>
@@ -324,10 +324,9 @@
                                         <td>校园志愿讲解</td>
                                         <td>2019.11.20 22:36</td>
                                         <td>已读</td>
-                                        <td>回复</td-->
-                                    </tr!>
-
-                                    </tbody>
+                                        <td>回复</td>
+                                </tr-->
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -376,7 +375,7 @@
                                         <td>回复</td>
                                     </tr-->
 
-                                    </tbody>
+                                </tbody>
                             </table>
                         </div>
                     </div>
