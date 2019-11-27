@@ -32,8 +32,66 @@
     <!-- ============================================================== -->
 
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- Message Modal -->
+    {% for userActivitiy in activity.userActivities %}
+    <div class="modal fade" id="{{message.id}}" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">消息详情</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="card" style="width: 45rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">项目：{{userActivity.activity.name}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">消息时间：时间</h6>
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">申请项目</th>
+                                        <th scope="col">申请职位</th>
+                                        <th scope="col">申请日期</th>
+                                        <th scope="col">姓名</th>
+                                        <th scope="col">学号</th>
+                                        <th scope="col">院系</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-success">
+                                        <th scope="row">{{userActivity.activity.name}}</th>
+                                        <td>工作职位</td>
+                                        <td>申请工作的时间</td>
+                                        <td>{{userActivity.user.name}}</td>
+                                        <td>{{userActivity.user.schoolId}}</td>
+                                        <td>{{userActivity.user.department}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <p class="card-text">{{userActivity.content}}</p>
+                            <a href="#" class="card-link">志愿者详情</a>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success">同意申请</button>
+                    <button type="button" class="btn btn-danger">拒绝申请</button>
+                    <button type="button" class="btn btn-info">回复</button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <!--div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -88,8 +146,7 @@
                 </div>
             </div>
         </div>
-    </div>
-
+    </div-->
 
     <div class="container-fluid">
         <div class="tab-content">
@@ -133,17 +190,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for userActivitiy in activity.userActivities %}
                                     <tr class="table-success" style="cursor:pointer;"
-                                        onclick="$('#exampleModal').modal('toggle')">
+                                        onclick="$('#{{userActivity.id}}').modal('toggle')">
                                         <th scope="row">志愿申请</th>
                                         <td>志愿者</td>
-                                        <td>奥巴马</td>
-                                        <td>校园志愿讲解</td>
-                                        <td>2019.11.20 22:36</td>
+                                        <td>{{userActivity.user.name}}</td>
+                                        <td>{{userActivity.activity.name}}</td>
+                                        <td>{{userActivity.time}}</td>
                                         <td>未读</td>
                                         <td>回复</td>
                                     </tr>
-                                    <tr class="table-success" style="cursor:pointer;"
+                                    {% endfor %}
+                                    <!--tr class="table-success" style="cursor:pointer;"
                                         onclick="$('#exampleModal').modal('toggle')">
                                         <th scope="row">志愿申请</th>
                                         <td>志愿者</td>
@@ -191,7 +250,7 @@
                                         <td>2019.11.20 22:36</td>
                                         <td>已读</td>
                                         <td>回复</td>
-                                    </tr>
+                                    </tr-->
                                 </tbody>
                             </table>
                         </div>
@@ -209,7 +268,19 @@
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
-                                    <tr>
+                                    {% for userActivitiy in activity.userActivities %}
+                                    <tr class="table-success" style="cursor:pointer;"
+                                        onclick="$('#{{userActivity.id}}').modal('toggle')">
+                                        <th scope="row">志愿申请</th>
+                                        <td>志愿者</td>
+                                        <td>{{userActivity.user.name}}</td>
+                                        <td>{{userActivity.activity.name}}</td>
+                                        <td>{{userActivity.time}}</td>
+                                        <td>未读</td>
+                                        <td>回复</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <!--tr>
                                         <th scope="col">消息类型</th>
                                         <th scope="col">用户类型</th>
                                         <th scope="col">用户名称</th>
@@ -248,9 +319,9 @@
                                         <td>2019.11.20 22:36</td>
                                         <td>已读</td>
                                         <td>回复</td>
-                                    </tr>
+                                    </tr!-->
 
-                                </tbody>
+                                    </tbody>
                             </table>
                         </div>
                     </div>
@@ -267,7 +338,8 @@
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
-                                    <tr>
+                                    <!--其余消息，待开发-->
+                                    <!--tr>
                                         <th scope="col">消息类型</th>
                                         <th scope="col">用户类型</th>
                                         <th scope="col">用户名称</th>
@@ -296,9 +368,9 @@
                                         <td>2019.11.20 22:36</td>
                                         <td>已读</td>
                                         <td>回复</td>
-                                    </tr>
+                                    </tr-->
 
-                                </tbody>
+                                    </tbody>
                             </table>
                         </div>
                     </div>
@@ -326,8 +398,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    <tr class="table-danger" style="cursor:pointer;"
+                                    <!--其余消息，待开发-->
+                                    <!--tr class="table-danger" style="cursor:pointer;"
                                         onclick="$('#exampleModal').modal('toggle')">
                                         <th scope="row">管理员消息</th>
                                         <td>管理员</td>
@@ -336,7 +408,7 @@
                                         <td>2019.11.20 12:36</td>
                                         <td>未读</td>
                                         <td>回复</td>
-                                    </tr>
+                                    </tr-->
 
                                 </tbody>
                             </table>
