@@ -7,12 +7,12 @@ from flask_script import Manager, Shell
 from flask_migrate import Migrate,MigrateCommand
 from werkzeug.routing import EndpointPrefix
 from app import create_app,db
-from app.model import User,Team
+from app.model import User,Team,Activity,UserActivity,Message
 
 
 
 def make_shell_context():
-    return dict(app=app, db=db, User=User,Team=Team)
+    return dict(app=app, db=db, User=User,Team=Team,Activity=Activity,UserActivity=UserActivity,Message=Message)
 
 def init_admin(app):
     '''初始化管理员用户'''
@@ -26,13 +26,14 @@ def init_admin(app):
         from app.model import Team
 
         if Team.query.filter_by(email=email).count() < 1:
-            admin=Team(userName=name,email=email,password=password)
+            admin=Team(teamName=name,email=email,password=password)
             db.session.add(admin)
             db.session.commit()
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 manager = Manager(app)
 migrate=Migrate(app,db)
+init_admin(app)
 manager.add_command('shell', Shell(make_context=make_shell_context))
 manager.add_command('db', MigrateCommand)
 

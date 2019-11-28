@@ -25,8 +25,8 @@ class User(db.Model):
     phone = db.Column('phone', db.String(20))
     department = db.Column('department', db.Text)
     profile = db.Column('profile', db.Text)
-    userActivities = db.relationship('UserActivity', backref='user',lazy='dynamic')
-    messages = db.relationship('Message', backref='user')
+    userActivities = db.relationship('UserActivity', backref='user',lazy='dynamic',cascade='all, delete-orphan')
+    messages = db.relationship('Message', backref='user',cascade='all, delete-orphan')
 
     @staticmethod
     def generate_fake(count=100):
@@ -73,8 +73,8 @@ class Team(db.Model,UserMixin):
     avatar = db.Column("avatar", db.String(128))
     password=db.Column('password',db.String(128))
     description=db.Column('description',db.Text)
-    activities = db.relationship('Activity', backref='team',lazy='dynamic')
-    messages = db.relationship('Message', backref='team')
+    activities = db.relationship('Activity', backref='team',lazy='dynamic',cascade='all, delete-orphan')
+    messages = db.relationship('Message', backref='team',cascade='all, delete-orphan')
 
 
     def verify_password(self,password):
@@ -91,17 +91,17 @@ class Team(db.Model,UserMixin):
         for i in range(count):
             t = Team(
                     email=fp.internet.email_address(),
-                    userName=fp.internet.user_name(True),
-                    teamname=fp.lorem_ipsum.word(),
-                    establishedtime=fp.date.date(),
+                    teamName=fp.internet.user_name(True),
+                    establishedTime=fp.date.date(),
                     description=fp.lorem_ipsum.sentence(),
+                    password=fp.basic.password()
             )
             db.session.add(t)
             db.session.commit()
 
     def to_json(self):
         json_team={
-            'userName':self.teamName,
+            'teamName':self.teamName,
             'email':self.email,
             'establishedtime':self.establishedtime,
             'description':self.description,
@@ -109,13 +109,22 @@ class Team(db.Model,UserMixin):
         }
         return json_team
 
+    def finishedActivities(self):
+        return Activity.query.filter_by(teamId=self.id,type='finished').all()
+
+    def createdActivities(self):
+        return Activity.query.filter_by(teamId=self.id,type='created').all()
+    
+    def creatingActivities(self):
+        return Activity.query.filter_by(teamId=self.id,type='creating').all()
+
 class Activity(db.Model):
     '''活动'''
     __tablename__ = 'activities'
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     AID = db.Column('AID', db.Integer)
-    teamId = db.Column('teamId', db.Integer, db.ForeignKey('teams.id'))
+    teamId = db.Column('teamId', db.Integer, db.ForeignKey('teams.id',ondelete='cascade'))
     thumb = db.Column('thumb', db.String(128), nullable=False)
     starttime = db.Column('starttime', db.DateTime, nullable=False)
     endtime = db.Column('endtime',db.DateTime,nullable=False)
@@ -124,28 +133,33 @@ class Activity(db.Model):
     content = db.Column('content', db.String(400), nullable=False)
     totalRecruits = db.Column('totalRecruits', db.Integer)
     appliedRecruits = db.Column('appliedRecruits', db.Integer)
-    manageperson = db.Column('manageperson', db.String(70), nullable=False) # 增加
-    managephone = db.Column('managephone', db.String(70), nullable=False) # 增加
-    manageemail = db.Column('manageemail', db.String(70), nullable=False) # 增加
+    managePerson = db.Column('manageperson', db.String(70), nullable=False) # 增加
+    managePhone = db.Column('managephone', db.String(70), nullable=False) # 增加
+    manageEmail = db.Column('manageemail', db.String(70), nullable=False) # 增加
     qrcode = db.Column('qrcode',db.String(128))
-    userActivities = db.relationship('UserActivity', backref='activity',lazy='dynamic')
-    messages = db.relationship('Message',backref='activity')
+    userActivities = db.relationship('UserActivity', backref='activity',lazy='dynamic',cascade='all, delete-orphan')
+    messages = db.relationship('Message',backref='activity',cascade='all, delete-orphan')
+    type = db.Column('type', db.Enum('creating', 'created','finished'))
 
     @staticmethod
     def generate_fake(count=100):
         from random import seed, randint
         import forgery_py as fp
         seed()
+        team_count=Team.query.count()
         for i in range(count):
             a = Activity(
                 AID=i,
+                team=Team.query.offset(randint(0,team_count-1)).first(),
                 thumb=fp.internet.domain_name(),
-                time=fp.date.date(),
                 starttime=fp.date.datetime(),
                 endtime=fp.date.datetime(),
                 location=fp.address.city(),
                 title=fp.lorem_ipsum.title(),
                 content=fp.lorem_ipsum.sentence(),
+                managePerson=fp.lorem_ipsum.title(),
+                manageEmail=fp.internet.email_address(),
+                managePhone=fp.address.phone(),
                 totalRecruits=fp.basic.number(at_least=20, at_most=100),
                 appliedRecruits=fp.basic.number(at_least=0, at_most=20),
             )
@@ -179,8 +193,8 @@ class Message(db.Model):
     __tablename__ = 'messages'
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    userId = db.Column('userId', db.Integer, db.ForeignKey('users.id'))
-    notifier = db.Column('notifier', db.Integer, db.ForeignKey('teams.id'))
+    userId = db.Column('userId', db.Integer, db.ForeignKey('users.id',ondelete='cascade'))
+    teamId = db.Column('teamId', db.Integer, db.ForeignKey('teams.id',ondelete='cascade'))
     activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id'))
     content = db.Column('content', db.Text)
     qrCode = db.Column('qrCode', db.String(64))
@@ -200,17 +214,16 @@ class Message(db.Model):
             u=User.query.offset(randint(0,user_count-1)).first()
             t=Team.query.offset(randint(0,notifier_count-1)).first()
             a=Activity.query.offset(randint(0,activity_count-1)).first()
-            m=Message(Sender=u,Notifier=t,Activity=a,content = fp.lorem_ipsum.sentence(),
+            m=Message(user=u,team=t,activity=a,content = fp.lorem_ipsum.sentence(),
                       time = fp.date.date(),isRead = fp.basic.boolean())
             db.session.add(m)
             db.session.commit()
 
     def to_json(self):
         json_message={
-            'url':url_for('api.get_message',id=self.id,_external=True),
-            'sender': url_for('api.get_user', id=self.userId, _external=True),
-            'notifier':url_for('api.get_notifier',id=self.notifier,_external=True),
-            'activity':url_for('api.get_activity',id=self.notifier,_external=True),
+            'userId':self.userId,
+            'teamId':self.teamId,
+            'activityId':self.activityId,
             'content':self.content,
             'qrcode':self.qrCode,
             'time':self.time,
@@ -223,11 +236,11 @@ class UserActivity(db.Model):
     __tablename__ = 'useractivities'
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    userId = db.Column('userId', db.Integer, db.ForeignKey('users.id'))
-    activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id'))
-    workdate = db.Column('workdate', db.DateTime, nullable=False) # 增加
+    userId = db.Column('userId', db.Integer, db.ForeignKey('users.id',ondelete='cascade'))
+    activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id',ondelete='cascade'))
+    workDate = db.Column('workdate', db.DateTime, nullable=False) # 增加
     content = db.Column('content', db.String(400), nullable=False) # 增加
-    applytime = db.Column('applytime', db.DateTime, nullable=False) # 增加
+    applyTime = db.Column('applytime', db.DateTime, nullable=False) # 增加
     type = db.Column('type', db.Enum('applying', 'applyed','finished')) # 志愿团体是否已阅申请消息？
 
     @staticmethod
@@ -242,7 +255,7 @@ class UserActivity(db.Model):
             u=User.query.offset(randint(0,user_count-1)).first()
             a=Activity.query.offset(randint(0,activity_count-1)).first()
             t=randint(0,2)
-            u_activity=UserActivity(user=u,activity=a,type='applying'if t==0 else 'applyed' if t==1 else 'finished')
+            u_activity=UserActivity(user=u,workDate=fp.date.datetime(),applyTime=fp.date.datetime(),content = fp.lorem_ipsum.sentence(),activity=a,type='applying'if t==0 else 'applyed' if t==1 else 'finished')
             db.session.add(u_activity)
             db.session.commit()
 

@@ -27,7 +27,7 @@ def create_app(config_name):
 
 
     # flask-admin
-    from .model import User, Team, Activity, UserActivity, TeamActivity,IntroCode
+    from .model import User, Team, Activity, UserActivity,IntroCode
 
     # flask-user
 
@@ -57,7 +57,6 @@ def create_app(config_name):
     admin.add_view(MyUserView(Activity, db.session))
     admin.add_view(MyUserView(IntroCode, db.session))
     admin.add_view(MyUserView(UserActivity, db.session))
-    admin.add_view(MyUserView(TeamActivity, db.session))
 
     from .api import api as api_blueprint
     app.register_blueprint(api_blueprint, url_prefix='/api')
