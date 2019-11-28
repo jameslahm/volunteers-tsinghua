@@ -19,13 +19,12 @@
           <i-card
             full
             @click="bindClick(item)"
-            :title="item.title"
-            :extra="item.leaderName"
-            :thumb="item.thumb"
+            :title="item.team"
+            :extra="item.applyedRecruits+'/'+item.totalRecruits"
             i-class="card-thumb"
           >
-            <view slot="content">{{item.description}}</view>
-            <view slot="footer">{{item.time+" "+item.location}}</view>
+            <view slot="content">{{item.title}}</view>
+            <view slot="footer">{{item.starttime+" "+item.location}}</view>
           </i-card>
         </div>
       </view>
@@ -53,16 +52,10 @@ export default {
   },
   computed: {
     items: function() {
-      return this.$store.getters.getGlobalItemsByPage(this.current);
+      return this.$store.state.globalItems
     },
     total:function(){
-      total=parseInt(this.$store.state.globalItems.length/20)
-      if(this.$store.state.globalItems.length%20==0){
-        return total
-      }
-      else{
-        return total+1
-      }
+      return this.$store.state.total
     }
   },
   components: {},
@@ -78,26 +71,31 @@ export default {
       const type = target.type;
         if (type === 'next') {
             this.current+=1
+            this.$store.commit('getGlobalItems',{'page':this.current})
         } else if (type === 'prev') {
             this.current-=1
+            this.$store.commit('getGlobalItems',{'page':this.current})
         }
     },
   },
   onLoad(options) {
-    wx.login({
-      success: res => {
-        console.log(res);
-        this.$store.commit("getUser", 123); //参数为code
-        this.$store.commit("getGlobalItems");
-      },
-      fail: () => {
-        console.log("error");
-      },
-      complete: () => {}
-    });
+    wx.setStorageSync({'key':'schoolId','data':'123'})
+    // 查看是否有登录学号
+    try{
+      var schoolId=wx.getStorageSync('schoolId')
+      console.log(schoolId)
+      if(schoolId){
+        this.$store.commit("getUser",schoolId)
+      }
+    }catch(e){
+      console.log("no login")
+    }
+  },
+  onShow(){
+    let params={'page':this.current}
+    this.$store.commit("getGlobalItems",params)
   },
   created() {
-    this.$store.commit("getItems");
   },
   onPageScroll(event) {
     this.scrollTop = event.scrollTop;
@@ -108,5 +106,7 @@ export default {
 <style>
 .card-thumb image {
   border-radius: 50%;
+  width:30px;
+  height:30px;
 }
 </style>

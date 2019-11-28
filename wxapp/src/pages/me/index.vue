@@ -48,6 +48,7 @@ export default {
 	methods:{
 		'bindClick2':function(){
 			this.$store.commit('logIn',{'schoolId':this.schoolId,'password':this.password})
+			this.isLogIn=true
 		},
 		'bindClick1':function(){
 			console.log('info')
@@ -55,6 +56,7 @@ export default {
 		},
 		'logOut':function(){
 			this.isLogIn=false
+			this.$store.commit('logOut')
 		},
 		'bindClick3':function(){
 			console.log('my activities')

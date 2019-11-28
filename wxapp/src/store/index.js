@@ -6,10 +6,11 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    items: [], // 用户参加的活动
+    items: [], // 用户参加的活动,分页，默认20个
     user: {},
-    messages: [], // 用户消息
-    globalItems: []// 所有活动
+    messages: [], // 用户消息，
+    globalItems: [], // 所有活动，分页默认20个
+    total: 0 // 所有globalItems总数
   },
   getters: {
     'getItemById': (state) => {
@@ -32,25 +33,11 @@ const store = new Vuex.Store({
           return item.id === id
         })[0]
       }
-    },
-    'getGlobalItemsByPage': (state) => {
-      return function (current) {
-        return state.globalItems.filter((item, index) => {
-          return index >= (current - 1) * 20 && index <= (current) * 20 - 1
-        })
-      }
-    },
-    'getItemsByPage': (state) => {
-      return function (current) {
-        return state.Items.filter((item, index) => {
-          return index >= (current - 1) * 20 && index <= (current) * 20 - 1
-        })
-      }
     }
   },
   mutations: {
-    getItems (state) {
-      get({ 'url': '/users/123/activities' }).then((res) => {
+    getItems (state, page) {
+      get({ 'url': '/users/123/activities', 'data': {'page': page} }).then((res) => {
         state.items = res
       })
     },
@@ -77,9 +64,19 @@ const store = new Vuex.Store({
       })
     },
     logIn (state, data) {
-      post({ 'url': '/auth/login', 'data': { 'schoolId': data.schoolId, 'password': data.password } }).then(res => {
+      // post({ 'url': '/auth/login', 'data': { 'schoolId': data.schoolId, 'password': data.password } }).then(res => {
+      //   state.user = res
+      // })
+      get({ 'url': '/users/123' }).then(res => {
         state.user = res
+        wx.setStorageSync({
+          key: 'schoolId',
+          data: state.user.schoolId
+        })
       })
+    },
+    logOut (state) {
+      state.user = undefined
     },
     changeInfo (state, info) {
       for (let k in info) {
@@ -89,7 +86,8 @@ const store = new Vuex.Store({
     },
     getGlobalItems (state, params) {
       get({ 'url': '/activities', 'data': params }).then(res => {
-        state.globalItems = res
+        state.globalItems = res.items
+        state.total = res.total
       })
     },
     applyItem (state, data) {

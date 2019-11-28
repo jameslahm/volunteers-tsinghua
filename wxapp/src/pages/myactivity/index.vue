@@ -8,9 +8,9 @@
     <i-panel v-if="current==='0'">
       <view style="padding:15px;">
         <div v-for="(item,index) in applyingItems" :key=index style="padding-bottom:15px">
-          <i-card full @click='bindClick(item)' :title="item.title" :extra="item.leaderName" :thumb="item.thumb" i-class="card-thumb">
-            <view slot="content">{{item.description}}</view>
-            <view slot="footer">{{item.time+" "+item.location}}</view>
+          <i-card full @click='bindClick(item)' :title="item.title" :extra="item.applyedRecruits+'/'+item.totalRecruits" i-class="card-thumb">
+            <view slot="content">{{item.title}}</view>
+            <view slot="footer">{{item.starttime+" "+item.location}}</view>
           </i-card>
         </div>
       </view>
@@ -18,9 +18,9 @@
     <i-panel v-if="current==='1'">
       <view style="padding:15px;">
         <div v-for="(item,index) in applyedItems" :key=index style="padding-bottom:15px">
-          <i-card full @click='bindClick(item)' :title="item.title" :extra="item.leaderName" :thumb="item.thumb" i-class="card-thumb">
-            <view slot="content">{{item.description}}</view>
-            <view slot="footer">{{item.time+" "+item.location}}</view>
+          <i-card full @click='bindClick(item)' :title="item.title" :extra="item.applyedRecruits+'/'+item.totalRecruits" i-class="card-thumb">
+            <view slot="content">{{item.title}}</view>
+            <view slot="footer">{{item.starttime+" "+item.location}}</view>
           </i-card>
         </div>
       </view>
@@ -28,9 +28,9 @@
     <i-panel v-if="current==='2'">
       <view style="padding:15px;">
         <div v-for="(item,index) in endedItems" :key=index style="padding-bottom:15px">
-          <i-card full @click='bindClick(item)' :title="item.title" :extra="item.leaderName" :thumb="item.thumb" i-class="card-thumb">
-            <view slot="content">{{item.description}}</view>
-            <view slot="footer">{{item.time+" "+item.location}}</view>
+          <i-card full @click='bindClick(item)' :title="item.title" :extra="item.applyedRecruits+'/'+item.totalRecruits" i-class="card-thumb">
+            <view slot="content">{{item.title}}</view>
+            <view slot="footer">{{item.starttime+" "+item.location}}</view>
           </i-card>
         </div>
       </view>

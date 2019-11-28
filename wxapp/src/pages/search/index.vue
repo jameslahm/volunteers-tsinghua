@@ -51,9 +51,15 @@
   <i-panel v-else>
       <view style="padding:15px;">
         <div v-for="(item,index) in items" :key=index style="padding-bottom:15px">
-          <i-card full @click='bindClick2(item)' :title="item.title" :extra="item.leaderName" :thumb="item.thumb" i-class="card-thumb">
-            <view slot="content">{{item.description}}</view>
-            <view slot="footer">{{item.time+" "+item.location}}</view>
+          <i-card
+            full
+            @click="bindClick2(item)"
+            :title="item.team"
+            :extra="item.applyedRecruits+'/'+item.totalRecruits"
+            i-class="card-thumb"
+          >
+            <view slot="content">{{item.title}}</view>
+            <view slot="footer">{{item.starttime+" "+item.location}}</view>
           </i-card>
         </div>
       </view>

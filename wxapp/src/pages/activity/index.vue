@@ -2,9 +2,9 @@
   <div>
     <i-message id="message" />
     <view style="padding:15px;">
-      <i-card full :title="item.title" :extra="item.extra" :thumb="item.thumb" i-class="card-thumb">
+      <i-card full :title="item.title" :thumb="item.thumb" i-class="card-thumb">
         <view slot="content">
-          <i-panel :title="item.description">
+          <i-panel :title="'活动编号：'+item.AID">
             <view style="padding:15px;">
               {{item.content}}
             </view>
@@ -64,6 +64,13 @@ export default {
           type:'warning'
         })
         return 
+      }
+      if(this.$store.state.user===undefined){
+        $Message({
+          content:"抱歉，请先登录",
+          type : "warning"
+        })
+        return
       }
       wx.navigateTo({ url: '/pages/apply/main?id=' + this.item.id })
     }
