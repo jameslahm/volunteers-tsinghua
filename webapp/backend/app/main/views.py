@@ -2,6 +2,7 @@ from flask import render_template
 from . import main
 from flask_login import login_required,current_user
 from flask import redirect,url_for
+from ..model import Activity,UserActivity
 
 
 @main.route('/', methods=['GET'])
@@ -18,15 +19,16 @@ def index():
 @login_required
 def profile():
     return render_template(
-        'profile.html'
+        'profile.html',team=current_user
     )
 
 
 @main.route('/myactivity', methods=['GET'])
 @login_required
 def myactivity():
+    activities=Activity.query.filter_by(team=current_user).all()
     return render_template(
-        'myactivity.html'
+        'myactivity.html',activities=activities
     )
 
 @main.route('/createactivity', methods=['GET', 'POST'])

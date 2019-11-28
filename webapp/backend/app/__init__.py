@@ -32,6 +32,7 @@ def create_app(config_name):
     # flask-user
 
     class MyUserView(ModelView):
+        column_display_pk=True
         def is_accessible(self):
             return current_user.is_administrator()
 
