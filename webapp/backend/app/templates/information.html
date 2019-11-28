@@ -454,4 +454,101 @@
     <!-- End footer -->
     <!-- ============================================================== -->
 </div>
+
+<script type="text/javascript" src="../static/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="../static/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+    <script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+        showMeridian: 1
+    });
+	$('.form_date').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+    });
+	$('.form_time').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 1,
+		minView: 0,
+		maxView: 1,
+		forceParse: 0
+    });
+</script>
+
+<script>
+    var url = '';
+    $("#uploadImage").fileupload({
+        url : ROOT + "/security/company/uploadFile",
+        dataType : 'json',
+        autoUpload : false,
+        acceptFileTypes : /(gif|jpe?g|png)$/i,
+        maxFileSize : 1000000, // 1 MB
+        imageMaxWidth : 100,
+        imageMaxHeight : 100,
+        messages : {
+            acceptFileTypes : '文件类型不匹配',
+            maxFileSize : '文件过大',
+            minFileSize : '文件过小'
+        }
+    }).on("fileuploadadd", function(e, data) {
+        // 当文件添加上去时候调用
+        $("#titleImageError")("");
+        data.submit()
+    }).on("fileuploaddone", function(e, data) {
+        // 上传完成时调用
+        if (data.result.returnState == "ERROR") {
+            alert("上传失败")
+            return;
+        }
+        url = data.result.returnData.url;
+    });
+    
+    function updateMsg() {
+        $.ajax({
+            url : ROOT + "/security/company/updateInfo",
+            data : {
+                id : $("#companyId").val(),
+                image : url,
+                companyName : $("#companyName").val(),
+                companySite : $("#companySite").val(),
+                companyLinker : $("#companyLinker").val(),
+                companyTel : $("#companyTel").val()
+            },
+            type : "post",
+            success : function(data) {
+                if (data.returnState == "OK") {
+                    layer.msg('操作成功', {
+                        icon : 6,
+                        shade : 0.01,
+                        offset : [ '57px', '1100px' ]
+                    });
+                    $table.bootstrapTable('refresh');
+                } else {
+                    layer.msg('操作失败', {
+                        icon : 5,
+                        shade : 0.01,
+                        offset : [ '90px', '900px' ]
+                    });
+                }
+            }
+        });
+    }
+</script>
 {% endblock %}
+
