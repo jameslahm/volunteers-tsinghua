@@ -5,7 +5,8 @@ from flask import request
 from flask_login import login_user, login_required, logout_user
 from ..model import Team,IntroCode
 from .. import db
-
+from ...utils import md5
+import requests
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -60,3 +61,32 @@ def logout():
     logout_user()
     flash('You have been logged out')
     return redirect(url_for('auth.login'))
+
+
+@auth.route('/auth/verifyThu<ticket>', methods=['GET'])
+def verify_thu(ticket):
+    AppID = 'ZHIZAITSINGHUA'
+    ticket = str(ticket).replace('?ticket=', '')
+
+    get_ip = requests.get("http://www.baidu.com", stream=True)
+    user_ip_address = get_ip.raw._connection.sock.getsockname()[0]
+    user_ip_address = str(user_ip_address).replace('.', '_')
+    get_ip.close()
+
+    verify_url = 'https://alumni-test.iterator-traits.com/fake-id-tsinghua/thuser/authapi/checkticket/{}/{}/{}'.format(
+        AppID, ticket, user_ip_address
+    )
+    rsp = requests.get(verify_url)
+    redirect('/profile')
+    return rsp.json()
+
+
+@auth.route('/auth/tsinghua')
+def login_thu():
+    AppID = 'ZHIZAITSINGHUA'
+    SEQ = 0
+    returnurl = 'auth.verify_thu'
+    url = 'https://alumni-test.iterator-traits.com/fake-id-tsinghua/do/off/ui/auth/login/form/{}/{}?/{}'.format(
+        md5(AppID), SEQ, returnurl
+    )
+    return redirect(url_for(url))
