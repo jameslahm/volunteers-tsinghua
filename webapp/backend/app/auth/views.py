@@ -5,7 +5,7 @@ from flask import request
 from flask_login import login_user, login_required, logout_user
 from ..model import Team,IntroCode
 from .. import db
-from ...utils import md5
+from utils import md5
 import requests
 
 @auth.route('/login', methods=['GET', 'POST'])
