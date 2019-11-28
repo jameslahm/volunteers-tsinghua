@@ -32,6 +32,20 @@ const store = new Vuex.Store({
           return item.id === id
         })[0]
       }
+    },
+    'getGlobalItemsByPage': (state) => {
+      return function (current) {
+        return state.globalItems.filter((item, index) => {
+          return index >= (current - 1) * 20 && index <= (current) * 20 - 1
+        })
+      }
+    },
+    'getItemsByPage': (state) => {
+      return function (current) {
+        return state.Items.filter((item, index) => {
+          return index >= (current - 1) * 20 && index <= (current) * 20 - 1
+        })
+      }
     }
   },
   mutations: {
@@ -52,18 +66,18 @@ const store = new Vuex.Store({
       state.messages.forEach(elem => {
         if (elem.id === id) {
           elem.isRead = true
-          post({'url': `/messages/${elem.id}/`, 'data': elem})
+          post({ 'url': `/messages/${elem.id}/`, 'data': elem })
         }
       })
     },
     getUser (state, id) {
-      get({'url': '/users/123'}).then(res => {
+      get({ 'url': '/users/123' }).then(res => {
         state.user = res
         console.log(state.user)
       })
     },
     logIn (state, data) {
-      post({'url': '/auth/login', 'data': {'schoolId': data.schoolId, 'password': data.password}}).then(res => {
+      post({ 'url': '/auth/login', 'data': { 'schoolId': data.schoolId, 'password': data.password } }).then(res => {
         state.user = res
       })
     },
@@ -71,10 +85,10 @@ const store = new Vuex.Store({
       for (let k in info) {
         state.user[k] = info[k]
       }
-      post({'url': `/users/${state.user.id}`, 'data': state.user})
+      post({ 'url': `/users/${state.user.id}`, 'data': state.user })
     },
     getGlobalItems (state, params) {
-      get({'url': '/activities', 'data': params}).then(res => {
+      get({ 'url': '/activities', 'data': params }).then(res => {
         state.globalItems = res
       })
     },

@@ -53,10 +53,10 @@ export default {
   },
   computed: {
     'applyedItems': function () {
-      return this.$store.state.items.filter((item) => {
+      return this.$store.state.items.filter((item,index) => {
         let date=new Date(item.time)
         let now=new Date()
-        return item.type === 'applyed' && now.getTime()< date.getTime()+86400000
+        return item.type === 'applyed' && now.getTime()< (date.getTime()+86400000)
       })
     },
     'applyingItems': function () {
@@ -68,7 +68,7 @@ export default {
       return this.$store.state.items.filter((item) => {
         let date=new Date(item.time)
         let now=new Date()
-        return item.type === 'applyed' && now.getTime()>= date.getTime()+86400000
+        return item.type === 'applyed' && now.getTime()>= (date.getTime()+86400000)
       })
     }
   },
@@ -85,16 +85,6 @@ export default {
       }
       this.selected[parseInt(this.current)]='selected'
     }
-  },
-  onLoad (options) {
-    wx.login({
-      success: res => {
-        console.log(res)
-        this.$store.commit('getUser', 123) //参数为code
-      },
-      fail: () => { console.log('error') },
-      complete: () => {}
-    })
   },
   created () {
     this.$store.commit('getItems')

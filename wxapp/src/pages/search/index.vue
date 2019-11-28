@@ -85,6 +85,10 @@ export default {
       return this.$store.state.globalItems
     }
   },
+  onShow(){
+    this.text=''
+    this.type=''
+  },
   methods: {
     'changeInput':function(e){
       this.text=e.target.detail.value
@@ -130,6 +134,7 @@ export default {
       this.notInputing=true
       this.type=''
       this.text=''
+      this.placeholder="搜索"
     }
   },
   onLoad (options) {
