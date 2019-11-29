@@ -7,14 +7,16 @@ from . import api
 def get_activities():
     page=request.args.get('page',1,type=int)
     pagination = Activity.query.order_by(Activity.starttime.desc()).paginate(
-        page,per_page=current_app.config['FLASKY_POSTS_PER_PAGE'],error_out=False)
+        page,per_page=current_app.config['FLASKY_POSTS_PER_PAGE'],error_out=False
     )
-    total=len(Activity.query.all())
+    total=int(len(Activity.query.all())/current_app.config['FLASKY_POSTS_PER_PAGE'])
+    if(len(Activity.query.all())%current_app.config['FLASKY_POSTS_PER_PAGE']!=0):
+        total+=1
     activities=pagination.items
     if activities is None:
         return jsonify({})
-    res1=[x.to_json() for x in activities]
-    res={'total':total,''}
+    items=[x.to_json() for x in activities]
+    res={'total':total,'items':items}
     return jsonify(res)
 
 

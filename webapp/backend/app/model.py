@@ -55,7 +55,7 @@ class User(db.Model):
             'wx':self.wx,
             'email': self.email,
             'avatar': self.avatar,
-            'schoolID': self.schoolID,
+            'schoolId': self.schoolId,
             'phone':self.phone,
             'department':self.department,
             'profile': self.profile,
@@ -178,7 +178,7 @@ class Activity(db.Model):
             'title':self.title,
             'content':self.content,
             'totalRecruits':self.totalRecruits,
-            'appliedRecruits':self.appliedRecruits,
+            'applyedRecruits':self.appliedRecruits,
         }
         return json_activity
 
@@ -222,7 +222,7 @@ class Message(db.Model):
     def to_json(self):
         json_message={
             'userId':self.userId,
-            'teamId':self.teamId,
+            'team':self.team.to_json(),
             'activityId':self.activityId,
             'content':self.content,
             'qrcode':self.qrCode,

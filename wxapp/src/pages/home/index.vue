@@ -19,7 +19,7 @@
           <i-card
             full
             @click="bindClick(item)"
-            :title="item.team"
+            :title="item.teamName"
             :extra="item.applyedRecruits+'/'+item.totalRecruits"
             i-class="card-thumb"
           >
@@ -79,7 +79,7 @@ export default {
     },
   },
   onLoad(options) {
-    wx.setStorageSync({'key':'schoolId','data':'123'})
+    wx.setStorageSync('schoolId','1')
     // 查看是否有登录学号
     try{
       var schoolId=wx.getStorageSync('schoolId')

@@ -10,12 +10,12 @@
             </view>
           </i-panel>
         </view>
-        <view slot="footer">
+        <!-- <view slot="footer">
           <i-panel title="团队成员" hide-border hide-top>
             <i-avatar v-for="(member,index) in item.members" :key=index :src="member.avatar" size=large style="padding:8px;">
             </i-avatar>
           </i-panel>
-        </view>
+        </view> -->
       </i-card>
       <i-button v-if="isApplyed" @click='bindClick()' disabled type='primary' size='small'>报名活动</i-button> 
       <i-button v-else @click='bindClick()' type='primary' size='small'>报名活动</i-button> 
@@ -40,7 +40,7 @@ export default {
   },
   components: {},
   onLoad (options) {
-    this.itemId = options.id
+    this.itemId = parseInt(options.id)
     console.log(this.itemId)
     if(this.$store.getters.getItemById(this.itemId)){
       this.isApplyed=true

@@ -37,12 +37,12 @@ const store = new Vuex.Store({
   },
   mutations: {
     getItems (state, page) {
-      get({ 'url': '/users/123/activities', 'data': {'page': page} }).then((res) => {
+      get({ 'url': `/users/${state.user.id}/activities`, 'data': {'page': page} }).then((res) => {
         state.items = res
       })
     },
     getMessages (state) {
-      get({ 'url': '/users/123/messages' }).then((res) => {
+      get({ 'url': `/users/${state.user.id}/messages` }).then((res) => {
         state.messages = res
         state.messages.forEach(elem => {
           elem.decription = elem.content.slice(0, 20) + '...'
@@ -58,16 +58,15 @@ const store = new Vuex.Store({
       })
     },
     getUser (state, id) {
-      get({ 'url': '/users/123' }).then(res => {
+      console.log(id)
+      get({ 'url': `/users/${id}` }).then(res => {
+        console.log(res)
         state.user = res
-        console.log(state.user)
+        console.log('User')
       })
     },
     logIn (state, data) {
-      // post({ 'url': '/auth/login', 'data': { 'schoolId': data.schoolId, 'password': data.password } }).then(res => {
-      //   state.user = res
-      // })
-      get({ 'url': '/users/123' }).then(res => {
+      post({ 'url': '/auth/login', 'data': { 'schoolId': data.schoolId, 'password': data.password } }).then(res => {
         state.user = res
         wx.setStorageSync({
           key: 'schoolId',
@@ -86,8 +85,10 @@ const store = new Vuex.Store({
     },
     getGlobalItems (state, params) {
       get({ 'url': '/activities', 'data': params }).then(res => {
+        console.log(res)
         state.globalItems = res.items
         state.total = res.total
+        console.log(res.total)
       })
     },
     applyItem (state, data) {
