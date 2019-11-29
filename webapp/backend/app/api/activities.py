@@ -1,6 +1,21 @@
-from flask import Blueprint, render_template, redirect, jsonify
+from flask import Blueprint, render_template, redirect, jsonify,request,current_app
 from ..model import Activity,UserActivity
 from . import api
+
+
+@api.route('/activities', methods=['GET'])
+def get_activities():
+    page=request.args.get('page',1,type=int)
+    pagination = Activity.query.order_by(Activity.starttime.desc()).paginate(
+        page,per_page=current_app.config['FLASKY_POSTS_PER_PAGE'],error_out=False)
+    )
+    total=len(Activity.query.all())
+    activities=pagination.items
+    if activities is None:
+        return jsonify({})
+    res1=[x.to_json() for x in activities]
+    res={'total':total,''}
+    return jsonify(res)
 
 
 @api.route('/activities/<int:id>', methods=['GET'])

@@ -12,5 +12,7 @@ def query_by_id(id):
 
 
 @api.route('/users/<int:id>/activities', methods=['GET'])
-def get_activities(user_id):
-    pass
+def get_activities(id):
+    activities=UserActivity.query.filter_by(userId=id).all()
+    res=[x.activity.to_json() for x in activities]
+    return jsonify(res)

@@ -172,7 +172,7 @@ class Activity(db.Model):
             'teamId':self.teamId,
             'teamName':self.team.teamName,
             'AID':self.AID,
-            'starttime':self.time,
+            'starttime':self.starttime,
             'endtime':self.endtime,
             'location':self.location,
             'title':self.title,
