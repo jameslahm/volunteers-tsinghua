@@ -2,9 +2,9 @@
   <div>
     <i-message id="message" />
     <view style="padding:15px;">
-      <i-card full :title="item.title" :extra="item.extra" :thumb="item.thumb" i-class="card-thumb">
+      <i-card full :title="item.title" :thumb="item.thumb" i-class="card-thumb">
         <view slot="content">
-          <i-panel :title="item.description">
+          <i-panel :title="'活动编号：'+item.AID">
             <view style="padding:15px;">
               {{item.content}}
             </view>
@@ -17,7 +17,8 @@
           </i-panel>
         </view>
       </i-card>
-      <i-button @click='bindClick()' type='primary' size='small'>报名活动</i-button> 
+      <i-button v-if="isApplyed" @click='bindClick()' disabled type='primary' size='small'>报名活动</i-button> 
+      <i-button v-else @click='bindClick()' type='primary' size='small'>报名活动</i-button> 
     </view>
    </div>
 </template>
@@ -28,30 +29,50 @@ const { $Message } = require('../../../static/iview/base/index');
 export default {
   data () {
     return {
-      itemId: 123
+      itemId: 123,
+      isApplyed:false
     }
   },
   computed: {
     'item': function () {
-      return this.$store.getters.getGlobalItemById(this.itemId)
+      return this.$store.getters.getGlobalItemById(this.itemId) || this.$store.getters.getItemById(this.itemId)
     }
   },
   components: {},
   onLoad (options) {
     this.itemId = options.id
     console.log(this.itemId)
+    if(this.$store.getters.getItemById(this.itemId)){
+      this.isApplyed=true
+    }
+    else{
+      this.isApplyed=false
+    }
   },
   methods: {
     'bindClick':function(){
+      if(this.isApplyed){
+        $Message({
+          content:"抱歉，你已经报名了",
+          type:'warning'
+        })
+        return
+      }
       if(this.item.applyedRecruits===this.item.totalRecruits){
         $Message({
           content:"抱歉，该活动人数已招满",
           type:'warning'
         })
+        return 
       }
-      else{
-        wx.navigateTo({ url: '/pages/apply/main?id=' + this.item.id })
+      if(this.$store.state.user===undefined){
+        $Message({
+          content:"抱歉，请先登录",
+          type : "warning"
+        })
+        return
       }
+      wx.navigateTo({ url: '/pages/apply/main?id=' + this.item.id })
     }
   },
   created () {

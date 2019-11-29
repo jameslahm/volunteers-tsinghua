@@ -6,10 +6,11 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    items: [], // 用户参加的活动
+    items: [], // 用户参加的活动,分页，默认20个
     user: {},
-    messages: [], // 用户消息
-    globalItems: []// 所有活动
+    messages: [], // 用户消息，
+    globalItems: [], // 所有活动，分页默认20个
+    total: 0 // 所有globalItems总数
   },
   getters: {
     'getItemById': (state) => {
@@ -35,8 +36,8 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
-    getItems (state) {
-      get({ 'url': '/users/123/activities' }).then((res) => {
+    getItems (state, page) {
+      get({ 'url': '/users/123/activities', 'data': {'page': page} }).then((res) => {
         state.items = res
       })
     },
@@ -52,30 +53,41 @@ const store = new Vuex.Store({
       state.messages.forEach(elem => {
         if (elem.id === id) {
           elem.isRead = true
-          post({'url': `/messages/${elem.id}/`, 'data': elem})
+          post({ 'url': `/messages/${elem.id}/`, 'data': elem })
         }
       })
     },
     getUser (state, id) {
-      get({'url': '/users/123'}).then(res => {
+      get({ 'url': '/users/123' }).then(res => {
         state.user = res
         console.log(state.user)
       })
     },
     logIn (state, data) {
-      post({'url': '/auth/login', 'data': {'schoolId': data.schoolId, 'password': data.password}}).then(res => {
+      // post({ 'url': '/auth/login', 'data': { 'schoolId': data.schoolId, 'password': data.password } }).then(res => {
+      //   state.user = res
+      // })
+      get({ 'url': '/users/123' }).then(res => {
         state.user = res
+        wx.setStorageSync({
+          key: 'schoolId',
+          data: state.user.schoolId
+        })
       })
+    },
+    logOut (state) {
+      state.user = undefined
     },
     changeInfo (state, info) {
       for (let k in info) {
         state.user[k] = info[k]
       }
-      post({'url': `/users/${state.user.id}`, 'data': state.user})
+      post({ 'url': `/users/${state.user.id}`, 'data': state.user })
     },
     getGlobalItems (state, params) {
-      get({'url': '/activities', 'data': params}).then(res => {
-        state.globalItems = res
+      get({ 'url': '/activities', 'data': params }).then(res => {
+        state.globalItems = res.items
+        state.total = res.total
       })
     },
     applyItem (state, data) {

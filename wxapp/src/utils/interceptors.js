@@ -18,17 +18,17 @@ fly.interceptors.request.use((request) => {
       for (let i = 0; i < 20; i++) {
         res.push(Mock.mock({
           'id': Mock.Random.id(),
-          'title': Mock.Random.csentence(4),
+          'AID': Mock.Random.guid().slice(0, 12),
+          'title': Mock.Random.csentence(8),
           'thumb': Mock.Random.image('28x28'),
-          'description': Mock.Random.cparagraph(1),
+          'team': Mock.Random.csentence(8),
           'content': Mock.Random.cparagraph(5),
-          'time': Mock.Random.datetime(),
+          'starttime': Mock.Random.datetime(),
+          'endtime': Mock.Random.datetime(),
           'location': Mock.Random.county(),
-          'leaderName': Mock.Random.cname(),
-          'leaderID': Mock.Random.guid(),
           'type|1': ['applying', 'applyed'],
-          'totalRecruits': Mock.Random.integer(1),
-          'applyedRecruits': Mock.Random.integer(1),
+          'totalRecruits': Mock.Random.integer(1, 20),
+          'applyedRecruits': Mock.Random.integer(1, 20),
           'members': [
             { 'userid': Mock.Random.id(), 'avatar': Mock.Random.image() },
             { 'userid': Mock.Random.id(), 'avatar': Mock.Random.image() }
@@ -66,24 +66,25 @@ fly.interceptors.request.use((request) => {
       res.department = Mock.Random.name()
       res.phone = Mock.Random.string('number')
       res.profile = Mock.Random.cparagraph()
+      res.schoolId = Mock.Random.id()
       return res
     }
     if (request.url === `${host}/activities`) {
-      let res = []
+      let res = {'items': [], 'total': 100}
       for (let i = 0; i < 20; i++) {
-        res.push(Mock.mock({
+        res.items.push(Mock.mock({
           'id': Mock.Random.id(),
-          'title': Mock.Random.csentence(4),
+          'AID': Mock.Random.guid().slice(0, 12),
+          'title': Mock.Random.csentence(8),
           'thumb': Mock.Random.image('28x28'),
-          'description': Mock.Random.cparagraph(1),
+          'team': Mock.Random.csentence(8),
           'content': Mock.Random.cparagraph(5),
-          'time': Mock.Random.datetime(),
+          'starttime': Mock.Random.datetime(),
+          'endtime': Mock.Random.datetime(),
           'location': Mock.Random.county(),
-          'leaderName': Mock.Random.cname(),
-          'leaderID': Mock.Random.guid(),
           'type|1': ['applying', 'applyed'],
-          'totalRecruits': Mock.Random.integer(1),
-          'applyedRecruits': Mock.Random.integer(1),
+          'totalRecruits': Mock.Random.integer(1, 20),
+          'applyedRecruits': Mock.Random.integer(1, 20),
           'members': [
             { 'userid': Mock.Random.id(), 'avatar': Mock.Random.image() },
             { 'userid': Mock.Random.id(), 'avatar': Mock.Random.image() }
