@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 
 {% block page %}
+<link href="../static/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" href="../static/css/bootstrap-fileinput.css">
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script-->
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="../static/js/bootstrap-fileinput.js"></script>
 <div class="page-wrapper">
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
@@ -55,13 +64,11 @@
                                     <div class="row">
                                         <div class='col-sm-6'>
                                             <div class="form-group">
-                                                <label for="dtp_input1"
-                                                    class="col-md-4 control-label">招募开始日期</label>
+                                                <label for="dtp_input1" class="col-md-4 control-label">招募开始日期</label>
                                                 <div class="input-group date form_date col-md-5" data-date=""
                                                     data-date-format="yyyy MM dd" data-link-field="dtp_input1"
                                                     data-link-format="yyyy-mm-dd">
-                                                    <input class="form-control" size="16" type="text" value=""
-                                                        >
+                                                    <input class="form-control" size="16" type="text" value="" readonly>
                                                     <span class="input-group-addon"><span
                                                             class="glyphicon glyphicon-remove"></span></span>
                                                     <span class="input-group-addon"><span
@@ -72,13 +79,11 @@
                                         </div>
                                         <div class='col-sm-6'>
                                             <div class="form-group">
-                                                <label for="dtp_input2"
-                                                    class="col-md-4 control-label">招募结束日期</label>
+                                                <label for="dtp_input2" class="col-md-4 control-label">招募结束日期</label>
                                                 <div class="input-group date form_date col-md-5" data-date=""
                                                     data-date-format="yyyy MM dd" data-link-field="dtp_input2"
                                                     data-link-format="yyyy-mm-dd">
-                                                    <input class="form-control" size="16" type="text" value=""
-                                                        >
+                                                    <input class="form-control" size="16" type="text" value="" readonly>
                                                     <span class="input-group-addon"><span
                                                             class="glyphicon glyphicon-remove"></span></span>
                                                     <span class="input-group-addon"><span
@@ -92,13 +97,11 @@
                                     <div class="row">
                                         <div class='col-sm-6'>
                                             <div class="form-group">
-                                                <label for="dtp_input3"
-                                                    class="col-md-4 control-label">项目开始日期</label>
+                                                <label for="dtp_input3" class="col-md-4 control-label">项目开始日期</label>
                                                 <div class="input-group date form_date col-md-5" data-date=""
                                                     data-date-format="yyyy MM dd" data-link-field="dtp_input3"
                                                     data-link-format="yyyy-mm-dd">
-                                                    <input class="form-control" size="16" type="text" value=""
-                                                        >
+                                                    <input class="form-control" size="16" type="text" value="" readonly>
                                                     <span class="input-group-addon"><span
                                                             class="glyphicon glyphicon-remove"></span></span>
                                                     <span class="input-group-addon"><span
@@ -109,13 +112,11 @@
                                         </div>
                                         <div class='col-sm-6'>
                                             <div class="form-group">
-                                                <label for="dtp_input4"
-                                                    class="col-md-4 control-label">项目结束日期</label>
+                                                <label for="dtp_input4" class="col-md-4 control-label">项目结束日期</label>
                                                 <div class="input-group date form_date col-md-5" data-date=""
                                                     data-date-format="yyyy MM dd" data-link-field="dtp_input4"
                                                     data-link-format="yyyy-mm-dd">
-                                                    <input class="form-control" size="16" type="text" value=""
-                                                        >
+                                                    <input class="form-control" size="16" type="text" value="" readonly>
                                                     <span class="input-group-addon"><span
                                                             class="glyphicon glyphicon-remove"></span></span>
                                                     <span class="input-group-addon"><span
@@ -133,8 +134,7 @@
                                                 <div class="input-group date form_time col-md-5" data-date=""
                                                     data-date-format="hh:ii" data-link-field="dtp_time1"
                                                     data-link-format="hh:ii">
-                                                    <input class="form-control" size="16" type="text" value=""
-                                                        >
+                                                    <input class="form-control" size="16" type="text" value="" readonly>
                                                     <span class="input-group-addon"><span
                                                             class="glyphicon glyphicon-remove"></span></span>
                                                     <span class="input-group-addon"><span
@@ -149,8 +149,7 @@
                                                 <div class="input-group date form_time col-md-5" data-date=""
                                                     data-date-format="hh:ii" data-link-field="dtp_time2"
                                                     data-link-format="hh:ii">
-                                                    <input class="form-control" size="16" type="text" value=""
-                                                        >
+                                                    <input class="form-control" size="16" type="text" value="" readonly>
                                                     <span class="input-group-addon"><span
                                                             class="glyphicon glyphicon-remove"></span></span>
                                                     <span class="input-group-addon"><span
@@ -176,8 +175,7 @@
                         </div>
                         <div class="form-group">
                             <label>申请理由</label>
-                            <textarea class="form-control" rows="5"
-                                placeholder="您可以在这里填写具体的申请理由，以方便审核"></textarea>
+                            <textarea class="form-control" rows="5" placeholder="您可以在这里填写具体的申请理由，以方便审核"></textarea>
                         </div>
 
                         <div class="form-group">
@@ -207,8 +205,7 @@
                             <label>上传图片</label> <br>
 
                             <div class="col-md-8">
-                                <div class="fileinput fileinput-new" data-provides="fileinput"
-                                    id="uploadImageDiv">
+                                <div class="fileinput fileinput-new" data-provides="fileinput" id="uploadImageDiv">
                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
                                         <img src="${companyInfo.image}" alt="" />
                                     </div>
@@ -221,8 +218,7 @@
                                             <input type="file" name="uploadImage" id="uploadImage" />
                                         </span>
                                     </div>
-                                    <a href="#" class="btn default fileinput-exists"
-                                        data-dismiss="fileinput">移除</a>
+                                    <a href="#" class="btn default fileinput-exists" data-dismiss="fileinput">移除</a>
                                     <span>您可以选择一张图片用于志愿项目的宣传</span>
                                 </div>
                                 <div id="titleImageError" style="color: #a94442"></div>
@@ -257,4 +253,100 @@
     <!-- End Right sidebar -->
     <!-- ============================================================== -->
 </div>
+
+<script type="text/javascript" src="../static/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../static/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+    $('.form_date').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+    $('.form_time').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 1,
+        minView: 0,
+        maxView: 1,
+        forceParse: 0
+    });
+</script>
+
+<script>
+    var url = '';
+    $("#uploadImage").fileupload({
+        url: ROOT + "/security/company/uploadFile",
+        dataType: 'json',
+        autoUpload: false,
+        acceptFileTypes: /(gif|jpeg|png)$/i,
+        maxFileSize: 1000000, // 1 MB
+        imageMaxWidth: 100,
+        imageMaxHeight: 100,
+        messages: {
+            acceptFileTypes: '文件类型不匹配',
+            maxFileSize: '文件过大',
+            minFileSize: '文件过小'
+        }
+    }).on("fileuploadadd", function (e, data) {
+        // 当文件添加上去时候调用
+        $("#titleImageError")("");
+        data.submit()
+    }).on("fileuploaddone", function (e, data) {
+        // 上传完成时调用
+        if (data.result.returnState == "ERROR") {
+            alert("上传失败")
+            return;
+        }
+        url = data.result.returnData.url;
+    });
+
+    function updateMsg() {
+        $.ajax({
+            url: ROOT + "/security/company/updateInfo",
+            data: {
+                id: $("#companyId").val(),
+                image: url,
+                companyName: $("#companyName").val(),
+                companySite: $("#companySite").val(),
+                companyLinker: $("#companyLinker").val(),
+                companyTel: $("#companyTel").val()
+            },
+            type: "post",
+            success: function (data) {
+                if (data.returnState == "OK") {
+                    layer.msg('操作成功', {
+                        icon: 6,
+                        shade: 0.01,
+                        offset: ['57px', '1100px']
+                    });
+                    $table.bootstrapTable('refresh');
+                } else {
+                    layer.msg('操作失败', {
+                        icon: 5,
+                        shade: 0.01,
+                        offset: ['90px', '900px']
+                    });
+                }
+            }
+        });
+    }
+</script>
 {% endblock %}
