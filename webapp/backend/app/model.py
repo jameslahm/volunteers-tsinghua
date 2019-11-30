@@ -73,6 +73,7 @@ class Team(db.Model,UserMixin):
     avatar = db.Column("avatar", db.String(128))
     password=db.Column('password',db.String(128))
     description=db.Column('description',db.Text)
+    phone=db.Column('phone',db.String(64))
     activities = db.relationship('Activity', backref='team',lazy='dynamic',cascade='all, delete-orphan')
     messages = db.relationship('Message', backref='team',cascade='all, delete-orphan')
 
@@ -242,6 +243,7 @@ class UserActivity(db.Model):
     content = db.Column('content', db.String(400), nullable=False) # 增加
     applyTime = db.Column('applytime', db.DateTime, nullable=False) # 增加
     type = db.Column('type', db.Enum('applying', 'applyed','finished')) # 志愿团体是否已阅申请消息？
+    isRead=db.Column('isRead',db.Boolean)
 
     @staticmethod
     def generate_fake(count=100):

@@ -32,7 +32,7 @@
                     <div class="card-body">
                         <center class="m-t-30"> <img src="../static/img/myactivity/users/agent.jpg"
                                 class="rounded-circle" width="150" />
-                            <h4 class="card-title m-t-10">{{team.teamname}}</h4>
+                            <h4 class="card-title m-t-10">{{team.teamName}}</h4>
                             <div class="row text-center justify-content-md-center">
                                 <div class="col-4"><a href="javascript:void(0)" class="link"><i
                                             class="icon-people"></i>
@@ -49,8 +49,8 @@
                         <hr>
                     </div>
                     <div class="card-body"> <small class="text-muted">用户名： </small>
-                        <h6>{{team.username}}</h6> <small class="text-muted p-t-30 db">成立时间</small>
-                        <h6>{{team.establishedtime}}</h6> <small class="text-muted p-t-30 db">管理单位</small>
+                        <h6>{{team.teamName}}</h6> <small class="text-muted p-t-30 db">成立时间</small>
+                        <h6>{{team.establishedTime}}</h6> <small class="text-muted p-t-30 db">管理单位</small>
                         <h6>校团委志愿组</h6>
                                 <small class="text-muted">团队简介</small>
                                 <p class="card-text">{{team.description}}
@@ -63,18 +63,18 @@
             <div class="col-lg-8 col-xlg-9 col-md-7">
                 <div class="card">
                     <div class="card-body">
-                        <form class="form-horizontal form-material">
+                        <form class="form-horizontal form-material" method='POST'>
                             <div class="form-group">
                                 <label class="col-md-12">团队名称</label>
                                 <div class="col-md-12">
                                     <input type="text" placeholder="软件学院志愿团队"
-                                        class="form-control form-control-line">
+                                        class="form-control form-control-line" value={{team.teamName}}>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="example-email" class="col-md-12">负责人邮箱</label>
                                 <div class="col-md-12">
-                                    <input type="email" placeholder="hannagover@gmail.com"
+                                    <input type="email" placeholder="hannagover@gmail.com" value={{team.email}}
                                         class="form-control form-control-line" name="example-email"
                                         id="example-email">
                                 </div>
@@ -82,13 +82,13 @@
                             <div class="form-group">
                                 <label class="col-md-12">负责人电话</label>
                                 <div class="col-md-12">
-                                    <input type="text" placeholder="12345647890" class="form-control form-control-line">
+                                    <input type="text" placeholder="12345647890" value={{team.phone}} class="form-control form-control-line">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">密码</label>
                                 <div class="col-md-12">
-                                    <input type="password" value="password"
+                                    <input type="password" value="team.password"
                                         class="form-control form-control-line">
                                 </div>
                             </div>
@@ -102,12 +102,15 @@
                             <div class="form-group">
                                 <label class="col-md-12">团队简介</label>
                                 <div class="col-md-12">
-                                    <textarea rows="5" placeholder="这里是XXXX，我们是一个XXXXXXXXXXXXXXXXXXXXX的团队，我们运营的项目包括XXXXXXXX。" class="form-control form-control-line"></textarea>
+                                    <textarea rows="5" placeholder="这里是XXXX，我们是一个XXXXXXXXXXXXXXXXXXXXX的团队，我们运营的项目包括XXXXXXXX。"  value={{team.description}}
+                                    class="form-control form-control-line">
+
+                                    </textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <button class="btn btn-success">更新信息</button>
+                                    <input type="submit" class="btn btn-success" value="更新信息"></button>
                                 </div>
                             </div>
                         </form>
@@ -116,47 +119,6 @@
             </div>
             <!-- Column -->
         </div>
-
-        <!--div class="card" style="width: 45rem;">
-            <div class="card-body">
-                <h5 class="card-title">清华大学XXXX团队</h5>
-                <h6 class="card-subtitle mb-2 text-muted">用户名：XSWL12345</h6>
-                <div class="row">
-                    <div class="col-sm-5">
-                        <div class="card">
-                            <img src="../static/img/myactivity/users/agent.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">团队简介</h5>
-                                <p class="card-text">这里是XXXX，我们是一个XXXXXXXXXXXXXXXXXXXXX的团队，我们运营的项目包括XXXXXXXX。
-                                    <a href="#" class="btn btn-success" style="float:right">修改
-                                    </a>
-                                </p>
-                            </div>
-                            <button class="btn btn-lg btn-info btn-block">招募公告</button>
-                            <button class="btn btn-lg btn-primary btn-block">导入成员</button>
-                            <button class="btn btn-lg btn-secondary btn-block" disabled>申请结项</button>
-                        </div>
-                    </div>
-                    <div class="col-sm-7">
-                        <div class="card">
-                            <div class="card-body">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><a href="#" class="btn btn-success"
-                                            style="float:right">修改密码</a></li>
-                                    <li class="list-group-item">成立时间：2019.11.23</li>
-                                    <li class="list-group-item">已完成项目数：3</li>
-                                    <li class="list-group-item">正在进行项目数：3</li>
-                                    <li class="list-group-item">管理单位：校团委志愿组 <a href="#" class="btn btn-success"
-                                            style="float:right">修改</a></li>
-                                    <li class="list-group-item">邮箱：3213213213@qq.com <a href="#"
-                                            class="btn btn-success" style="float:right">修改</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div-->
     </div>
 
 </div>
