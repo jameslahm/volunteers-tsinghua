@@ -6,7 +6,9 @@ from flask import url_for,current_app
 from flask_login import AnonymousUserMixin,UserMixin
 import flask_sqlalchemy
 from flask import request
-from datetime import datetime
+import datetime
+from werkzeug.security import check_password_hash,generate_password_hash
+import re
 
 
 
@@ -76,9 +78,15 @@ class Team(db.Model,UserMixin):
     activities = db.relationship('Activity', backref='team',lazy='dynamic',cascade='all, delete-orphan')
     messages = db.relationship('Message', backref='team',cascade='all, delete-orphan')
 
+    def __init__(self,**kwargs):
+        password=kwargs.get('password')
+        if password != None:
+            self.password = generate_password_hash(password)
 
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
     def verify_password(self,password):
-        return self.password==password
+        return check_password_hash(self.password, password)
 
     def is_administrator(self):
         return self.email==current_app.config['FLASK_ADMIN']
@@ -98,6 +106,7 @@ class Team(db.Model,UserMixin):
             )
             db.session.add(t)
             db.session.commit()
+
 
     def to_json(self):
         json_team={
@@ -165,6 +174,53 @@ class Activity(db.Model):
             )
             db.session.add(a)
             db.session.commit()
+    @staticmethod
+    def search_bytitle(title):
+        l = Activity.query.all()
+        ans=[]
+        for x in l:
+            if (len(title) < len(x.title)):
+                if re.search(title, x.title) != None:
+                    ans.append(x)
+            else:
+                title_length = len(x.title)
+                if re.search(title[0:int(title_length / 2)], x.title) != None:
+                    ans.append(x)
+        return ans
+    @staticmethod
+    def search_bytime(time):
+        l = Activity.query.all()
+        # input example : '2017-04-09 15:25'
+        time=datetime.datetime.strptime(time,'%Y-%m-%d %H:%M')
+        time_date=time.date()
+        return [x for x in l if time_date.__eq__(x.datetime.date())]
+    @staticmethod
+    def search_bylocation(location):
+        l = Activity.query.all()
+        ans=[]
+        for x in l:
+            if (len(location) < len(x.location)):
+                if re.search(location, x.location) != None:
+                    ans.append(x)
+            else:
+                location_length = len(x.location)
+                if re.search(location[0:int(location_length / 2)], x.location) != None:
+                    ans.append(x)
+        return ans
+    @staticmethod
+    def search_byteam(teamname):
+        l = Activity.query.all()
+        ans=[]
+        for x in l:
+            Name=x.team.first().teamName
+            if (len(teamname) < len(Name)):
+                if re.search(teamname, Name) != None:
+                    ans.append(x)
+            else:
+                Name_length = len(Name)
+                if re.search(teamname[0:int(Name_length / 2)], Name) != None:
+                    ans.append(x)
+        return ans
 
     def to_json(self):
         json_activity={
@@ -247,7 +303,6 @@ class UserActivity(db.Model):
     def generate_fake(count=100):
         from random import seed,randint
         import forgery_py as fp
-
         seed()
         user_count=User.query.count()
         activity_count=Activity.query.count()
