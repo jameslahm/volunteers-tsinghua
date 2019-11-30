@@ -1,23 +1,12 @@
 # -*- coding: utf-8 -*-
 '''通用零散的函数封装'''
 import os
-import sys
 from datetime import datetime
 import uuid
 import re
 import hashlib
-try:
-    # python 3
-    from urllib.parse import (
+from urllib.parse import (
         urlencode,
-        parse_qs,
-        urlsplit,
-        urlunsplit
-    )
-except ImportError:
-    # python 2
-    from urllib import urlencode
-    from urlparse import (
         parse_qs,
         urlsplit,
         urlunsplit
