@@ -44,22 +44,22 @@
                 <div class="modal-body">
 
                     <div class="tab-content">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist" style="padding-left: 10px;">
+                        <ul class="nav nav-tabs" id="{{activity.id}}mytab" role="tablist" style="padding-left: 10px;">
                             <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                <a class="nav-link active" id="{{activity.id}}home-tab" data-toggle="tab" href="#{{activity.id}}home" role="tab"
                                     aria-controls="home" aria-selected="true">项目信息</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                <a class="nav-link" id="{{activity.id}}profile-tab" data-toggle="tab" href="#{{activity.id}}profile" role="tab"
                                     aria-controls="profile" aria-selected="false">成员管理</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab"
+                                <a class="nav-link" id="{{activity.id}}messages-tab" data-toggle="tab" href="#{{activity.id}}messages" role="tab"
                                     aria-controls="messages" aria-selected="false">招募消息</a>
                             </li>
                         </ul>
 
-                        <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="tab-pane active" id="{{activity.id}}home" role="tabpanel" aria-labelledby="home-tab">
 
                             <div class="card" style="width: 45rem;">
                                 <div class="card-body">
@@ -72,7 +72,7 @@
                                                     alt="...">
                                                 <div class="card-body">
                                                     <h5 class="card-title">项目简介</h5>
-                                                    <p class="card-text">{{activity.description}}
+                                                    <p class="card-text">{{activity.content}}
                                                         <a href="#" class="btn btn-success" style="float:right">修改
                                                         </a>
                                                     </p>
@@ -87,28 +87,28 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <ul class="list-group list-group-flush">
-                                                        <li class="list-group-item">状态：待审核 <a href="#"
+                                                        <li class="list-group-item">状态：{{activity.type}} <a href="#"
                                                                 class="btn btn-success" style="float:right">修改</a></li>
                                                         <!--li class="list-group-item">
                                                             招募日期：{{activity.time}}-{{activity.time}}<a href="#"
                                                                 class="btn btn-success" style="float:right">修改</a></li-->
-                                                        <li class="list-group-item">
+                                                        <!--li class="list-group-item">
                                                             活动日期：{{activity.date}}-{{activity.enddate}}<a href="#"
-                                                                class="btn btn-success" style="float:right">修改</a></li>
+                                                                class="btn btn-success" style="float:right">修改</a></li-->
                                                         <li class="list-group-item">
-                                                            活动时间：{{activity.time}}-{{activity.endtime}}<a href="#"
+                                                            活动时间：{{activity.starttime.date()}}到{{activity.endtime.date()}}<a href="#"
                                                                 class="btn btn-success" style="float:right">修改</a></li>
-                                                        <li class="list-group-item">活动类别：公益 <a href="#"
-                                                                class="btn btn-success" style="float:right">修改</a></li>
+                                                        <!--li class="list-group-item">活动类别：公益 <a href="#"
+                                                                class="btn btn-success" style="float:right">修改</a></li-->
                                                         <li class="list-group-item">
-                                                            管理单位：{{activity.teamName}} <a href="#"
+                                                            管理单位：{{activity.team}} <a href="#"
                                                                 class="btn btn-success" style="float:right">修改</a></li>
-                                                        <li class="list-group-item">负责人：{{activity.manageperson}}<a
+                                                        <li class="list-group-item">负责人：{{activity.managePerson}}<a
                                                                 href="#" class="btn btn-success"
                                                                 style="float:right">修改</a></li>
-                                                        <li class="list-group-item">联系电话：{{activity.phone}}<a href="#"
+                                                        <li class="list-group-item">联系电话：{{activity.managePhone}}<a href="#"
                                                                 class="btn btn-success" style="float:right">修改</a></li>
-                                                        <li class="list-group-item">邮箱：{{activity.email}} <a href="#"
+                                                        <li class="list-group-item">邮箱：{{activity.manageEmail}} <a href="#"
                                                                 class="btn btn-success" style="float:right">修改</a></li>
                                                         <li class="list-group-item"><a href="#" class="btn btn-danger"
                                                                 style="float:right">删除项目</a></li>
@@ -120,7 +120,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="tab-pane" id="{{activity.id}}profile" role="tabpanel" aria-labelledby="profile-tab">
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
@@ -157,7 +157,7 @@
 
 
                         </div>
-                        <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+                        <div class="tab-pane" id="{{activity.id}}messages" role="tabpanel" aria-labelledby="messages-tab">
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
