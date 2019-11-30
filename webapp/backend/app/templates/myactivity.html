@@ -101,7 +101,7 @@
                                                         <li class="list-group-item">活动类别：公益 <a href="#"
                                                                 class="btn btn-success" style="float:right">修改</a></li>
                                                         <li class="list-group-item">
-                                                            管理单位：{{activity.teamActivities.Team.teamname}} <a href="#"
+                                                            管理单位：{{activity.teamName}} <a href="#"
                                                                 class="btn btn-success" style="float:right">修改</a></li>
                                                         <li class="list-group-item">负责人：{{activity.manageperson}}<a
                                                                 href="#" class="btn btn-success"
@@ -124,7 +124,7 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title">成员列表(3/20)</h4>
+                                        <h4 class="card-title">成员列表{{activity.appliedRecruits.__str__()+'/'+activity.totalRecruits.__str__()}}</h4>
                                         <h6 class="card-subtitle">在这里查看已经加入您项目的志愿者。</h6>
                                     </div>
                                     <div class="table-responsive">
@@ -212,7 +212,7 @@
 
     <!-- Modal message-->
     {% for userActivity in activity.userActivities %}
-    <div class="modal fade" id="{{message.id}}" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel"
+    <div class="modal fade" id="{{activity.id}}" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
@@ -272,7 +272,7 @@
 
     <!-- Modal person-->
     {% for userActivity in activity.userActivities %}
-    <div class="modal fade" id="{{member.id}}" tabindex="-1" role="dialog" aria-labelledby="personModalLabel"
+    <div class="modal fade" id="{{userActivity.userId}}" tabindex="-1" role="dialog" aria-labelledby="personModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -393,91 +393,7 @@
                                     </tr>
                                     {% endfor %}
                                     {%import 'activitypages.html' as pg%}
-                                    {{pg.my_paginate(pagination,'myactivity.html')}}
-                                    <!--tr style="cursor:pointer;" onclick="$('#exampleModal').modal('toggle')">
-                                    <td class=“w-25”>
-                                        <div class="card mb-3" style="max-width: 450px;">
-                                            <div class="row no-gutters">
-                                                <div class="col-md-4">
-                                                    <img src="../static/img/myactivity/thu2.jpeg" class="d-block w-100"
-                                                        alt="...">
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">校园志愿讲解</h5>
-                                                        <p class="card-text">
-                                                            招募校园讲解志愿者，在国庆期间提供讲解服务，每年参与的人数超过1000人。</p>
-                                                        <p class="card-text"><small class="text-muted">更新于3分钟之前</small>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </td>
-                                    <td style='vertical-align: middle;'>XSWL12345</td>
-                                    <td style='vertical-align: middle;'>校团委志愿组</td>
-                                    <td style='vertical-align: middle;'>公益</td>
-                                    <td style='vertical-align: middle;'>小王子</td>
-                                    <td style='vertical-align: middle;'>待审核</td>
-                                    <td style='vertical-align: middle;'>2019.11.24</td>
-                                </tr>
-                                <tr style="cursor:pointer;" onclick="$('#exampleModal').modal('toggle')">
-                                    <td class=“w-25”>
-                                        <div class="card mb-3" style="max-width: 450px;">
-                                            <div class="row no-gutters">
-                                                <div class="col-md-4">
-                                                    <img src="../static/img/myactivity/thu1.jpg" class="d-block w-100"
-                                                        alt="...">
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">敬老院服务</h5>
-                                                        <p class="card-text">
-                                                            招募敬老院服务志愿者，预计将前往XX敬老院，持续时间1整天，招募人数10人左右。</p>
-                                                        <p class="card-text"><small class="text-muted">更新于3分钟之前</small>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </td>
-                                    <td style='vertical-align: middle;'>XSWL12346</td>
-                                    <td style='vertical-align: middle;'>软件学院志愿组</td>
-                                    <td style='vertical-align: middle;'>公益</td>
-                                    <td style='vertical-align: middle;'>小王子</td>
-                                    <td style='vertical-align: middle;'>审核通过</td>
-                                    <td style='vertical-align: middle;'>2019.11.24</td>
-                                </tr>
-                                <tr style="cursor:pointer;" onclick="$('#exampleModal').modal('toggle')">
-                                    <td class=“w-25”>
-                                        <div class="card mb-3" style="max-width: 450px;">
-                                            <div class="row no-gutters">
-                                                <div class="col-md-4">
-                                                    <img src="../static/img/myactivity/thu3.jpg" class="d-block w-100"
-                                                        alt="...">
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">校庆嘉宾接待</h5>
-                                                        <p class="card-text">
-                                                            招募校庆嘉宾接待志愿者，在校庆期间期间接待外宾，需要经过1天的培训。</p>
-                                                        <p class="card-text"><small class="text-muted">更新于3分钟之前</small>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </td>
-                                    <td style='vertical-align: middle;'>XSWL12347</td>
-                                    <td style='vertical-align: middle;'>校学生会</td>
-                                    <td style='vertical-align: middle;'>公益</td>
-                                    <td style='vertical-align: middle;'>王五</td>
-                                    <td style='vertical-align: middle;'>待审核</td>
-                                    <td style='vertical-align: middle;'>2019.11.24</td>
-                                </tr-->
+                                    {{pg.my_paginate(pagination,'main.myactivity')}}
                                 </tbody>
                             </table>
                         </div>
