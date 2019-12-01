@@ -124,6 +124,7 @@
                                             </thead>
                                             <tbody>
                                                 {% for userActivity in activity.userActivities %}
+                                                {% if userActivity.type=='applied' %}
                                                 <tr class="table-success" style="cursor:pointer;"
                                                     onclick="$('#userActivity{{userActivity.id}}').modal('toggle')">
                                                     <th scope="row">{{userActivity.user.userName}}</th>
@@ -132,6 +133,7 @@
                                                     <!--td>{{userActivity.user.job}}</td-->
                                                     <td>{{userActivity.activity.starttime}}</td>
                                                 </tr>
+                                                {% endif %}
                                                 {% endfor %}
                                             </tbody>
                                         </table>
@@ -163,6 +165,7 @@
                                             </thead>
                                             <tbody>
                                                 {% for userActivity in activity.userActivities %}
+                                                {% if userActivity.type=='applying' %}
                                                 <tr class="table-success" style="cursor:pointer;"
                                                     onclick="$('#userActivityApply{{userActivity.id}}').modal('toggle')">
                                                     <th scope="row">志愿申请</th>
@@ -173,6 +176,7 @@
                                                     <td>{{userActivity.isRead}}</td>
                                                     <td>回复</td>
                                                 </tr>
+                                                {% endif %}
                                                 {% endfor %}
                                             </tbody>
                                         </table>
@@ -307,7 +311,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
                     <button type="button" class="btn btn-primary">确认</button>
@@ -336,8 +339,6 @@
                                     <tr>
                                         <th scope="col" style='text-align: center;'>项目</th>
                                         <th scope="col">项目编号</th>
-                                        <th scope="col">管理单位</th>
-                                        <th scope="col">活动类别</th>
                                         <th scope="col">负责人</th>
                                         <th scope="col">状态</th>
                                         <th scope="col">开始日期</th>
@@ -367,12 +368,10 @@
                                             </div>
 
                                         </td>
-                                        <td style='vertical-align: middle;'>{{activity.id}}</td>
-                                        <td style='vertical-align: middle;'>{{activity.managerperson}}</td>
-                                        <td style='vertical-align: middle;'>公益</td>
-                                        <td style='vertical-align: middle;'>{{activity.manager}}</td>
-                                        <td style='vertical-align: middle;'>{{activity.state}}</td>
-                                        <td style='vertical-align: middle;'>{{activity.date}}</td>
+                                        <td style='vertical-align: middle;'>{{activity.AID}}</td>
+                                        <td style='vertical-align: middle;'>{{activity.managePerson}}</td>
+                                        <td style='vertical-align: middle;'>{{activity.type}}</td>
+                                        <td style='vertical-align: middle;'>{{activity.starttime}}</td>
                                     </tr>
                                     {% endfor %}
                                     {%import 'activitypages.html' as pg%}
@@ -412,19 +411,19 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
     var deleteActivity = function(id) {
-        axios.get("http://127.0.0.1/deleteActivity",{params:{'id':id}}).then((res)=>{
+        axios.get("http://127.0.0.1:5000/api/deleteActivity",{params:{'id':id}}).then((res)=>{
             alert("删除成功");
             location.reload()
         })
     }
     var deleteMember=function(id){
-        axios.get("http://127.0.0.1/deleteMember",{params:{'id':id}}).then((res)=>{
+        axios.get("http://127.0.0.1:5000/api/deleteMember",{params:{'id':id}}).then((res)=>{
             alert("删除成功");
             location.reload()
         })
     }
     var replyApply=function(id,res){
-        axios.get("http://127.0.0.1/replyApply",{params:{'id':id,'res':res}}).then((res)=>{
+        axios.get("http://127.0.0.1:5000/api/replyApply",{params:{'id':id,'res':res}}).then((res)=>{
             alert("回复成功")
             location.reload()
         })

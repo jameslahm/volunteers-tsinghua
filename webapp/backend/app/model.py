@@ -73,21 +73,23 @@ class Team(db.Model,UserMixin):
     teamName=db.Column('teamname',db.String(64),unique=False) #改
     establishedTime=db.Column('establishedtime',db.DateTime)
     avatar = db.Column("avatar", db.String(128))
-    password=db.Column('password',db.String(128))
+    password_hash=db.Column('password_hash',db.String(128))
     description=db.Column('description',db.Text)
     phone=db.Column('phone',db.String(64))
     activities = db.relationship('Activity', backref='team',lazy='dynamic',cascade='all, delete-orphan')
     messages = db.relationship('Message', backref='team',cascade='all, delete-orphan')
 
-    def __init__(self,**kwargs):
-        password=kwargs.get('password')
-        if password != None:
-            self.password = generate_password_hash(password)
 
-    def set_password(self, password):
-        self.password = generate_password_hash(password)
-    def verify_password(self,password):
-        return check_password_hash(self.password, password)
+    @property
+    def password(self):
+        raise AttributeError("password is not readable")
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def verify_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
     def is_administrator(self):
         return self.email==current_app.config['FLASK_ADMIN']
@@ -235,12 +237,12 @@ class Activity(db.Model):
             'title':self.title,
             'content':self.content,
             'totalRecruits':self.totalRecruits,
-            'applyedRecruits':self.appliedRecruits,
+            'appliedRecruits':self.appliedRecruits,
         }
         return json_activity
 
     def members(self):
-        l=self.userActivities.filter_by(type='applyed').all()
+        l=self.userActivities.filter_by(type='applied').all()
         res=[x.user for x in l]
         return res
 
@@ -252,7 +254,7 @@ class Message(db.Model):
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     userId = db.Column('userId', db.Integer, db.ForeignKey('users.id',ondelete='cascade'))
     teamId = db.Column('teamId', db.Integer, db.ForeignKey('teams.id',ondelete='cascade'))
-    activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id'))
+    activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id',ondelete='cascade'))
     content = db.Column('content', db.Text)
     qrCode = db.Column('qrCode', db.String(64))
     time = db.Column('time', db.DateTime)
@@ -265,12 +267,15 @@ class Message(db.Model):
 
         seed()
         user_count=User.query.count()
-        notifier_count=Team.query.count()
         activity_count=Activity.query.count()
         for i in range(count):
             u=User.query.offset(randint(0,user_count-1)).first()
-            t=Team.query.offset(randint(0,notifier_count-1)).first()
-            a=Activity.query.offset(randint(0,activity_count-1)).first()
+            count=UserActivity.query.filter_by(user=u,type='applying').count()
+            if(count==0):
+                continue
+            userA=UserActivity.query.filter_by(user=u,type='applying').offset(randint(0,count-1)).first()
+            a=userA.activity
+            t=a.team
             m=Message(user=u,team=t,activity=a,content = fp.lorem_ipsum.sentence(),
                       time = fp.date.date(),isRead = fp.basic.boolean())
             db.session.add(m)
@@ -298,7 +303,7 @@ class UserActivity(db.Model):
     workDate = db.Column('workdate', db.DateTime, nullable=False) # 增加
     content = db.Column('content', db.String(400), nullable=False) # 增加
     applyTime = db.Column('applytime', db.DateTime, nullable=False) # 增加
-    type = db.Column('type', db.Enum('applying', 'applyed','finished')) # 志愿团体是否已阅申请消息？
+    type = db.Column('type', db.Enum('applying', 'applied','finished')) # 志愿团体是否已阅申请消息？
     isRead=db.Column('isRead',db.Boolean)
 
     @staticmethod
@@ -312,7 +317,7 @@ class UserActivity(db.Model):
             u=User.query.offset(randint(0,user_count-1)).first()
             a=Activity.query.offset(randint(0,activity_count-1)).first()
             t=randint(0,2)
-            u_activity=UserActivity(user=u,workDate=fp.date.datetime(),applyTime=fp.date.datetime(),content = fp.lorem_ipsum.sentence(),activity=a,type='applying'if t==0 else 'applyed' if t==1 else 'finished')
+            u_activity=UserActivity(user=u,workDate=fp.date.datetime(),applyTime=fp.date.datetime(),content = fp.lorem_ipsum.sentence(),activity=a,type='applying'if t==0 else 'applied' if t==1 else 'finished')
             db.session.add(u_activity)
             db.session.commit()
 

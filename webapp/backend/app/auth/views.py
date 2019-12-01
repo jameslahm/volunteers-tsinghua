@@ -13,6 +13,7 @@ def login():
         password = request.form.get('password')
         remember_me = request.form.get('remember_me')
         team = Team.query.filter_by(email=email).first()
+        print(team)
         if team is not None and team.verify_password(password):
             login_user(team, remember=remember_me)
             if team.is_administrator():
@@ -43,7 +44,7 @@ def register():
                 flash('Code is not correct')
             else:
                 flash('You have registered successfully')
-                team=Team(email=email,userName=username,password=password)
+                team=Team(email=email,teamName=username,password=password)
                 db.session.add(team)
                 db.session.commit()
                 login_user(team,remember=True)
