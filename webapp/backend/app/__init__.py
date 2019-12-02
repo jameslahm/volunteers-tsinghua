@@ -8,6 +8,7 @@ from flask_admin import Admin,AdminIndexView,expose
 from flask_admin.contrib.sqla import ModelView
 from flask_sqlalchemy import SQLAlchemy
 from config import config
+import os
 from flask_bootstrap import Bootstrap
 
 db = SQLAlchemy()
@@ -19,7 +20,8 @@ login_manager.login_view = 'auth.login'
 def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
-
+    app.config['BASE_DIR']=os.path.abspath(os.path.dirname(__file__))
+    print(app.config['BASE_DIR'])
     db.init_app(app)
     login_manager.init_app(app)
     bootstrap.init_app(app)
@@ -27,7 +29,7 @@ def create_app(config_name):
 
 
     # flask-admin
-    from .model import User, Team, Activity, UserActivity,IntroCode
+    from .model import User, Team, Activity, UserActivity,IntroCode,Message
 
     # flask-user
 
@@ -58,6 +60,8 @@ def create_app(config_name):
     admin.add_view(MyUserView(Activity, db.session))
     admin.add_view(MyUserView(IntroCode, db.session))
     admin.add_view(MyUserView(UserActivity, db.session))
+    admin.add_view(MyUserView(Message, db.session))
+
 
     from .api import api as api_blueprint
     app.register_blueprint(api_blueprint, url_prefix='/api')

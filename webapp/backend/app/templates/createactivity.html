@@ -48,52 +48,18 @@
                 <div class="card card-body">
                     <h4 class="card-title">项目申请</h4>
                     <h5 class="card-subtitle"> 请您填写项目申请表，管理员会尽快回复您的申请 </h5>
-                    <form class="form-horizontal m-t-30">
+                    <form class="form-horizontal m-t-30" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="name">项目名称</label>
-                            <input type="text" class="form-control" placeholder="请填写志愿项目的名称">
+                            <input type="text" name='title' class="form-control" placeholder="请填写志愿项目的名称">
                         </div>
                         <div class="form-group">
                             <label for="location">项目地点</label>
-                            <input type="text" class="form-control" placeholder="请填写项目具体地点">
+                            <input type="text" name='location' class="form-control" placeholder="请填写项目具体地点">
                         </div>
                         <div class="form-group">
                             <label>项目时间</label>
-                            <form action="" class="form-horizontal" role="form">
-                                <fieldset>
-                                    <div class="row">
-                                        <div class='col-sm-6'>
-                                            <div class="form-group">
-                                                <label for="dtp_input1" class="col-md-4 control-label">招募开始日期</label>
-                                                <div class="input-group date form_date col-md-5" data-date=""
-                                                    data-date-format="yyyy MM dd" data-link-field="dtp_input1"
-                                                    data-link-format="yyyy-mm-dd">
-                                                    <input class="form-control" size="16" type="text" value="" readonly>
-                                                    <span class="input-group-addon"><span
-                                                            class="glyphicon glyphicon-remove"></span></span>
-                                                    <span class="input-group-addon"><span
-                                                            class="glyphicon glyphicon-calendar"></span></span>
-                                                </div>
-                                                <input type="hidden" id="dtp_input1" value="" /><br />
-                                            </div>
-                                        </div>
-                                        <div class='col-sm-6'>
-                                            <div class="form-group">
-                                                <label for="dtp_input2" class="col-md-4 control-label">招募结束日期</label>
-                                                <div class="input-group date form_date col-md-5" data-date=""
-                                                    data-date-format="yyyy MM dd" data-link-field="dtp_input2"
-                                                    data-link-format="yyyy-mm-dd">
-                                                    <input class="form-control" size="16" type="text" value="" readonly>
-                                                    <span class="input-group-addon"><span
-                                                            class="glyphicon glyphicon-remove"></span></span>
-                                                    <span class="input-group-addon"><span
-                                                            class="glyphicon glyphicon-calendar"></span></span>
-                                                </div>
-                                                <input type="hidden" id="dtp_input2" value="" /><br />
-                                            </div>
-                                        </div>
-                                    </div>
-
+                            <fieldset>
                                     <div class="row">
                                         <div class='col-sm-6'>
                                             <div class="form-group">
@@ -107,7 +73,7 @@
                                                     <span class="input-group-addon"><span
                                                             class="glyphicon glyphicon-calendar"></span></span>
                                                 </div>
-                                                <input type="hidden" id="dtp_input3" value="" /><br />
+                                                <input type="hidden" id="dtp_input3" name="startdate" value="" /><br />
                                             </div>
                                         </div>
                                         <div class='col-sm-6'>
@@ -122,7 +88,7 @@
                                                     <span class="input-group-addon"><span
                                                             class="glyphicon glyphicon-calendar"></span></span>
                                                 </div>
-                                                <input type="hidden" id="dtp_input4" value="" /><br />
+                                                <input type="hidden" id="dtp_input4" name="enddate" value="" /><br />
                                             </div>
                                         </div>
                                     </div>
@@ -130,7 +96,7 @@
                                     <div class="row">
                                         <div class='col-sm-6'>
                                             <div class="form-group">
-                                                <label for="dtp_time1" class="col-md-2 control-label">每日开始时间</label>
+                                                <label for="dtp_time1" class="col-md-2 control-label">开始时间</label>
                                                 <div class="input-group date form_time col-md-5" data-date=""
                                                     data-date-format="hh:ii" data-link-field="dtp_time1"
                                                     data-link-format="hh:ii">
@@ -140,12 +106,12 @@
                                                     <span class="input-group-addon"><span
                                                             class="glyphicon glyphicon-time"></span></span>
                                                 </div>
-                                                <input type="hidden" id="dtp_time1" value="" /><br />
+                                                <input type="hidden" id="dtp_time1" value="" name="starttime"/><br />
                                             </div>
                                         </div>
                                         <div class='col-sm-6'>
                                             <div class="form-group">
-                                                <label for="dtp_time2" class="col-md-2 control-label">每日结束时间</label>
+                                                <label for="dtp_time2" class="col-md-2 control-label">结束时间</label>
                                                 <div class="input-group date form_time col-md-5" data-date=""
                                                     data-date-format="hh:ii" data-link-field="dtp_time2"
                                                     data-link-format="hh:ii">
@@ -155,32 +121,22 @@
                                                     <span class="input-group-addon"><span
                                                             class="glyphicon glyphicon-time"></span></span>
                                                 </div>
-                                                <input type="hidden" id="dtp_time2" value="" /><br />
+                                                <input type="hidden" id="dtp_time2" value="" name="endtime"/><br />
                                             </div>
                                         </div>
                                     </div>
 
-                                </fieldset>
-                            </form>
+                            </fieldset>
                         </div>
 
                         <div class="form-group">
                             <label for="location">招募人数</label>
-                            <input type="number" class="form-control" placeholder="请输入预计招募人数">
+                            <input type="number" class="form-control" name="totalRecruits" placeholder="请输入预计招募人数">
                         </div>
 
                         <div class="form-group">
-                            <label>项目简介</label>
-                            <textarea class="form-control" rows="5" placeholder="请简要描述一下您的志愿项目"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>申请理由</label>
-                            <textarea class="form-control" rows="5" placeholder="您可以在这里填写具体的申请理由，以方便审核"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="instituion">管理单位</label>
-                            <input type="text" class="form-control" placeholder="请填写项目负责单位名称">
+                            <label>项目内容</label>
+                            <textarea class="form-control" rows="5" name="content" placeholder="请简要描述一下您的志愿项目"></textarea>
                         </div>
 
                         <div class="card">
@@ -188,16 +144,16 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="name-person1">姓名</label>
-                                    <input type="text" class="form-control" placeholder="请填写负责人姓名">
+                                    <input type="text" class="form-control" name="managePerson" placeholder="请填写负责人姓名">
                                 </div>
                                 <div class="form-group">
                                     <label for="email">邮箱</label>
-                                    <input type="email" id="email" name="email" class="form-control"
+                                    <input type="email" id="email" name="manageEmail" class="form-control"
                                         placeholder="请填写负责人邮箱">
                                 </div>
                                 <div class="form-group">
                                     <label for="name-person1">联系电话</label>
-                                    <input type="number" class="form-control" placeholder="请填写负责人联系电话">
+                                    <input type="number" class="form-control" name="managePhone" placeholder="请填写负责人联系电话">
                                 </div>
                             </div>
                         </div>
@@ -207,7 +163,7 @@
                             <div class="col-md-8">
                                 <div class="fileinput fileinput-new" data-provides="fileinput" id="uploadImageDiv">
                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                        <img src="${companyInfo.image}" alt="" />
+                                        <img src="" alt="" />
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail"
                                         style="max-width: 200px; max-height: 150px;"></div>
@@ -215,7 +171,7 @@
                                         <span class="btn default btn-file" class='col-sm-6'>
                                             <button class="btn btn-secondary btn-file"
                                                 class="fileinput-new">选择图片</button>
-                                            <input type="file" name="uploadImage" id="uploadImage" />
+                                            <input type="file" name="thumb" id="uploadImage" />
                                         </span>
                                     </div>
                                     <a href="#" class="btn default fileinput-exists" data-dismiss="fileinput">移除</a>
@@ -224,6 +180,7 @@
                                 <div id="titleImageError" style="color: #a94442"></div>
                             </div>
                         </div>
+                        <input class="btn btn-lg btn-primary btn-block" type="submit"></button>
                     </form>
                 </div>
             </div>
@@ -238,7 +195,6 @@
         <!-- ============================================================== -->
         <!-- End Right sidebar -->
         <!-- ============================================================== -->
-        <button class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
     </div>
     <!-- ============================================================== -->
     <!-- End Container fluid  -->
@@ -291,62 +247,5 @@
 </script>
 
 <script>
-    var url = '';
-    $("#uploadImage").fileupload({
-        url: ROOT + "/security/company/uploadFile",
-        dataType: 'json',
-        autoUpload: false,
-        acceptFileTypes: /(gif|jpeg|png)$/i,
-        maxFileSize: 1000000, // 1 MB
-        imageMaxWidth: 100,
-        imageMaxHeight: 100,
-        messages: {
-            acceptFileTypes: '文件类型不匹配',
-            maxFileSize: '文件过大',
-            minFileSize: '文件过小'
-        }
-    }).on("fileuploadadd", function (e, data) {
-        // 当文件添加上去时候调用
-        $("#titleImageError")("");
-        data.submit()
-    }).on("fileuploaddone", function (e, data) {
-        // 上传完成时调用
-        if (data.result.returnState == "ERROR") {
-            alert("上传失败")
-            return;
-        }
-        url = data.result.returnData.url;
-    });
-
-    function updateMsg() {
-        $.ajax({
-            url: ROOT + "/security/company/updateInfo",
-            data: {
-                id: $("#companyId").val(),
-                image: url,
-                companyName: $("#companyName").val(),
-                companySite: $("#companySite").val(),
-                companyLinker: $("#companyLinker").val(),
-                companyTel: $("#companyTel").val()
-            },
-            type: "post",
-            success: function (data) {
-                if (data.returnState == "OK") {
-                    layer.msg('操作成功', {
-                        icon: 6,
-                        shade: 0.01,
-                        offset: ['57px', '1100px']
-                    });
-                    $table.bootstrapTable('refresh');
-                } else {
-                    layer.msg('操作失败', {
-                        icon: 5,
-                        shade: 0.01,
-                        offset: ['90px', '900px']
-                    });
-                }
-            }
-        });
-    }
 </script>
 {% endblock %}
