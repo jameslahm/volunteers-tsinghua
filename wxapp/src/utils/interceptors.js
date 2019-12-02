@@ -26,9 +26,9 @@ fly.interceptors.request.use((request) => {
           'starttime': Mock.Random.datetime(),
           'endtime': Mock.Random.datetime(),
           'location': Mock.Random.county(),
-          'type|1': ['applying', 'applyed'],
+          'type|1': ['applying', 'applied'],
           'totalRecruits': Mock.Random.integer(1, 20),
-          'applyedRecruits': Mock.Random.integer(1, 20),
+          'appliedRecruits': Mock.Random.integer(1, 20),
           'members': [
             { 'userid': Mock.Random.id(), 'avatar': Mock.Random.image() },
             { 'userid': Mock.Random.id(), 'avatar': Mock.Random.image() }
@@ -82,9 +82,9 @@ fly.interceptors.request.use((request) => {
           'starttime': Mock.Random.datetime(),
           'endtime': Mock.Random.datetime(),
           'location': Mock.Random.county(),
-          'type|1': ['applying', 'applyed'],
+          'type|1': ['applying', 'applied'],
           'totalRecruits': Mock.Random.integer(1, 20),
-          'applyedRecruits': Mock.Random.integer(1, 20),
+          'appliedRecruits': Mock.Random.integer(1, 20),
           'members': [
             { 'userid': Mock.Random.id(), 'avatar': Mock.Random.image() },
             { 'userid': Mock.Random.id(), 'avatar': Mock.Random.image() }

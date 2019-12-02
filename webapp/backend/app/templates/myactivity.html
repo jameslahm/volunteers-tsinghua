@@ -410,6 +410,7 @@
 {{super()}}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+    axios.defaults.withCredentials = true;
     var deleteActivity = function(id) {
         axios.get("http://127.0.0.1:5000/api/deleteActivity",{params:{'id':id}}).then((res)=>{
             alert("删除成功");

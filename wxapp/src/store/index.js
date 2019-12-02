@@ -16,21 +16,21 @@ const store = new Vuex.Store({
     'getItemById': (state) => {
       return function (id) {
         return state.items.filter((item) => {
-          return item.id === id
+          return item.id === parseInt(id)
         })[0]
       }
     },
     'getMessageById': (state) => {
       return function (id) {
         return state.messages.filter((item) => {
-          return item.id === id
+          return item.id === parseInt(id)
         })[0]
       }
     },
     'getGlobalItemById': (state) => {
       return function (id) {
         return state.globalItems.filter((item) => {
-          return item.id === id
+          return item.id === parseInt(id)
         })[0]
       }
     }
@@ -53,7 +53,7 @@ const store = new Vuex.Store({
       state.messages.forEach(elem => {
         if (elem.id === id) {
           elem.isRead = true
-          post({ 'url': `/messages/${elem.id}/`, 'data': elem })
+          get({ 'url': `/messages/${elem.id}/changeIsRead` })
         }
       })
     },
@@ -92,10 +92,17 @@ const store = new Vuex.Store({
       })
     },
     applyItem (state, data) {
-      console.log('apply')
+      get({'url': `/users/${state.user.id}/apply`, 'data': data}).then(res => {
+        console.log(res)
+      })
     },
     clearGlobalItems (state) {
       state.globalItems = []
+    },
+    deleteMessage (state, id) {
+      get(`/message/${id}/delete`).then(res => {
+        console.log(res)
+      })
     }
   }
 })

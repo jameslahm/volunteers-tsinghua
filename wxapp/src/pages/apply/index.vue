@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     'bindClick': function() {
-      this.$store.commit('applyItem',{'content':this.content})
+      this.$store.commit('applyItem',{'content':this.content,'id':itemId})
       $Message({
         content:"报名成功",
         type:'success'

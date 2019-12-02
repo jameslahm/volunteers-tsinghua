@@ -4,6 +4,7 @@
         "i-cell": "../../static/iview/cell/index",
         "i-badge":"../../static/iview/badge/index",
         "i-icon":"../../static/iview/icon/index",
-        "i-panel":"../../static/iview/panel/index"
+        "i-panel":"../../static/iview/panel/index",
+        "i-swipeout": "../../static/iview/swipeout/index"
     }
 }
