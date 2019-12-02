@@ -1,4 +1,4 @@
-from flask import render_template,request,current_app
+from flask import render_template,request,current_app, jsonify
 from . import main
 from flask_login import login_required,current_user
 from flask import redirect,url_for
@@ -83,34 +83,39 @@ def information():
         'information.html'
     )
 
-@main.route('/verifyThu<ticket>', methods=['GET'])
-def verify_thu(ticket):
-    AppID = 'wxf3aa74b41b1f555c'
-    ticket = str(ticket).replace('?ticket=', '')
+
+@main.route('/verifyThu', methods=['GET', 'POST'])
+def verifyThu():
+    ticket = request.args.get('ticket')
 
     get_ip = requests.get("http://www.baidu.com", stream=True)
     user_ip_address = get_ip.raw._connection.sock.getsockname()[0]
     user_ip_address = str(user_ip_address).replace('.', '_')
     get_ip.close()
 
+    AppID = 'A16'
     verify_url = 'https://alumni-test.iterator-traits.com/fake-id-tsinghua/thuser/authapi/checkticket/{}/{}/{}'.format(
         AppID, ticket, user_ip_address
     )
-    return requests.get(verify_url).json()
+    rsp = requests.get(verify_url)
+
+    result = str(rsp).split(':')
+    info = {'code': result[0][5:], 'zjh': result[1][4:], 'yhm': result[2][4:], 'xm': result[3][3:],
+            'yhlb': result[4][5:], 'dw': result[5][3:], 'email': result[6][6:]}
+
+    return jsonify(info)
+
     # return render_template(
     #     'profile.html', user_info=requests.get(verify_url).json()
     # )
-    # rsp = requests.get(verify_url)
-    # redirect('/profile')
-    # return rsp.json()
 
 
 @main.route('/tsinghua')
 def login_thu():
-    AppID = 'wxf3aa74b41b1f555c'
+    AppID = 'A16'
     SEQ = '669223961b70204ffbd023015ea9decb'
-    returnurl = 'auth.verify_thu'
-    url = 'https://alumni-test.iterator-traits.com/fake-id-tsinghua/do/off/ui/auth/login/form/{}/{}?/{}'.format(
+    returnurl = 'verifyThu'
+    url = 'https://alumni-test.iterator-traits.com/fake-id-tsinghua/do/off/ui/auth/login/form/{}/{}?{}'.format(
         md5(AppID), SEQ, returnurl
     )
     return redirect(url)
