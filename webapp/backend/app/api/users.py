@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, jsonify
 from ..model import User,UserActivity,Message
 from . import api
+from .authentication import verify_token
 
 
 @api.route('/users/<int:id>', methods=['GET'])
@@ -14,7 +15,11 @@ def query_by_id(id):
 @api.route('/users/<int:id>/activities', methods=['GET'])
 def get_user_activities(id):
     activities=UserActivity.query.filter_by(userId=id).all()
-    res=[x.activity.to_json() for x in activities]
+    res=[]
+    for x in activities:
+        temp=x.activity.to_json()
+        temp['type']=x.type
+        res.append(temp)
     return jsonify(res)
 
 

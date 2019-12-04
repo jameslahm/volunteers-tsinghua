@@ -9,7 +9,7 @@ from flask import request
 import datetime
 from werkzeug.security import check_password_hash,generate_password_hash
 import re
-
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 
 class User(db.Model):
@@ -64,6 +64,22 @@ class User(db.Model):
         }
         return json_user
 
+    def generate_auth_token(self,expiration):
+        s=Serializer(current_app.config['SECRET_KEY'],expires_in=expiration)
+        return s.dumps({'id',self.id})
+
+    @staticmethod
+    def verify_auth_token(token):
+        s=Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data=s.loads(token)
+        except:
+            return False
+        return User.query.filter_by(id=data.get('id')).first()
+
+
+
+
 class Team(db.Model,UserMixin):
     '''志愿团体'''
     __tablename__ = 'teams'
@@ -115,7 +131,7 @@ class Team(db.Model,UserMixin):
         json_team={
             'teamName':self.teamName,
             'email':self.email,
-            'establishedtime':self.establishedtime,
+            'establishedtime':self.establishedTime,
             'description':self.description,
             'avatar':self.avatar,
         }
@@ -135,7 +151,7 @@ class Activity(db.Model):
     __tablename__ = 'activities'
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    AID = db.Column('AID', db.Integer)
+    AID = db.Column('AID', db.String(12))
     teamId = db.Column('teamId', db.Integer, db.ForeignKey('teams.id',ondelete='cascade'))
     thumb = db.Column('thumb', db.String(128), nullable=False)
     starttime = db.Column('starttime', db.DateTime, nullable=False)
@@ -152,6 +168,7 @@ class Activity(db.Model):
     userActivities = db.relationship('UserActivity', backref='activity',lazy='dynamic',cascade='all, delete-orphan')
     messages = db.relationship('Message',backref='activity',cascade='all, delete-orphan')
     type = db.Column('type', db.Enum('creating', 'created','finished'))
+    isRead=db.Column('isRead',db.Boolean)
 
     @staticmethod
     def generate_fake(count=100):
@@ -225,6 +242,23 @@ class Activity(db.Model):
                     ans.append(x)
         return ans
 
+    @staticmethod
+    def search_byAID(aid):
+        return Activity.query.filter_by(Activity.AID.startswith(aid)).all()
+
+    @staticmethod
+    def search(param,type):
+        if(type=='activity'):
+            return Activity.search_bytitle(param)
+        if(type=='coordinates'):
+            return Activity.search_bylocation(param)
+        if(type=='time'):
+            return Activity.search_bytime(param)
+        if(type=='group'):
+            return Activity.search_byteam(param)
+        if(type=='barrage'):
+            return Activity.search_byAID(param)
+
     def to_json(self):
         json_activity={
             'id':self.id,
@@ -283,6 +317,7 @@ class Message(db.Model):
 
     def to_json(self):
         json_message={
+            'id':self.id,
             'userId':self.userId,
             'team':self.team.to_json(),
             'activityId':self.activityId,

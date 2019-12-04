@@ -35,7 +35,7 @@
     <!-- Message Modal -->
     {% for activity in activities %}
     {% for userActivity in activity.userActivities %}
-    <div class="modal fade" id="{{message.id}}" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel"
+    <div class="modal fade" id="userActivity{{userActivity.id}}" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
@@ -79,8 +79,8 @@
                             <a href="#" class="card-link">志愿者详情</a>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-success">同意</button>
-                    <button type="button" class="btn btn-danger">拒绝</button>
+                    <button type="button" class="btn btn-success" onclick="replyApply({{userActivity.id}},'1')">同意</button>
+                    <button type="button" class="btn btn-danger" onclick="replyApply({{userActivity.id}},'0')">拒绝</button>
                 </div>
 
                 <div class="modal-footer">
@@ -91,70 +91,63 @@
     </div>
     {% endfor %}
     {% endfor %}
+
+    {% for activity in activities %}
+    <div class="modal fade" id="Activity{{activity.id}}" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">消息详情</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="card" style="width: 45rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">项目：{{activity.title}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">消息时间：时间</h6>
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">审批结果</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-success">
+                                        <th scope="row">{{activity.type}}</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="changeIsRead({{activity.id}},'activity')" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
     <div class="container-fluid">
         <div class="tab-content">
             <ul class="nav nav-tabs" id="myTab" role="tablist" style="padding-left: 10px;">
                 <li class="nav-item">
-                    <a class="nav-link active" id="allMessage-tab" data-toggle="tab" href="#allMessage" role="tab"
-                        aria-controls="allMessage" aria-selected="true">所有消息</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" id="applyMessage-tab" data-toggle="tab" href="#applyMessage" role="tab"
                         aria-controls="applyMessage" aria-selected="false">志愿者申请</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="volunteerMessage-tab" data-toggle="tab" href="#volunteerMessage" role="tab"
-                        aria-controls="volunteerMessages" aria-selected="false">志愿者留言</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="managerMessage-tab" data-toggle="tab" href="#managerMessage" role="tab"
                         aria-controls="managerMessage" aria-selected="false">管理员消息</a>
                 </li>
             </ul>
-            <div class="tab-pane active" id="allMessage" role="tabpanel" aria-labelledby="allMessage-tab">
-                <div class="col-12">
-                    <div class="card">
 
-                        <div class="card-body">
-                            <h4 class="card-title">所有消息</h4>
-                            <h6 class="card-subtitle">在这里查看所有您收到的消息。</h6>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">消息类型</th>
-                                        <th scope="col">用户类型</th>
-                                        <th scope="col">用户名称</th>
-                                        <th scope="col">相关项目</th>
-                                        <th scope="col">时间</th>
-                                        <th scope="col">消息状态</th>
-                                        <th scope="col">操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for activity in activities %}
-                                    {% for userActivity in activity.userActivities %}
-                                    <tr class="table-success" style="cursor:pointer;"
-                                        onclick="$('#{{userActivity.id}}').modal('toggle')">
-                                        <th scope="row">志愿申请</th>
-                                        <td>志愿者</td>
-                                        <td>{{userActivity.user.name}}</td>
-                                        <td>{{userActivity.activity.title}}</td>
-                                        <td>{{userActivity.applytime}}</td>
-                                        <td>未读</td>
-                                        <td>回复</td>
-                                    </tr>
-                                    {% endfor %}
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane" id="applyMessage" role="tabpanel" aria-labelledby="applyMessag-tab">
+            <div class="tab-pane active" id="applyMessage" role="tabpanel" aria-labelledby="applyMessag-tab">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
@@ -177,8 +170,9 @@
                                 <tbody>
                                     {% for activity in activities %}
                                     {% for userActivity in activity.userActivities %}
+                                    {% if not userActivity.isRead %}
                                     <tr class="table-success" style="cursor:pointer;"
-                                        onclick="$('#{{userActivity.id}}').modal('toggle')">
+                                        onclick="$('#userActivity{{userActivity.id}}').modal('toggle')">
                                         <th scope="row">志愿申请</th>
                                         <td>志愿者</td>
                                         <td>{{userActivity.user.name}}</td>
@@ -187,36 +181,9 @@
                                         <td>未读</td>
                                         <td>回复</td>
                                     </tr>
+                                    {% endif %}
                                     {% endfor %}
                                     {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane" id="volunteerMessage" role="tabpanel" aria-labelledby="volunteerMessage-tab">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">志愿者留言</h4>
-                            <h6 class="card-subtitle">在这里查看您收到的来自志愿者的留言和反馈。</h6>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">消息类型</th>
-                                        <th scope="col">用户类型</th>
-                                        <th scope="col">用户名称</th>
-                                        <th scope="col">相关项目</th>
-                                        <th scope="col">时间</th>
-                                        <th scope="col">消息状态</th>
-                                        <th scope="col">操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
                                 </tbody>
                             </table>
                         </div>
@@ -237,7 +204,6 @@
                                     <tr>
                                         <th scope="col">消息类型</th>
                                         <th scope="col">用户类型</th>
-                                        <th scope="col">用户名称</th>
                                         <th scope="col">相关项目</th>
                                         <th scope="col">时间</th>
                                         <th scope="col">消息状态</th>
@@ -245,7 +211,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                    {% for activity in activities %}
+                                    {% if not activity.isRead %}
+                                    <tr class="table-success" style="cursor:pointer;"
+                                        onclick="$('#Activity{{activity.id}}').modal('toggle')">
+                                        <th scope="row">管理员消息</th>
+                                        <td>管理员</td>
+                                        <td>管理员</td>
+                                        <td>{{activity.title}}</td>
+                                        <td>{{activity.applytime}}</td>
+                                        <td>{{activity.isRead}}</td>
+                                        <td>阅读</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -289,43 +268,21 @@
 
 {% block script %}
 {{super()}}
-<script type="text/javascript" src="../static/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="../static/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
-    <script type="text/javascript">
-    $('.form_datetime').datetimepicker({
-        language:  'zh-CN',
-        weekStart: 1,
-        todayBtn:  1,
-		autoclose: 1,
-		todayHighlight: 1,
-		startView: 2,
-		forceParse: 0,
-        showMeridian: 1
-    });
-	$('.form_date').datetimepicker({
-        language:  'zh-CN',
-        weekStart: 1,
-        todayBtn:  1,
-		autoclose: 1,
-		todayHighlight: 1,
-		startView: 2,
-		minView: 2,
-		forceParse: 0
-    });
-	$('.form_time').datetimepicker({
-        language:  'zh-CN',
-        weekStart: 1,
-        todayBtn:  1,
-		autoclose: 1,
-		todayHighlight: 1,
-		startView: 1,
-		minView: 0,
-		maxView: 1,
-		forceParse: 0
-    });
-</script>
-
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+    axios.defaults.withCredentials = true;
+    var replyApply=function(id,res){
+        axios.get("http://127.0.0.1:5000/api/replyApply",{params:{'id':id,'res':res}}).then((res)=>{
+            alert("回复成功")
+            location.reload()
+        })
+    }
+    var changeIsRead=function(id){
+        axios.get("http://127.0.0.1:5000/api/changeIsRead",{params:{'id':id}}).then((res)=>{
+            alert("回复成功")
+            location.reload()
+        })
+    }
 </script>
 {% endblock %}
 

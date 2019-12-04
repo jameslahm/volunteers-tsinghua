@@ -20,7 +20,7 @@
             full
             @click="bindClick(item)"
             :title="item.teamName"
-            :extra="item.applyedRecruits+'/'+item.totalRecruits"
+            :extra="item.appliedRecruits+'/'+item.totalRecruits"
             i-class="card-thumb"
           >
             <view slot="content">{{item.title}}</view>

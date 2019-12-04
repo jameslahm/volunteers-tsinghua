@@ -58,7 +58,7 @@ export default {
         })
         return
       }
-      if(this.item.applyedRecruits===this.item.totalRecruits){
+      if(this.item.appliedRecruits===this.item.totalRecruits){
         $Message({
           content:"抱歉，该活动人数已招满",
           type:'warning'
