@@ -10,6 +10,7 @@ import datetime
 from werkzeug.security import check_password_hash,generate_password_hash
 import re
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from datetime import datetime
 
 
 class User(db.Model):
@@ -335,9 +336,9 @@ class UserActivity(db.Model):
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     userId = db.Column('userId', db.Integer, db.ForeignKey('users.id',ondelete='cascade'))
     activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id',ondelete='cascade'))
-    workDate = db.Column('workdate', db.DateTime, nullable=False) # 增加
+    # workDate = db.Column('workdate', db.DateTime, nullable=False) # 增加
     content = db.Column('content', db.String(400), nullable=False) # 增加
-    applyTime = db.Column('applytime', db.DateTime, nullable=False) # 增加
+    applyTime = db.Column('applytime', db.DateTime, nullable=False,default=datetime.now) # 增加
     type = db.Column('type', db.Enum('applying', 'applied','finished')) # 志愿团体是否已阅申请消息？
     isRead=db.Column('isRead',db.Boolean)
 
@@ -352,7 +353,7 @@ class UserActivity(db.Model):
             u=User.query.offset(randint(0,user_count-1)).first()
             a=Activity.query.offset(randint(0,activity_count-1)).first()
             t=randint(0,2)
-            u_activity=UserActivity(user=u,workDate=fp.date.datetime(),applyTime=fp.date.datetime(),content = fp.lorem_ipsum.sentence(),activity=a,type='applying'if t==0 else 'applied' if t==1 else 'finished')
+            u_activity=UserActivity(user=u,applyTime=fp.date.datetime(),content = fp.lorem_ipsum.sentence(),activity=a,type='applying'if t==0 else 'applied' if t==1 else 'finished')
             db.session.add(u_activity)
             db.session.commit()
 

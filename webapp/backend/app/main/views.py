@@ -4,7 +4,7 @@ from flask_login import login_required,current_user
 from flask import redirect,url_for
 from werkzeug import secure_filename
 from ..model import Activity,UserActivity
-from utils import md5
+from ..utils.functions import md5
 import os
 from .. import db
 import requests
@@ -107,6 +107,7 @@ def verifyThu():
 
     # return render_template(
     #     'profile.html', user_info=requests.get(verify_url).json()
+    
     # )
 
 
