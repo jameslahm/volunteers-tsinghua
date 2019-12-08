@@ -10,7 +10,9 @@ const store = new Vuex.Store({
     user: {},
     messages: [], // 用户消息，
     globalItems: [], // 所有活动，分页默认20个
-    total: 0 // 所有globalItems总数
+    total: 0, // 所有globalItems总数
+    token: '',
+    password: ''
   },
   getters: {
     'getItemById': (state) => {
@@ -59,6 +61,9 @@ const store = new Vuex.Store({
     },
     getUser (state, id) {
       console.log(id)
+      // post({'url': '/token', 'data': {'schoolId': state.user.schoolId, 'password': state.password}}).then((res) => {
+      //   state.token = res.token
+      // })
       get({ 'url': `/users/${id}` }).then(res => {
         console.log(res)
         state.user = res

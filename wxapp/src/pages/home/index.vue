@@ -80,9 +80,11 @@ export default {
   },
   onLoad(options) {
     wx.setStorageSync('schoolId','1')
+    // wx.setStorageSync('password':'')
     // 查看是否有登录学号
     try{
       var schoolId=wx.getStorageSync('schoolId')
+      // var password=wx.getStorageSync('password')
       console.log(schoolId)
       if(schoolId){
         this.$store.commit("getUser",schoolId)
