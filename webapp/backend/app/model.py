@@ -161,7 +161,7 @@ class Activity(db.Model):
     title = db.Column('title', db.String(70), nullable=False)
     content = db.Column('content', db.String(400), nullable=False)
     totalRecruits = db.Column('totalRecruits', db.Integer)
-    appliedRecruits = db.Column('appliedRecruits', db.Integer)
+    appliedRecruits = db.Column('appliedRecruits', db.Integer,default=0)
     managePerson = db.Column('manageperson', db.String(70), nullable=False) # 增加
     managePhone = db.Column('managephone', db.String(70), nullable=False) # 增加
     manageEmail = db.Column('manageemail', db.String(70), nullable=False) # 增加
@@ -273,6 +273,7 @@ class Activity(db.Model):
             'content':self.content,
             'totalRecruits':self.totalRecruits,
             'appliedRecruits':self.appliedRecruits,
+            'thumb':self.thumb
         }
         return json_activity
 
