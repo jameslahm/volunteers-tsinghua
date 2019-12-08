@@ -42,7 +42,7 @@ def create_app(config_name):
 
         @expose('/')
         def index(self):
-            if not current_user.is_authenticated:
+            if not current_user.is_administrator():
                 return redirect(url_for('auth.login'))
             return super(MyAdminIndexView, self).index()
 
