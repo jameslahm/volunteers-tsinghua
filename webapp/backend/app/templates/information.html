@@ -170,7 +170,7 @@
                                 <tbody>
                                     {% for activity in activities %}
                                     {% for userActivity in activity.userActivities %}
-                                    {% if not userActivity.isRead %}
+                                    {% if userActivity.type=='applying' %}
                                     <tr class="table-success" style="cursor:pointer;"
                                         onclick="$('#userActivity{{userActivity.id}}').modal('toggle')">
                                         <th scope="row">志愿申请</th>

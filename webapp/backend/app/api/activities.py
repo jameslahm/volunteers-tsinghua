@@ -68,8 +68,12 @@ def replyApply():
     id=request.args.get('id')
     res=request.args.get('res')
     userA=UserActivity.query.filter_by(id=id).first()
-    userA.type='applied' if res=='1' else 'applying'
-    message=Message(user=userA.user,activity=userA.activity,content="拒绝")
+    if res=='1':
+        userA.type='applied'
+        message=Message(user=userA.user,activity=userA.activity,content="同意")
+    else:
+        message=Message(user=userA.user,activity=userA.activity,content="拒绝")
+        db.session.delete(userA)
     db.session.add(message)
     db.session.commit()
     return jsonify({})

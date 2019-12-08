@@ -84,5 +84,7 @@ export default {
 <style>
 .card-thumb image {
   border-radius: 50%;
+  width:30px;
+  height:30px;
 }
 </style>

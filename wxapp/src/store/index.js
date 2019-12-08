@@ -1,6 +1,7 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
 import { get, post } from '../utils/api'
+import config from '../config'
 
 Vue.use(Vuex)
 
@@ -41,6 +42,9 @@ const store = new Vuex.Store({
     getItems (state, page) {
       get({ 'url': `/users/${state.user.id}/activities`, 'data': {'page': page} }).then((res) => {
         state.items = res
+        state.items.forEach(elem => {
+          elem.thumb = config.host + elem.thumb
+        })
       })
     },
     getMessages (state) {
@@ -92,6 +96,9 @@ const store = new Vuex.Store({
       get({ 'url': '/activities', 'data': params }).then(res => {
         console.log(res)
         state.globalItems = res.items
+        state.globalItems.forEach(elem => {
+          elem.thumb = config.host + elem.thumb
+        })
         state.total = res.total
         console.log(res.total)
       })
