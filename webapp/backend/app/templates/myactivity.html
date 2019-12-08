@@ -15,7 +15,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="profile">主页</a>
+                                <a href="/">主页</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">我的项目</li>
                         </ol>
@@ -87,6 +87,7 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <form class="form-control" method="POST">
+                                                        <input name='id' value={{activity.id}} hidden>
                                                         状态：<input readonly class="form-control form-control-line" value={{activity.type}}>
                                                         活动日期：<input name="starttime" class="form-control form-control-line" value={{activity.starttime}} name='starttime'>
                                                         管理单位：<input readonly class="form-control form-control-line" value={{activity.team.teamName}} >                                      
@@ -357,8 +358,6 @@
                                                     <div class="col-md-8">
                                                         <div class="card-body">
                                                             <h5 class="card-title">{{activity.title}}</h5>
-                                                            <p class="card-text">
-                                                                {{activity.title}}</p>
                                                             <p class="card-text"><small
                                                                     class="text-muted">更新于3分钟之前</small>
                                                             </p>

@@ -38,10 +38,11 @@ def myactivity():
         starttime=request.form.get('starttime')
         managePerson=request.form.get('managePerson')
         managePhone=request.form.get('managePhone')
-        team=current_user
-        team.starttime=starttime
-        team.managePerson=managePerson
-        team.managePhone=managePhone
+        id=request.form.get('id')
+        activitie=Activity.query.filter_by(id=id).first()
+        activitie.starttime=starttime
+        activitie.managePerson=managePerson
+        activitie.managePhone=managePhone
         db.session.commit()
     page=request.args.get('page',1,type=int)
     pagination=Activity.query.filter_by(team=current_user).order_by(Activity.starttime.desc()).paginate(
