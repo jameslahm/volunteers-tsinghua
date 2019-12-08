@@ -68,6 +68,8 @@ def createactivity():
             filename = secure_filename(thumb.filename)
             thumb.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename).replace('\\','/'))
             file='/static/img/'+filename
+        else:
+            file=None
         activity=Activity(title=title,location=location,starttime=startdate+" "+starttime,endtime=enddate+" "+endtime,totalRecruits=totalRecruits, \
             content=content,managePerson=managePerson,manageEmail=manageEmail,managePhone=managePhone,thumb=file,team=current_user)
         db.session.add(activity)
