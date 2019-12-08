@@ -3,26 +3,29 @@ from . import main
 from flask_login import login_required,current_user
 from flask import redirect,url_for
 from werkzeug import secure_filename
-from ..model import Activity,UserActivity
+from ..model import Activity,UserActivity,Team
 from ..utils.functions import md5
 import os
 from .. import db
 import requests
 
 
-@main.route('/', methods=['GET'])
+@main.route('/', methods=['GET','POST'])
 @login_required
 def index():
     if current_user.is_administrator():
         return redirect(url_for('admin.index'))
-    return render_template(
-        'profile.html',team=current_user
-    )
-
-
-@main.route('/profile', methods=['GET'])
-@login_required
-def profile():
+    if(request.method=='POST'):
+        teamName=request.form.get('teamName')
+        phone=request.form.get('phone')
+        password=request.form.get('password')
+        description=request.form.get('description')
+        team=current_user
+        team.teamName=teamName
+        team.phone=phone
+        team.password=password
+        team.description=description
+        db.session.commit()
     return render_template(
         'profile.html',team=current_user
     )
