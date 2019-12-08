@@ -70,13 +70,6 @@
                                             <div class="card">
                                                 <img src="{{activity.thumb}}" class="card-img-top"
                                                     alt="...">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">项目简介</h5>
-                                                    <p class="card-text">{{activity.content}}
-                                                        <a href="#" class="btn btn-success" style="float:right">修改
-                                                        </a>
-                                                    </p>
-                                                </div>
                                                 <button class="btn btn-lg btn-info btn-block">招募公告</button>
                                                 <button class="btn btn-lg btn-primary btn-block">导入成员</button>
                                                 <button class="btn btn-lg btn-secondary btn-block"
@@ -95,6 +88,12 @@
                                                         联系电话：<input name="managePhone" class="form-control form-control-line" value={{activity.managePhone}} name='managePhone'>
                                                         <!-- <li class="list-group-item">邮箱：{{activity.email}} <a href="#"
                                                                 class="btn btn-success" style="float:right">修改</a></li> -->
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">项目简介</h5>
+                                                                <p class="card-text">
+                                                                    <input type='text' name='content' class="form-control" value={{activity.content}}>
+                                                                </p>
+                                                        </div>
                                                         <input  type="submit" class="btn btn-success" value="保存">
                                                         <button class="btn btn-danger" onclick="deleteActivity({{activity.id}});return false;">删除项目
                                                     </ul>

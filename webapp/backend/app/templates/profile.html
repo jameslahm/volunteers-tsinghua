@@ -36,10 +36,12 @@
                             <div class="row text-center justify-content-md-center">
                                 <div class="col-4"><a href="javascript:void(0)" class="link"><i
                                             class="icon-people"></i>
+                                            已完成活动
                                         <font class="font-medium">{{team.finishedActivities().__len__()}}</font>
                                     </a></div>
                                 <div class="col-4"><a href="javascript:void(0)" class="link"><i
                                             class="icon-picture"></i>
+                                            已创建活动
                                         <font class="font-medium">{{team.createdActivities().__len__()+team.creatingActivities().__len__()}}</font>
                                     </a></div>
                             </div>
@@ -102,10 +104,8 @@
                             <div class="form-group">
                                 <label class="col-md-12">团队简介</label>
                                 <div class="col-md-12">
-                                    <textarea rows="5" placeholder="这里是XXXX，我们是一个XXXXXXXXXXXXXXXXXXXXX的团队，我们运营的项目包括XXXXXXXX。"  value={{team.description}}
-                                    class="form-control form-control-line" name="description">
-
-                                    </textarea>
+                                    <input type='text' class="form-control form-control-line" rows="5" placeholder="这里是XXXX，我们是一个XXXXXXXXXXXXXXXXXXXXX的团队，我们运营的项目包括XXXXXXXX。" 
+                                     name="description" value={{team.description}}>
                                 </div>
                             </div>
                             <div class="form-group">
