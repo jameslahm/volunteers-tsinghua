@@ -31,9 +31,18 @@ def index():
     )
 
 
-@main.route('/myactivity', methods=['GET'])
+@main.route('/myactivity', methods=['GET','POST'])
 @login_required
 def myactivity():
+    if(request.method=='POST'):
+        starttime=request.form.get('starttime')
+        managePerson=request.form.get('managePerson')
+        managePhone=request.form.get('managePhone')
+        team=current_user
+        team.starttime=starttime
+        team.managePerson=managePerson
+        team.managePhone=managePhone
+        db.session.commit()
     page=request.args.get('page',1,type=int)
     pagination=Activity.query.filter_by(team=current_user).order_by(Activity.starttime.desc()).paginate(
         page,per_page=current_app.config['FLASKY_POSTS_PER_PAGE'],error_out=False

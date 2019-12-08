@@ -72,7 +72,7 @@
                                                     alt="...">
                                                 <div class="card-body">
                                                     <h5 class="card-title">项目简介</h5>
-                                                    <p class="card-text">{{activity.description}}
+                                                    <p class="card-text">{{activity.content}}
                                                         <a href="#" class="btn btn-success" style="float:right">修改
                                                         </a>
                                                     </p>
@@ -88,10 +88,10 @@
                                                 <div class="card-body">
                                                     <form class="form-control" method="POST">
                                                         状态：<input readonly class="form-control form-control-line" value={{activity.type}}>
-                                                        活动日期：<input name="starttime" class="form-control form-control-line" value={{activity.starttime}}>
+                                                        活动日期：<input name="starttime" class="form-control form-control-line" value={{activity.starttime}} name='starttime'>
                                                         管理单位：<input readonly class="form-control form-control-line" value={{activity.team.teamName}} >                                      
-                                                        负责人：<input name="managePerson" class="form-control form-control-line" value={{activity.managePerson}}>
-                                                        联系电话：<input name="managePhone" class="form-control form-control-line" value={{activity.managePhone}}>
+                                                        负责人：<input name="managePerson" class="form-control form-control-line" value={{activity.managePerson}} name='managePerson'>
+                                                        联系电话：<input name="managePhone" class="form-control form-control-line" value={{activity.managePhone}} name='managePhone'>
                                                         <!-- <li class="list-group-item">邮箱：{{activity.email}} <a href="#"
                                                                 class="btn btn-success" style="float:right">修改</a></li> -->
                                                         <input  type="submit" class="btn btn-success" value="保存">
@@ -412,19 +412,19 @@
 <script>
     axios.defaults.withCredentials = true;
     var deleteActivity = function(id) {
-        axios.get("http://127.0.0.1:5000/api/deleteActivity",{params:{'id':id}}).then((res)=>{
+        axios.get("/api/deleteActivity",{params:{'id':id}}).then((res)=>{
             alert("删除成功");
             location.reload()
         })
     }
     var deleteMember=function(id){
-        axios.get("http://127.0.0.1:5000/api/deleteMember",{params:{'id':id}}).then((res)=>{
+        axios.get("/api/deleteMember",{params:{'id':id}}).then((res)=>{
             alert("删除成功");
             location.reload()
         })
     }
     var replyApply=function(id,res){
-        axios.get("http://127.0.0.1:5000/api/replyApply",{params:{'id':id,'res':res}}).then((res)=>{
+        axios.get("/api/replyApply",{params:{'id':id,'res':res}}).then((res)=>{
             alert("回复成功")
             location.reload()
         })

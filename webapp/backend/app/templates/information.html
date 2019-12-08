@@ -272,13 +272,13 @@
 <script>
     axios.defaults.withCredentials = true;
     var replyApply=function(id,res){
-        axios.get("http://127.0.0.1:5000/api/replyApply",{params:{'id':id,'res':res}}).then((res)=>{
+        axios.get("/api/replyApply",{params:{'id':id,'res':res}}).then((res)=>{
             alert("回复成功")
             location.reload()
         })
     }
     var changeIsRead=function(id){
-        axios.get("http://127.0.0.1:5000/api/changeIsRead",{params:{'id':id}}).then((res)=>{
+        axios.get("/api/changeIsRead",{params:{'id':id}}).then((res)=>{
             alert("回复成功")
             location.reload()
         })
