@@ -2,6 +2,7 @@
 '''测试阶段-启动文件'''
 import os
 import sys
+import unittest
 
 from flask_script import Manager, Shell
 from flask_migrate import Migrate,MigrateCommand
@@ -43,7 +44,9 @@ def init_db():
 
 @manager.command
 def test(coverage=False):
-    return
+    """Run the unit tests"""
+    tests = unittest.TestLoader().discover(r'app.test')
+    unittest.TextTestRunner(verbosity=2).run(tests)
 
 
 if __name__ == '__main__':
