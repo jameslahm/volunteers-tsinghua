@@ -1,4 +1,5 @@
-const host = 'http://example.com'
+const host = 'https://2019-a16.iterator-traits.com'
+const port = '80'
 const appid = ''
 const appSecret = ''
 
@@ -6,7 +7,8 @@ const config = {
   host,
   appid,
   appSecret,
-  DEBUG: true
+  DEBUG: false,
+  port
 }
 
 export default config

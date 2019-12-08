@@ -6,42 +6,45 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    items: [], // 用户参加的活动
+    items: [], // 用户参加的活动,分页，默认20个
     user: {},
-    messages: [], // 用户消息
-    globalItems: []// 所有活动
+    messages: [], // 用户消息，
+    globalItems: [], // 所有活动，分页默认20个
+    total: 0, // 所有globalItems总数
+    token: '',
+    password: ''
   },
   getters: {
     'getItemById': (state) => {
       return function (id) {
         return state.items.filter((item) => {
-          return item.id === id
+          return item.id === parseInt(id)
         })[0]
       }
     },
     'getMessageById': (state) => {
       return function (id) {
         return state.messages.filter((item) => {
-          return item.id === id
+          return item.id === parseInt(id)
         })[0]
       }
     },
     'getGlobalItemById': (state) => {
       return function (id) {
         return state.globalItems.filter((item) => {
-          return item.id === id
+          return item.id === parseInt(id)
         })[0]
       }
     }
   },
   mutations: {
-    getItems (state) {
-      get({ 'url': '/users/123/activities' }).then((res) => {
+    getItems (state, page) {
+      get({ 'url': `/users/${state.user.id}/activities`, 'data': {'page': page} }).then((res) => {
         state.items = res
       })
     },
     getMessages (state) {
-      get({ 'url': '/users/123/messages' }).then((res) => {
+      get({ 'url': `/users/${state.user.id}/messages` }).then((res) => {
         state.messages = res
         state.messages.forEach(elem => {
           elem.decription = elem.content.slice(0, 20) + '...'
@@ -52,37 +55,59 @@ const store = new Vuex.Store({
       state.messages.forEach(elem => {
         if (elem.id === id) {
           elem.isRead = true
-          post({'url': `/messages/${elem.id}/`, 'data': elem})
+          get({ 'url': `/messages/${elem.id}/changeIsRead` })
         }
       })
     },
     getUser (state, id) {
-      get({'url': '/users/123'}).then(res => {
+      console.log(id)
+      // post({'url': '/token', 'data': {'schoolId': state.user.schoolId, 'password': state.password}}).then((res) => {
+      //   state.token = res.token
+      // })
+      get({ 'url': `/users/${id}` }).then(res => {
+        console.log(res)
         state.user = res
-        console.log(state.user)
+        console.log('User')
       })
     },
     logIn (state, data) {
-      post({'url': '/auth/login', 'data': {'schoolId': data.schoolId, 'password': data.password}}).then(res => {
+      post({ 'url': '/auth/login', 'data': { 'schoolId': data.schoolId, 'password': data.password } }).then(res => {
         state.user = res
+        wx.setStorageSync({
+          key: 'schoolId',
+          data: state.user.schoolId
+        })
       })
+    },
+    logOut (state) {
+      state.user = undefined
     },
     changeInfo (state, info) {
       for (let k in info) {
         state.user[k] = info[k]
       }
-      post({'url': `/users/${state.user.id}`, 'data': state.user})
+      post({ 'url': `/users/${state.user.id}`, 'data': state.user })
     },
     getGlobalItems (state, params) {
-      get({'url': '/activities', 'data': params}).then(res => {
-        state.globalItems = res
+      get({ 'url': '/activities', 'data': params }).then(res => {
+        console.log(res)
+        state.globalItems = res.items
+        state.total = res.total
+        console.log(res.total)
       })
     },
     applyItem (state, data) {
-      console.log('apply')
+      get({'url': `/users/${state.user.id}/apply`, 'data': data}).then(res => {
+        console.log(res)
+      })
     },
     clearGlobalItems (state) {
       state.globalItems = []
+    },
+    deleteMessage (state, id) {
+      get(`/message/${id}/delete`).then(res => {
+        console.log(res)
+      })
     }
   }
 })

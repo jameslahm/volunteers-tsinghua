@@ -1,7 +1,6 @@
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-
 class Config():
     SECRET_KEY = os.getenv('SECRET_KEY') or "hard to guess"
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
@@ -9,10 +8,11 @@ class Config():
     FLASKY_MAIL_SENDER = os.getenv('FLASKY_MAIL_SENDER')
     FLASK_ADMIN = os.getenv('FLASKY_ADMIN') or 'volunteers-tsinghua@example.com'
     FLASK_ADMIN_PASSWORD = os.getenv('FLASKY_ADMIN_PASSWORD') or '123456'
-
+    ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg','bmp'])
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     FLASKY_POSTS_PER_PAGE=20
     FLASKY_COMMENTS_PER_PAGE=20
+    UPLOAD_FOLDER=basedir+'/app/static/img/'
 
 
     @staticmethod
@@ -29,7 +29,7 @@ class Development(Config):
     MAIL_USERNAME = os.getenv('MAIL_USERNAME') 
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD') 
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://  \
-                            root:zhizaitsinghua@localhost:3306/volunteers?charset=utf8'
+                            root:Waqing121!@localhost:3306/volunteers?charset=utf8'
 
 class TestConfig(Config):
     TESTING = True

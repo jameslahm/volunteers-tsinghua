@@ -32,13 +32,15 @@
     <!-- ============================================================== -->
 
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- Message Modal -->
+    {% for activity in activities %}
+    {% for userActivity in activity.userActivities %}
+    <div class="modal fade" id="userActivity{{userActivity.id}}" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">消息详情</h5>
+                    <h5 class="modal-title" id="messageModalLabel">消息详情</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -47,8 +49,8 @@
                 <div class="modal-body">
                     <div class="card" style="width: 45rem;">
                         <div class="card-body">
-                            <h5 class="card-title">项目：校园志愿讲解</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">消息时间：2019.11.20 19:56</h6>
+                            <h5 class="card-title">项目：{{userActivity.activity.title}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">消息时间：时间</h6>
 
                             <table class="table">
                                 <thead>
@@ -63,143 +65,89 @@
                                 </thead>
                                 <tbody>
                                     <tr class="table-success">
-                                        <th scope="row">校园志愿讲解</th>
-                                        <td>流动志愿者</td>
-                                        <td>2019.11.20</td>
-                                        <td>王俊凯</td>
-                                        <td>201919991999</td>
-                                        <td>软件学院</td>
+                                        <th scope="row">{{userActivity.activity.title}}</th>
+                                        <td>工作职位</td>
+                                        <td>申请工作的时间</td>
+                                        <td>{{userActivity.user.name}}</td>
+                                        <td>{{userActivity.user.schoolId}}</td>
+                                        <td>{{userActivity.user.department}}</td>
                                     </tr>
                                 </tbody>
                             </table>
 
-                            <p class="card-text">申请理由：我爱志愿，我真的很爱志愿，希望你们可以收留我这个可怜的孩子嘤嘤嘤。</p>
+                            <p class="card-text">{{userActivity.content}}</p>
                             <a href="#" class="card-link">志愿者详情</a>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-success">同意申请</button>
-                    <button type="button" class="btn btn-danger">拒绝申请</button>
-                    <button type="button" class="btn btn-info">回复</button>
+                    <button type="button" class="btn btn-success" onclick="replyApply({{userActivity.id}},'1')">同意</button>
+                    <button type="button" class="btn btn-danger" onclick="replyApply({{userActivity.id}},'0')">拒绝</button>
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">确认</button>
                 </div>
             </div>
         </div>
     </div>
+    {% endfor %}
+    {% endfor %}
 
+    {% for activity in activities %}
+    <div class="modal fade" id="Activity{{activity.id}}" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">消息详情</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="card" style="width: 45rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">项目：{{activity.title}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">消息时间：时间</h6>
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">审批结果</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-success">
+                                        <th scope="row">{{activity.type}}</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="changeIsRead({{activity.id}},'activity')" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 
     <div class="container-fluid">
         <div class="tab-content">
             <ul class="nav nav-tabs" id="myTab" role="tablist" style="padding-left: 10px;">
                 <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                        aria-controls="home" aria-selected="true">所有消息</a>
+                    <a class="nav-link" id="applyMessage-tab" data-toggle="tab" href="#applyMessage" role="tab"
+                        aria-controls="applyMessage" aria-selected="false">志愿者申请</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                        aria-controls="profile" aria-selected="false">志愿者申请</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab"
-                        aria-controls="messages" aria-selected="false">志愿者留言</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab"
-                        aria-controls="settings" aria-selected="false">管理员消息</a>
+                    <a class="nav-link" id="managerMessage-tab" data-toggle="tab" href="#managerMessage" role="tab"
+                        aria-controls="managerMessage" aria-selected="false">管理员消息</a>
                 </li>
             </ul>
-            <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <div class="col-12">
-                    <div class="card">
 
-                        <div class="card-body">
-                            <h4 class="card-title">所有消息</h4>
-                            <h6 class="card-subtitle">在这里查看所有您收到的消息。</h6>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">消息类型</th>
-                                        <th scope="col">用户类型</th>
-                                        <th scope="col">用户名称</th>
-                                        <th scope="col">相关项目</th>
-                                        <th scope="col">时间</th>
-                                        <th scope="col">消息状态</th>
-                                        <th scope="col">操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="table-success" style="cursor:pointer;"
-                                        onclick="$('#exampleModal').modal('toggle')">
-                                        <th scope="row">志愿申请</th>
-                                        <td>志愿者</td>
-                                        <td>奥巴马</td>
-                                        <td>校园志愿讲解</td>
-                                        <td>2019.11.20 22:36</td>
-                                        <td>未读</td>
-                                        <td>回复</td>
-                                    </tr>
-                                    <tr class="table-success" style="cursor:pointer;"
-                                        onclick="$('#exampleModal').modal('toggle')">
-                                        <th scope="row">志愿申请</th>
-                                        <td>志愿者</td>
-                                        <td>特朗普</td>
-                                        <td>校园志愿讲解</td>
-                                        <td>2019.11.20 12:36</td>
-                                        <td>未读</td>
-                                        <td>回复</td>
-                                    </tr>
-                                    <tr class="table-primary" style="cursor:pointer;"
-                                        onclick="$('#exampleModal').modal('toggle')">
-                                        <th scope="row">志愿者留言</th>
-                                        <td>志愿者</td>
-                                        <td>希拉里</td>
-                                        <td>校园志愿讲解</td>
-                                        <td>2019.11.20 22:36</td>
-                                        <td>未读</td>
-                                        <td>回复</td>
-                                    </tr>
-                                    <tr class="table-danger" style="cursor:pointer;"
-                                        onclick="$('#exampleModal').modal('toggle')">
-                                        <th scope="row">管理员消息</th>
-                                        <td>管理员</td>
-                                        <td>清华大学团委志愿组</td>
-                                        <td>校园志愿讲解</td>
-                                        <td>2019.11.20 12:36</td>
-                                        <td>未读</td>
-                                        <td>回复</td>
-                                    </tr>
-
-                                    <tr style="cursor:pointer;" onclick="$('#exampleModal').modal('toggle')">
-                                        <th scope="row">志愿申请</th>
-                                        <td>志愿者</td>
-                                        <td>马克思</td>
-                                        <td>校园志愿讲解</td>
-                                        <td>2019.11.20 22:36</td>
-                                        <td>已读</td>
-                                        <td>回复</td>
-                                    </tr>
-                                    <tr style="cursor:pointer;" onclick="$('#exampleModal').modal('toggle')">
-                                        <th scope="row">志愿者留言</th>
-                                        <td>志愿者</td>
-                                        <td>恩格斯</td>
-                                        <td>校园志愿讲解</td>
-                                        <td>2019.11.20 22:36</td>
-                                        <td>已读</td>
-                                        <td>回复</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="tab-pane active" id="applyMessage" role="tabpanel" aria-labelledby="applyMessag-tab">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
@@ -220,36 +168,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for activity in activities %}
+                                    {% for userActivity in activity.userActivities %}
+                                    {% if not userActivity.isRead %}
                                     <tr class="table-success" style="cursor:pointer;"
-                                        onclick="$('#exampleModal').modal('toggle')">
+                                        onclick="$('#userActivity{{userActivity.id}}').modal('toggle')">
                                         <th scope="row">志愿申请</th>
                                         <td>志愿者</td>
-                                        <td>奥巴马</td>
-                                        <td>校园志愿讲解</td>
-                                        <td>2019.11.20 22:36</td>
+                                        <td>{{userActivity.user.name}}</td>
+                                        <td>{{userActivity.activity.title}}</td>
+                                        <td>{{userActivity.applytime}}</td>
                                         <td>未读</td>
                                         <td>回复</td>
                                     </tr>
-                                    <tr class="table-success" style="cursor:pointer;"
-                                        onclick="$('#exampleModal').modal('toggle')">
-                                        <th scope="row">志愿申请</th>
-                                        <td>志愿者</td>
-                                        <td>特朗普</td>
-                                        <td>校园志愿讲解</td>
-                                        <td>2019.11.20 12:36</td>
-                                        <td>未读</td>
-                                        <td>回复</td>
-                                    </tr>
-                                    <tr style="cursor:pointer;" onclick="$('#exampleModal').modal('toggle')">
-                                        <th scope="row">志愿申请</th>
-                                        <td>志愿者</td>
-                                        <td>马克思</td>
-                                        <td>校园志愿讲解</td>
-                                        <td>2019.11.20 22:36</td>
-                                        <td>已读</td>
-                                        <td>回复</td>
-                                    </tr>
-
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -257,55 +191,7 @@
                 </div>
             </div>
 
-            <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">志愿者留言</h4>
-                            <h6 class="card-subtitle">在这里查看您收到的来自志愿者的留言和反馈。</h6>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">消息类型</th>
-                                        <th scope="col">用户类型</th>
-                                        <th scope="col">用户名称</th>
-                                        <th scope="col">相关项目</th>
-                                        <th scope="col">时间</th>
-                                        <th scope="col">消息状态</th>
-                                        <th scope="col">操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="table-primary" style="cursor:pointer;"
-                                        onclick="$('#exampleModal').modal('toggle')">
-                                        <th scope="row">志愿者留言</th>
-                                        <td>志愿者</td>
-                                        <td>希拉里</td>
-                                        <td>校园志愿讲解</td>
-                                        <td>2019.11.20 22:36</td>
-                                        <td>未读</td>
-                                        <td>回复</td>
-                                    </tr>
-                                    <tr style="cursor:pointer;" onclick="$('#exampleModal').modal('toggle')">
-                                        <th scope="row">志愿者留言</th>
-                                        <td>志愿者</td>
-                                        <td>恩格斯</td>
-                                        <td>校园志愿讲解</td>
-                                        <td>2019.11.20 22:36</td>
-                                        <td>已读</td>
-                                        <td>回复</td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+            <div class="tab-pane" id="managerMessage" role="tabpanel" aria-labelledby="managerMessage-tab">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
@@ -318,7 +204,6 @@
                                     <tr>
                                         <th scope="col">消息类型</th>
                                         <th scope="col">用户类型</th>
-                                        <th scope="col">用户名称</th>
                                         <th scope="col">相关项目</th>
                                         <th scope="col">时间</th>
                                         <th scope="col">消息状态</th>
@@ -326,18 +211,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    <tr class="table-danger" style="cursor:pointer;"
-                                        onclick="$('#exampleModal').modal('toggle')">
+                                    {% for activity in activities %}
+                                    {% if not activity.isRead %}
+                                    <tr class="table-success" style="cursor:pointer;"
+                                        onclick="$('#Activity{{activity.id}}').modal('toggle')">
                                         <th scope="row">管理员消息</th>
                                         <td>管理员</td>
-                                        <td>清华大学团委志愿者</td>
-                                        <td>校园志愿讲解</td>
-                                        <td>2019.11.20 12:36</td>
-                                        <td>未读</td>
-                                        <td>回复</td>
+                                        <td>管理员</td>
+                                        <td>{{activity.title}}</td>
+                                        <td>{{activity.applytime}}</td>
+                                        <td>{{activity.isRead}}</td>
+                                        <td>阅读</td>
                                     </tr>
-
+                                    {% endif %}
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -378,3 +265,24 @@
     <!-- ============================================================== -->
 </div>
 {% endblock %}
+
+{% block script %}
+{{super()}}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    axios.defaults.withCredentials = true;
+    var replyApply=function(id,res){
+        axios.get("http://127.0.0.1:5000/api/replyApply",{params:{'id':id,'res':res}}).then((res)=>{
+            alert("回复成功")
+            location.reload()
+        })
+    }
+    var changeIsRead=function(id){
+        axios.get("http://127.0.0.1:5000/api/changeIsRead",{params:{'id':id}}).then((res)=>{
+            alert("回复成功")
+            location.reload()
+        })
+    }
+</script>
+{% endblock %}
+

@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 
 {% block page %}
+<link href="../static/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" href="../static/css/bootstrap-fileinput.css">
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script-->
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="../static/js/bootstrap-fileinput.js"></script>
 <div class="page-wrapper">
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
@@ -39,89 +48,47 @@
                 <div class="card card-body">
                     <h4 class="card-title">项目申请</h4>
                     <h5 class="card-subtitle"> 请您填写项目申请表，管理员会尽快回复您的申请 </h5>
-                    <form class="form-horizontal m-t-30">
+                    <form class="form-horizontal m-t-30" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="name">项目名称</label>
-                            <input type="text" class="form-control" placeholder="请填写志愿项目的名称">
+                            <input type="text" name='title' class="form-control" placeholder="请填写志愿项目的名称">
                         </div>
                         <div class="form-group">
                             <label for="location">项目地点</label>
-                            <input type="text" class="form-control" placeholder="请填写项目具体地点">
+                            <input type="text" name='location' class="form-control" placeholder="请填写项目具体地点">
                         </div>
                         <div class="form-group">
                             <label>项目时间</label>
-                            <form action="" class="form-horizontal" role="form">
-                                <fieldset>
+                            <fieldset>
                                     <div class="row">
                                         <div class='col-sm-6'>
                                             <div class="form-group">
-                                                <label for="dtp_input1"
-                                                    class="col-md-4 control-label">招募开始日期</label>
-                                                <div class="input-group date form_date col-md-5" data-date=""
-                                                    data-date-format="yyyy MM dd" data-link-field="dtp_input1"
-                                                    data-link-format="yyyy-mm-dd">
-                                                    <input class="form-control" size="16" type="text" value=""
-                                                        readonly>
-                                                    <span class="input-group-addon"><span
-                                                            class="glyphicon glyphicon-remove"></span></span>
-                                                    <span class="input-group-addon"><span
-                                                            class="glyphicon glyphicon-calendar"></span></span>
-                                                </div>
-                                                <input type="hidden" id="dtp_input1" value="" /><br />
-                                            </div>
-                                        </div>
-                                        <div class='col-sm-6'>
-                                            <div class="form-group">
-                                                <label for="dtp_input2"
-                                                    class="col-md-4 control-label">招募结束日期</label>
-                                                <div class="input-group date form_date col-md-5" data-date=""
-                                                    data-date-format="yyyy MM dd" data-link-field="dtp_input2"
-                                                    data-link-format="yyyy-mm-dd">
-                                                    <input class="form-control" size="16" type="text" value=""
-                                                        readonly>
-                                                    <span class="input-group-addon"><span
-                                                            class="glyphicon glyphicon-remove"></span></span>
-                                                    <span class="input-group-addon"><span
-                                                            class="glyphicon glyphicon-calendar"></span></span>
-                                                </div>
-                                                <input type="hidden" id="dtp_input2" value="" /><br />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class='col-sm-6'>
-                                            <div class="form-group">
-                                                <label for="dtp_input3"
-                                                    class="col-md-4 control-label">项目开始日期</label>
+                                                <label for="dtp_input3" class="col-md-4 control-label">项目开始日期</label>
                                                 <div class="input-group date form_date col-md-5" data-date=""
                                                     data-date-format="yyyy MM dd" data-link-field="dtp_input3"
                                                     data-link-format="yyyy-mm-dd">
-                                                    <input class="form-control" size="16" type="text" value=""
-                                                        readonly>
+                                                    <input class="form-control" size="16" type="text" value="" readonly>
                                                     <span class="input-group-addon"><span
                                                             class="glyphicon glyphicon-remove"></span></span>
                                                     <span class="input-group-addon"><span
                                                             class="glyphicon glyphicon-calendar"></span></span>
                                                 </div>
-                                                <input type="hidden" id="dtp_input3" value="" /><br />
+                                                <input type="hidden" id="dtp_input3" name="startdate" value="" /><br />
                                             </div>
                                         </div>
                                         <div class='col-sm-6'>
                                             <div class="form-group">
-                                                <label for="dtp_input4"
-                                                    class="col-md-4 control-label">项目结束日期</label>
+                                                <label for="dtp_input4" class="col-md-4 control-label">项目结束日期</label>
                                                 <div class="input-group date form_date col-md-5" data-date=""
                                                     data-date-format="yyyy MM dd" data-link-field="dtp_input4"
                                                     data-link-format="yyyy-mm-dd">
-                                                    <input class="form-control" size="16" type="text" value=""
-                                                        readonly>
+                                                    <input class="form-control" size="16" type="text" value="" readonly>
                                                     <span class="input-group-addon"><span
                                                             class="glyphicon glyphicon-remove"></span></span>
                                                     <span class="input-group-addon"><span
                                                             class="glyphicon glyphicon-calendar"></span></span>
                                                 </div>
-                                                <input type="hidden" id="dtp_input4" value="" /><br />
+                                                <input type="hidden" id="dtp_input4" name="enddate" value="" /><br />
                                             </div>
                                         </div>
                                     </div>
@@ -129,60 +96,47 @@
                                     <div class="row">
                                         <div class='col-sm-6'>
                                             <div class="form-group">
-                                                <label for="dtp_time1" class="col-md-2 control-label">每日开始时间</label>
+                                                <label for="dtp_time1" class="col-md-2 control-label">开始时间</label>
                                                 <div class="input-group date form_time col-md-5" data-date=""
                                                     data-date-format="hh:ii" data-link-field="dtp_time1"
                                                     data-link-format="hh:ii">
-                                                    <input class="form-control" size="16" type="text" value=""
-                                                        readonly>
+                                                    <input class="form-control" size="16" type="text" value="" readonly>
                                                     <span class="input-group-addon"><span
                                                             class="glyphicon glyphicon-remove"></span></span>
                                                     <span class="input-group-addon"><span
                                                             class="glyphicon glyphicon-time"></span></span>
                                                 </div>
-                                                <input type="hidden" id="dtp_time1" value="" /><br />
+                                                <input type="hidden" id="dtp_time1" value="" name="starttime"/><br />
                                             </div>
                                         </div>
                                         <div class='col-sm-6'>
                                             <div class="form-group">
-                                                <label for="dtp_time2" class="col-md-2 control-label">每日结束时间</label>
+                                                <label for="dtp_time2" class="col-md-2 control-label">结束时间</label>
                                                 <div class="input-group date form_time col-md-5" data-date=""
                                                     data-date-format="hh:ii" data-link-field="dtp_time2"
                                                     data-link-format="hh:ii">
-                                                    <input class="form-control" size="16" type="text" value=""
-                                                        readonly>
+                                                    <input class="form-control" size="16" type="text" value="" readonly>
                                                     <span class="input-group-addon"><span
                                                             class="glyphicon glyphicon-remove"></span></span>
                                                     <span class="input-group-addon"><span
                                                             class="glyphicon glyphicon-time"></span></span>
                                                 </div>
-                                                <input type="hidden" id="dtp_time2" value="" /><br />
+                                                <input type="hidden" id="dtp_time2" value="" name="endtime"/><br />
                                             </div>
                                         </div>
                                     </div>
 
-                                </fieldset>
-                            </form>
+                            </fieldset>
                         </div>
 
                         <div class="form-group">
                             <label for="location">招募人数</label>
-                            <input type="number" class="form-control" placeholder="请输入预计招募人数">
+                            <input type="number" class="form-control" name="totalRecruits" placeholder="请输入预计招募人数">
                         </div>
 
                         <div class="form-group">
-                            <label>项目简介</label>
-                            <textarea class="form-control" rows="5" placeholder="请简要描述一下您的志愿项目"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>申请理由</label>
-                            <textarea class="form-control" rows="5"
-                                placeholder="您可以在这里填写具体的申请理由，以方便审核"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="instituion">管理单位</label>
-                            <input type="text" class="form-control" placeholder="请填写项目负责单位名称">
+                            <label>项目内容</label>
+                            <textarea class="form-control" rows="5" name="content" placeholder="请简要描述一下您的志愿项目"></textarea>
                         </div>
 
                         <div class="card">
@@ -190,16 +144,16 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="name-person1">姓名</label>
-                                    <input type="text" class="form-control" placeholder="请填写负责人姓名">
+                                    <input type="text" class="form-control" name="managePerson" placeholder="请填写负责人姓名">
                                 </div>
                                 <div class="form-group">
                                     <label for="email">邮箱</label>
-                                    <input type="email" id="email" name="email" class="form-control"
+                                    <input type="email" id="email" name="manageEmail" class="form-control"
                                         placeholder="请填写负责人邮箱">
                                 </div>
                                 <div class="form-group">
                                     <label for="name-person1">联系电话</label>
-                                    <input type="number" class="form-control" placeholder="请填写负责人联系电话">
+                                    <input type="number" class="form-control" name="managePhone" placeholder="请填写负责人联系电话">
                                 </div>
                             </div>
                         </div>
@@ -207,10 +161,9 @@
                             <label>上传图片</label> <br>
 
                             <div class="col-md-8">
-                                <div class="fileinput fileinput-new" data-provides="fileinput"
-                                    id="uploadImageDiv">
+                                <div class="fileinput fileinput-new" data-provides="fileinput" id="uploadImageDiv">
                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                        <img src="${companyInfo.image}" alt="" />
+                                        <img src="" alt="" />
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail"
                                         style="max-width: 200px; max-height: 150px;"></div>
@@ -218,16 +171,16 @@
                                         <span class="btn default btn-file" class='col-sm-6'>
                                             <button class="btn btn-secondary btn-file"
                                                 class="fileinput-new">选择图片</button>
-                                            <input type="file" name="uploadImage" id="uploadImage" />
+                                            <input type="file" name="thumb" id="uploadImage" />
                                         </span>
                                     </div>
-                                    <a href="#" class="btn default fileinput-exists"
-                                        data-dismiss="fileinput">移除</a>
+                                    <a href="#" class="btn default fileinput-exists" data-dismiss="fileinput">移除</a>
                                     <span>您可以选择一张图片用于志愿项目的宣传</span>
                                 </div>
                                 <div id="titleImageError" style="color: #a94442"></div>
                             </div>
                         </div>
+                        <input class="btn btn-lg btn-primary btn-block" type="submit"></button>
                     </form>
                 </div>
             </div>
@@ -242,7 +195,6 @@
         <!-- ============================================================== -->
         <!-- End Right sidebar -->
         <!-- ============================================================== -->
-        <button class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
     </div>
     <!-- ============================================================== -->
     <!-- End Container fluid  -->
@@ -257,4 +209,43 @@
     <!-- End Right sidebar -->
     <!-- ============================================================== -->
 </div>
+
+<script type="text/javascript" src="../static/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../static/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+    $('.form_date').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+    $('.form_time').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 1,
+        minView: 0,
+        maxView: 1,
+        forceParse: 0
+    });
+</script>
+
+<script>
+</script>
 {% endblock %}

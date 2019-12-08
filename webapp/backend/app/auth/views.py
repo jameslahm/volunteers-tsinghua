@@ -6,7 +6,6 @@ from flask_login import login_user, login_required, logout_user
 from ..model import Team,IntroCode
 from .. import db
 
-
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     if(request.method == 'POST'):
@@ -14,6 +13,7 @@ def login():
         password = request.form.get('password')
         remember_me = request.form.get('remember_me')
         team = Team.query.filter_by(email=email).first()
+        print(team)
         if team is not None and team.verify_password(password):
             login_user(team, remember=remember_me)
             if team.is_administrator():
@@ -44,7 +44,7 @@ def register():
                 flash('Code is not correct')
             else:
                 flash('You have registered successfully')
-                team=Team(email=email,userName=username,password=password)
+                team=Team(email=email,teamName=username,password=password)
                 db.session.add(team)
                 db.session.commit()
                 login_user(team,remember=True)
@@ -60,3 +60,5 @@ def logout():
     logout_user()
     flash('You have been logged out')
     return redirect(url_for('auth.login'))
+
+

@@ -40,6 +40,15 @@ export default {
 	onLoad(){
 		if(!this.$store.state.user.id){
 			this.isLogIn=false
+			// wx.navigateToMiniProgram({  
+			// 	"appId": "wx1ebe3b2266f4afe0",  
+			// 	"path": "pages/index/index",  
+			// 	"envVersion": "trial",  
+			// 	"extraData": {   
+			// 		"origin": "miniapp",   
+			// 		"type": "id.tsinghua"  
+			// 		} 
+			// 	})
 		}
 		else{
 			this.isLogIn=true
@@ -48,6 +57,7 @@ export default {
 	methods:{
 		'bindClick2':function(){
 			this.$store.commit('logIn',{'schoolId':this.schoolId,'password':this.password})
+			this.isLogIn=true
 		},
 		'bindClick1':function(){
 			console.log('info')
@@ -55,6 +65,16 @@ export default {
 		},
 		'logOut':function(){
 			this.isLogIn=false
+			// wx.navigateToMiniProgram({  
+			// 	"appId": "wx1ebe3b2266f4afe0",  
+			// 	"path": "pages/index/index",  
+			// 	"envVersion": "trial",  
+			// 	"extraData": {   
+			// 		"origin": "miniapp",   
+			// 		"type": "id.tsinghua"  
+			// 		} 
+			// 	})
+			this.$store.commit('logOut')
 		},
 		'bindClick3':function(){
 			console.log('my activities')

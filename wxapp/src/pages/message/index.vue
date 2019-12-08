@@ -4,6 +4,7 @@
         <view slot="footer">
             <p>请扫码入群</p>
             <img :src="message.qrCode">
+            <i-button @click="bindClick()" size="small" type="primary">删除消息</i-button>
         </view>
     </i-card>
 </template>
@@ -13,6 +14,11 @@ export default {
     data(){
         return {
             messageId:''
+        }
+    },
+    methods:{
+        'bindClick':function(){
+            this.$store.commit('deleteMessage',messageId)
         }
     },
     computed:{

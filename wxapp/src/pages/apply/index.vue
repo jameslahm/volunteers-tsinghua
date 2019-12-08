@@ -1,7 +1,7 @@
 <template>
   <div>
     <i-message id="message"/>
-    <i-card :thumb="item.thumb" title="item.title">
+    <i-card :thumb="item.thumb" :title="item.title">
       <view slot="content">
         <i-input title="姓名" id="userName" :value="info.userName" type="text" placeholder="name" @change="changeInput"></i-input>
         <i-input title="院系" id="department" :value="info.department" type="text" placeholder="department" @change="changeInput"></i-input>
@@ -32,7 +32,7 @@ export default {
   },
   computed:{
     'item':function(){
-      return this.$store.getters.getGlobalItemById(this.itemId)
+      return this.$store.getters.getGlobalItemById(this.itemId) || this.$store.getters.getItemById(this.itemId)
     },
     'user':function(){
       return this.$store.state.user
@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     'bindClick': function() {
-      this.$store.commit('applyItem',{'content':this.content})
+      this.$store.commit('applyItem',{'content':this.content,'id':this.itemId})
       $Message({
         content:"报名成功",
         type:'success'
