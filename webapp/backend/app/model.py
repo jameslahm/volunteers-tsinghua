@@ -321,7 +321,7 @@ class Message(db.Model):
         json_message={
             'id':self.id,
             'userId':self.userId,
-            'team':self.team.to_json(),
+            'team':self.activity.team.to_json(),
             'activityId':self.activityId,
             'content':self.content,
             'qrcode':self.qrCode,
