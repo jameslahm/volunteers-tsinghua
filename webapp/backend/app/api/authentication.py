@@ -23,6 +23,7 @@ def verifyTHU():
     data=request.json
     url="https://alumni-test.iterator-traits.com/fake-id-tsinghua-proxy/api/user/session/token"
     res=requests.post(url,data).json().get('user')
+    print(res)
     u=User.query.filter_by(schoolId=res.card).first()
     if not u:
         u=User(schoolId=res.card,userName=res.name,department=res.department)
