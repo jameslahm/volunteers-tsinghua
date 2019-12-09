@@ -45,7 +45,7 @@ def get_user_messages(id):
 
 @api.route('/users/<int:id>/apply',methods=['POST'])
 def user_apply(id):
-    data=request.json()
+    data=request.json
     token=data.get('token')
     u=verify_token(id,token)
     if not u:
