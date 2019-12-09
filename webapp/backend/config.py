@@ -4,8 +4,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config():
     SECRET_KEY = os.getenv('SECRET_KEY') or "hard to guess"
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
-    FLASKY_MAIL_SUBJECT_PREFIX = '[FLASKY]'
-    FLASKY_MAIL_SENDER = os.getenv('FLASKY_MAIL_SENDER')
+    FLASKY_MAIL_SUBJECT_PREFIX = '[SE]'
+    FLASKY_MAIL_SENDER = os.getenv('FLASKY_MAIL_SENDER') or 'SE'
     FLASK_ADMIN = os.getenv('FLASKY_ADMIN') or 'volunteers-tsinghua@example.com'
     FLASK_ADMIN_PASSWORD = os.getenv('FLASKY_ADMIN_PASSWORD') or '123456'
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg','bmp'])
@@ -13,6 +13,11 @@ class Config():
     FLASKY_POSTS_PER_PAGE=20
     FLASKY_COMMENTS_PER_PAGE=20
     UPLOAD_FOLDER=basedir+'/app/static/img/'
+    MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_PORT = 587
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = 'jameslahm17@gmail.com'
+    MAIL_PASSWORD = 'dkcqjdrpmswxrjtw'
 
 
     @staticmethod
@@ -23,11 +28,6 @@ class Config():
 class Development(Config):
     ENV='development'
     DEBUG = True
-    MAIL_SERVER = 'smtp.googlemail.com'
-    MAIL_PORT = 587
-    MAIL_USE_TLS = True
-    MAIL_USERNAME = os.getenv('MAIL_USERNAME') 
-    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD') 
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://  \
                             root:Waqing121!@localhost:3306/volunteers?charset=utf8'
 

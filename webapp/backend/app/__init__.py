@@ -9,8 +9,10 @@ from flask_admin.contrib.sqla import ModelView
 from flask_sqlalchemy import SQLAlchemy
 from config import config
 import os
+from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 
+mail = Mail()
 db = SQLAlchemy()
 bootstrap=Bootstrap()
 login_manager = LoginManager()
@@ -25,6 +27,7 @@ def create_app(config_name):
     db.init_app(app)
     login_manager.init_app(app)
     bootstrap.init_app(app)
+    mail.init_app(app)
     app.db = db
 
 

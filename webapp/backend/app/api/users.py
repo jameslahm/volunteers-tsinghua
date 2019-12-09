@@ -18,6 +18,7 @@ def query_by_id(id):
         user.email=data.get('email')
         user.phone=data.get('phone')
         user.description=data.get('description')
+        user.avatar=data.get('avatar')
         db.session.commit()
         return jsonify(user.to_json())
     user_info = User.query.filter(User.id == id).first()

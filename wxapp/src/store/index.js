@@ -110,8 +110,39 @@ const store = new Vuex.Store({
       post({'url': '/verifyTHU', 'data': {'token': token}}).then((res) => {
         state.user = res.user
         state.token = res.token
-        console.log(state.user)
         wx.setStorageSync('id', state.user.id)
+        wx.getSetting({
+          success (res) {
+            if (res.authSetting['scope.userInfo']) {
+              // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+              wx.getUserInfo({
+                success: function (res) {
+                  state.user.avatar = res.userInfo.avatarUrl
+                  var data = state.user
+                  console.log(state.user)
+                  data.token = state.token
+                  post({ 'url': `/users/${state.user.id}`, 'data': data })
+                }
+              })
+            } else {
+              wx.authorize({
+                scope: 'scope.userInfo',
+                success () {
+                  wx.getUserInfo({
+                    success: function (res) {
+                      state.user.avatar = res.userInfo.avatarUrl
+                      var data = state.user
+                      console.log(state.user)
+                      data.token = state.token
+                      post({ 'url': `/users/${state.user.id}`, 'data': data })
+                    }
+                  })
+                }
+              })
+            }
+          }
+        })
+        console.log('Avatar')
       })
     }
   }

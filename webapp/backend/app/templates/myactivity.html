@@ -70,8 +70,8 @@
                                             <div class="card">
                                                 <img src="{{activity.thumb}}" class="card-img-top"
                                                     alt="...">
-                                                <button class="btn btn-lg btn-info btn-block">招募公告</button>
-                                                <button class="btn btn-lg btn-primary btn-block">导入成员</button>
+                                                <!-- <button class="btn btn-lg btn-info btn-block">招募公告</button>
+                                                <button class="btn btn-lg btn-primary btn-block">导入成员</button> -->
                                                 <button class="btn btn-lg btn-secondary btn-block"
                                                     disabled>申请结项</button>
                                             </div>
@@ -278,10 +278,16 @@
                                             <h5 class="card-title">个人简介</h5>
                                             <p class="card-text" rows="10">{{userActivity.user.profile}}
                                             </p>
+                                            <div class="card">
+                                                <img src="{{userActivity.user.avatar}}" class="card-img-top"
+                                                    alt="...">
+                                                        <!-- <button class="btn btn-lg btn-info btn-block">招募公告</button>
+                                                        <button class="btn btn-lg btn-primary btn-block">导入成员</button> -->
+                                            </div>
                                         </div>
-                                        <button class="btn btn-lg btn-info btn-block">发送消息</button>
+                                        <!-- <button class="btn btn-lg btn-info btn-block">发送消息</button>
                                         <button class="btn btn-lg btn-primary btn-block">更改职位</button>
-                                        <button class="btn btn-lg btn-secondary btn-block" disabled>招募邀请</button>
+                                        <button class="btn btn-lg btn-secondary btn-block" disabled>招募邀请</button> -->
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -292,10 +298,10 @@
                                                 <li class="list-group-item">微信号：{{userActivity.user.wx}}</li>
                                                 <li class="list-group-item">邮箱：{{userActivity.user.email}}</li>
                                                 <li class="list-group-item">联系电话：{{userActivity.user.phone}} </li>
-                                                <li class="list-group-item">加入项目：{{userActivity.activity.title}}（{{userActivity.activity.id}}）
+                                                <li class="list-group-item">加入项目：{{userActivity.activity.title}}
                                                 </li>
-                                                <li class="list-group-item">工作职位：工作岗位</li>
-                                                <li class="list-group-item">工作时间：工作时间</li>
+                                                <!-- <li class="list-group-item">工作职位：工作岗位</li>
+                                                <li class="list-group-item">工作时间：工作时间</li> -->
                                                 <li class="list-group-item"><a href="#" class="btn btn-danger"
                                                         style="float:right" onclick="deleteMember({{userActivity.id}});return false;">删除成员</a></li>
                                             </ul>
