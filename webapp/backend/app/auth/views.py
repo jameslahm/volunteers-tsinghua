@@ -5,6 +5,7 @@ from flask import request
 from flask_login import login_user, login_required, logout_user
 from ..model import Team,IntroCode
 from .. import db
+from ..email import send_mail
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -61,4 +62,30 @@ def logout():
     flash('You have been logged out')
     return redirect(url_for('auth.login'))
 
+@auth.route('/reset',methods=['GET','POST'])
+def password_reset_request():
+    if(request.method=='POST'):
+        email=request.form.get('email')
+        team=Team.query.filter_by(email=email).first()
+        token=team.generate_reset_token(3600)
+        send_mail(team.email,'Reset your Password','auth/email/reset_password',team=team,token=token)
+        flash('An email with instructions to reset your password has been sent to you')
+        return redirect(url_for('auth.login'))
+    else:
+        return render_template('auth/password_reset_request.html')
 
+@auth.route('/reset/<token>',methods=['GET','POST'])
+def password_reset(token):
+    team=Team.verify_reset_token(token)
+    if(request.method=='GET'):
+        return render_template('auth/password_reset.html')
+    else:
+        if(team):
+            team.password=request.form.get('password')
+            if(request.form.get('email')==team.email):
+                db.session.commit()
+                flash('Your password has been updated')
+            else:
+                flash('Email not correct')
+                return redirect(url_for('auth.login'))
+        return redirect(url_for('auth.login'))

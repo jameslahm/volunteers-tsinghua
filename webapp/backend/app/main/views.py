@@ -25,6 +25,15 @@ def index():
         team.phone=phone
         team.password=password
         team.description=description
+        avatar=request.files['avatar']
+        if avatar and allowed_file(avatar.filename):
+            filename = secure_filename(avatar.filename)
+            print(filename)
+            avatar.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename).replace('\\','/'))
+            file='/static/img/'+filename
+        else:
+            file=None
+        team.avatar=file
         db.session.commit()
     return render_template(
         'profile.html',team=current_user
@@ -52,7 +61,7 @@ def myactivity():
     )
     activities=pagination.items
     return render_template(
-        'myactivity.html',activities=activities,pagination=pagination
+        'myactivity.html',activities=activities,pagination=pagination,team=current_user
     )
 
 
@@ -98,7 +107,7 @@ def createactivity():
         db.session.commit()
         return redirect(url_for('main.myactivity'))
     return render_template(
-        'createactivity.html'
+        'createactivity.html',team=current_user
     )
 
 
@@ -108,30 +117,30 @@ def createactivity():
 def information():
     activities=Activity.query.filter_by(team=current_user).all()
     return render_template(
-        'information.html',activities=activities
+        'information.html',activities=activities,team=current_user
     )
 
 
-@main.route('/verifyThu', methods=['GET', 'POST'])
-def verifyThu():
-    ticket = request.args.get('ticket')
+# @main.route('/verifyThu', methods=['GET', 'POST'])
+# def verifyThu():
+#     ticket = request.args.get('ticket')
 
-    get_ip = requests.get("http://www.baidu.com", stream=True)
-    user_ip_address = get_ip.raw._connection.sock.getsockname()[0]
-    user_ip_address = str(user_ip_address).replace('.', '_')
-    get_ip.close()
+#     get_ip = requests.get("http://www.baidu.com", stream=True)
+#     user_ip_address = get_ip.raw._connection.sock.getsockname()[0]
+#     user_ip_address = str(user_ip_address).replace('.', '_')
+#     get_ip.close()
 
-    AppID = 'A16'
-    verify_url = 'https://alumni-test.iterator-traits.com/fake-id-tsinghua/thuser/authapi/checkticket/{}/{}/{}'.format(
-        AppID, ticket, user_ip_address
-    )
-    rsp = requests.get(verify_url)
+#     AppID = 'A16'
+#     verify_url = 'https://alumni-test.iterator-traits.com/fake-id-tsinghua/thuser/authapi/checkticket/{}/{}/{}'.format(
+#         AppID, ticket, user_ip_address
+#     )
+#     rsp = requests.get(verify_url)
 
-    result = str(rsp).split(':')
-    info = {'code': result[0][5:], 'zjh': result[1][4:], 'yhm': result[2][4:], 'xm': result[3][3:],
-            'yhlb': result[4][5:], 'dw': result[5][3:], 'email': result[6][6:]}
+#     result = str(rsp).split(':')
+#     info = {'code': result[0][5:], 'zjh': result[1][4:], 'yhm': result[2][4:], 'xm': result[3][3:],
+#             'yhlb': result[4][5:], 'dw': result[5][3:], 'email': result[6][6:]}
 
-    return jsonify(info)
+#     return jsonify(info)
 
     # return render_template(
     #     'profile.html', user_info=requests.get(verify_url).json()
@@ -139,12 +148,12 @@ def verifyThu():
     # )
 
 
-@main.route('/tsinghua')
-def login_thu():
-    AppID = 'A16'
-    SEQ = '669223961b70204ffbd023015ea9decb'
-    returnurl = 'verifyThu'
-    url = 'https://alumni-test.iterator-traits.com/fake-id-tsinghua/do/off/ui/auth/login/form/{}/{}?{}'.format(
-        md5(AppID), SEQ, returnurl
-    )
-    return redirect(url)
+# @main.route('/tsinghua')
+# def login_thu():
+#     AppID = 'A16'
+#     SEQ = '669223961b70204ffbd023015ea9decb'
+#     returnurl = 'verifyThu'
+#     url = 'https://alumni-test.iterator-traits.com/fake-id-tsinghua/do/off/ui/auth/login/form/{}/{}?{}'.format(
+#         md5(AppID), SEQ, returnurl
+#     )
+#     return redirect(url)

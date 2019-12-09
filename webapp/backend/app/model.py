@@ -20,7 +20,7 @@ class User(db.Model):
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     # TODO: how to get openId?
-    openId = db.Column("openId", db.String(64), unique=False) # 改
+    # openId = db.Column("openId", db.String(64), unique=False) # 改
     userName = db.Column("userName", db.String(16), unique=False, nullable=False)
     wx = db.Column("wx", db.String(64), unique=False) # 改
     email = db.Column("email", db.String(64), unique=False) # 改
@@ -89,13 +89,26 @@ class Team(db.Model,UserMixin):
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     email = db.Column("email", db.String(64), unique=False) #改
     teamName=db.Column('teamname',db.String(64),unique=False) #改
-    establishedTime=db.Column('establishedtime',db.DateTime)
+    establishedTime=db.Column('establishedtime',db.DateTime,default=datetime.now)
     avatar = db.Column("avatar", db.String(128))
     password_hash=db.Column('password_hash',db.String(128))
     description=db.Column('description',db.Text)
     phone=db.Column('phone',db.String(64))
     activities = db.relationship('Activity', backref='team',lazy='dynamic',cascade='all, delete-orphan')
 
+
+    def generate_reset_token(self,expiration):
+        s=Serializer(current_app.config['SECRET_KEY'],expires_in=expiration)
+        return s.dumps(self.id).decode('utf-8')
+    
+    @staticmethod
+    def verify_reset_token(token):
+        s=Serializer(current_app.config['SECRET_KEY'])
+        try:
+            id=s.loads(token.encode('utf-8'))
+        except:
+            return False
+        return Team.query.filter_by(id=id).first()
 
     @property
     def password(self):
@@ -139,7 +152,7 @@ class Team(db.Model,UserMixin):
         return json_team
 
     def finishedActivities(self):
-        return Activity.query.filter_by(teamId=self.id,type='finished').all()
+        return Activity.query.filter_by(teamId=self.id,type='created').filter(Activity.endtime<=datetime.now()).all()
 
     def createdActivities(self):
         return Activity.query.filter_by(teamId=self.id,type='created').all()
