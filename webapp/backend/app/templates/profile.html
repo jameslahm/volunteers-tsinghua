@@ -90,22 +90,15 @@
                             <div class="form-group">
                                 <label class="col-md-12">密码</label>
                                 <div class="col-md-12">
-                                    <input type="password" value="team.password"
-                                        class="form-control form-control-line" name="password">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-12">管理单位</label>
-                                <div class="col-md-12">
-                                    <input type="text" placeholder="校团委志愿组"
-                                        class="form-control form-control-line">
+                                    <input type="password" class="form-control form-control-line" name="password" placeholder="******">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">团队简介</label>
                                 <div class="col-md-12">
-                                    <input type='text' class="form-control form-control-line" rows="5" placeholder="这里是XXXX，我们是一个XXXXXXXXXXXXXXXXXXXXX的团队，我们运营的项目包括XXXXXXXX。" 
-                                     name="description" value={{team.description}}>
+                                    <textarea class="form-control" rows="5" placeholder="这里是XXXX，我们是一个XXXXXXXXXXXXXXXXXXXXX的团队，我们运营的项目包括XXXXXXXX。" 
+                                     name="description">{{team.description}}
+                                    </textarea>
                                 </div>
                             </div>
                             <div class="form-group">

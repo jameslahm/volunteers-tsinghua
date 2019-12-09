@@ -4,11 +4,8 @@
     <view style="padding:15px;">
       <i-card full :title="item.title" :thumb="item.thumb" i-class="card-thumb">
         <view slot="content">
-          <i-panel :title="'活动编号：'+item.AID">
-            <view style="padding:15px;">
-              {{item.content}}
-            </view>
-          </i-panel>
+            活动编号：<br/>{{item.AID}}<br/><br/>
+            活动内容：<br/>{{item.content}}
         </view>
         <!-- <view slot="footer">
           <i-panel title="团队成员" hide-border hide-top>
@@ -29,25 +26,21 @@ const { $Message } = require('../../../static/iview/base/index');
 export default {
   data () {
     return {
-      itemId: 123,
-      isApplyed:false
+      itemId: 123
     }
   },
   computed: {
     'item': function () {
       return this.$store.getters.getGlobalItemById(this.itemId) || this.$store.getters.getItemById(this.itemId)
+    },
+    'isApplyed':function(){
+      return this.$store.getters.getItemById(this.itemId)
     }
   },
   components: {},
   onLoad (options) {
     this.itemId = parseInt(options.id)
-    console.log(this.itemId)
-    if(this.$store.getters.getItemById(this.itemId)){
-      this.isApplyed=true
-    }
-    else{
-      this.isApplyed=false
-    }
+    this.$store.commit('getItems')
   },
   methods: {
     'bindClick':function(){

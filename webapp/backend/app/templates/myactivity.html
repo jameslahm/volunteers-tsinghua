@@ -88,12 +88,7 @@
                                                         联系电话：<input name="managePhone" class="form-control form-control-line" value={{activity.managePhone}} name='managePhone'>
                                                         <!-- <li class="list-group-item">邮箱：{{activity.email}} <a href="#"
                                                                 class="btn btn-success" style="float:right">修改</a></li> -->
-                                                        <div class="card-body">
-                                                            <h5 class="card-title">项目简介</h5>
-                                                                <p class="card-text">
-                                                                    <input type='text' name='content' class="form-control" value={{activity.content}}>
-                                                                </p>
-                                                        </div>
+                                                        项目简介 <textarea name='content' class="form-control">{{activity.content}}</textarea>
                                                         <input  type="submit" class="btn btn-success" value="保存">
                                                         <button class="btn btn-danger" onclick="deleteActivity({{activity.id}});return false;">删除项目
                                                     </ul>
@@ -410,19 +405,19 @@
 <script>
     axios.defaults.withCredentials = true;
     var deleteActivity = function(id) {
-        axios.get("/api/deleteActivity",{params:{'id':id}}).then((res)=>{
+        axios.get("/api/activities/deleteActivity",{params:{'id':id}}).then((res)=>{
             alert("删除成功");
             location.reload()
         })
     }
     var deleteMember=function(id){
-        axios.get("/api/deleteMember",{params:{'id':id}}).then((res)=>{
+        axios.get("/api/activities/deleteMember",{params:{'id':id}}).then((res)=>{
             alert("删除成功");
             location.reload()
         })
     }
     var replyApply=function(id,res){
-        axios.get("/api/replyApply",{params:{'id':id,'res':res}}).then((res)=>{
+        axios.get("/api/activities/replyApply",{params:{'id':id,'res':res}}).then((res)=>{
             alert("回复成功")
             location.reload()
         })

@@ -1,9 +1,8 @@
 <template>
     <i-card :thumb="message.team.avatar" title="通知" i-class="card-thumb">
-        <view slot="content">{{message.content}}</view>
-        <view slot="footer">
+        <view slot="content">{{message.content}}
             <p>请扫码入群</p>
-            <img :src="message.qrCode">
+            <img :src="message.qrcode" mode='widthFix'>
             <i-button @click="bindClick()" size="small" type="primary">删除消息</i-button>
         </view>
     </i-card>
@@ -18,7 +17,7 @@ export default {
     },
     methods:{
         'bindClick':function(){
-            this.$store.commit('deleteMessage',messageId)
+            this.$store.commit('deleteMessage',this.messageId)
         }
     },
     computed:{
@@ -28,7 +27,6 @@ export default {
     },
     onLoad(options){
         this.messageId=options.id
-        console.log(this.messageId)
     }
 }
 </script>

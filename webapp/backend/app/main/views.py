@@ -76,15 +76,24 @@ def createactivity():
         manageEmail=request.form.get('manageEmail')
         managePhone=request.form.get('managePhone')
         thumb=request.files['thumb']
+        qrcode=request.files['qrcode']
         type='creating'
         if thumb and allowed_file(thumb.filename):
             filename = secure_filename(thumb.filename)
+            print(filename)
             thumb.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename).replace('\\','/'))
             file='/static/img/'+filename
         else:
             file=None
+        if qrcode and allowed_file(qrcode.filename):
+            filename = secure_filename(qrcode.filename)
+            print(filename)
+            qrcode.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename).replace('\\','/'))
+            qrcode='/static/img/'+filename
+        else:
+            qrcode=None
         activity=Activity(title=title,location=location,starttime=startdate+" "+starttime,endtime=enddate+" "+endtime,totalRecruits=totalRecruits, \
-            content=content,managePerson=managePerson,manageEmail=manageEmail,managePhone=managePhone,thumb=file,team=current_user,type=type)
+            content=content,managePerson=managePerson,manageEmail=manageEmail,managePhone=managePhone,thumb=file,team=current_user,type=type,qrcode=qrcode)
         db.session.add(activity)
         db.session.commit()
         return redirect(url_for('main.myactivity'))
@@ -97,8 +106,9 @@ def createactivity():
 @main.route('/information', methods=['GET', 'POST'])
 @login_required
 def information():
+    activities=Activity.query.filter_by(team=current_user).all()
     return render_template(
-        'information.html'
+        'information.html',activities=activities
     )
 
 

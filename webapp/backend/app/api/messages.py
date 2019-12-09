@@ -4,26 +4,31 @@ from . import api
 from .. import db
 from .authentication import verify_token
 
-@api.route('messages/<int:id>/changeIsRead',methods=['GET','POST'])
+@api.route('messages/<int:id>/changeIsRead',methods=['POST'])
 def change_message_isread(id):
     data=request.json
-    email=data.get('schoolId')
     token=data.get('token')
-    if not verify_token(email,token):
+    u=verify_token(token)
+    if not u:
         abort(402)
     message=Message.query.filter_by(id=id).first()
+    if message.user!=u:
+        abort(402)
     message.isRead=True
     db.session.commit()
     return jsonify({})
 
-@api.route('messages/<int:id>/delete',methods=['GET','POST'])
+@api.route('messages/<int:id>/delete',methods=['POST'])
 def delete_message(id):
     data=request.json
-    email=data.get('schoolId')
     token=data.get('token')
-    if not verify_token(email,token):
+    u=verify_token(token)
+    if not u:
         abort(402)
+    print(id)
     message=Message.query.filter_by(id=id).first()
+    if message.user!=u:
+        abort(402)
     db.session.delete(message)
     db.session.commit()
     return jsonify({})

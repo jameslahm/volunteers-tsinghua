@@ -4,7 +4,6 @@ import store from '@/store/index'
 export default {
   store,
   onShow (options) {
-    console.log(options)
   },
   created () {
     // 调用API从本地缓存中获取数据

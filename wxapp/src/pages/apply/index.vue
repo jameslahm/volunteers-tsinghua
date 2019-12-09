@@ -45,6 +45,7 @@ export default {
         content:"报名成功",
         type:'success'
       })
+      this.$store.commit('getItems')
     },
     'changeInput':function(event){
       if(event.target.id==='content') this.content=event.target.detail.value
