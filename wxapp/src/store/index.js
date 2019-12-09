@@ -73,8 +73,8 @@ const store = new Vuex.Store({
       })
     },
     logOut (state) {
-      state.user = undefined
-      state.token = undefined
+      state.user = {}
+      state.token = ''
     },
     changeInfo (state, info) {
       for (let k in info) {
@@ -110,6 +110,7 @@ const store = new Vuex.Store({
       post({'url': '/verifyTHU', 'data': {'token': token}}).then((res) => {
         state.user = res.user
         state.token = res.token
+        console.log(state.user)
         wx.setStorageSync('id', state.user.id)
       })
     }

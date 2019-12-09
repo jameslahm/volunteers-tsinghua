@@ -7,6 +7,7 @@ export default {
     if (options.referrerInfo.extraData) {
       var token = options.referrerInfo.extraData.token
       this.$store.commit('verifyTHU', token)
+      wx.switchTab({url: '/pages/home/main'})
     }
   },
   created () {
