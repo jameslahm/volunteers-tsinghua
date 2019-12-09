@@ -46,20 +46,21 @@
                     <div class="tab-content">
                         <ul class="nav nav-tabs" id="myTab" role="tablist" style="padding-left: 10px;">
                             <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home{{activity.id}}" role="tab"
-                                    aria-controls="home" aria-selected="true">项目信息</a>
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home{{activity.id}}"
+                                    role="tab" aria-controls="home" aria-selected="true">项目信息</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile{{activity.id}}" role="tab"
-                                    aria-controls="profile" aria-selected="false">成员管理</a>
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile{{activity.id}}"
+                                    role="tab" aria-controls="profile" aria-selected="false">成员管理</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages{{activity.id}}" role="tab"
-                                    aria-controls="messages" aria-selected="false">招募消息</a>
+                                <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages{{activity.id}}"
+                                    role="tab" aria-controls="messages" aria-selected="false">招募消息</a>
                             </li>
                         </ul>
 
-                        <div class="tab-pane active" id="home{{activity.id}}" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="tab-pane active" id="home{{activity.id}}" role="tabpanel"
+                            aria-labelledby="home-tab">
 
                             <div class="card" style="width: 45rem;">
                                 <div class="card-body">
@@ -69,11 +70,10 @@
                                         <div class="col-sm-5">
                                             <div class="card">
                                                 <img src="{{activity.thumb}}" class="card-img-top"
-                                                    alt="...">
+                                                    alt="../static/img/myactivity/thu2.jpeg">
                                                 <button class="btn btn-lg btn-info btn-block">招募公告</button>
                                                 <button class="btn btn-lg btn-primary btn-block">导入成员</button>
-                                                <button class="btn btn-lg btn-secondary btn-block"
-                                                    disabled>申请结项</button>
+                                                <button class="btn btn-lg btn-secondary btn-block">申请结项</button>
                                             </div>
                                         </div>
                                         <div class="col-sm-7">
@@ -81,17 +81,27 @@
                                                 <div class="card-body">
                                                     <form class="form-control" method="POST">
                                                         <input name='id' value={{activity.id}} hidden>
-                                                        状态：<input readonly class="form-control form-control-line" value={{activity.type}}>
-                                                        活动日期：<input name="starttime" class="form-control form-control-line" value={{activity.starttime}} name='starttime'>
-                                                        管理单位：<input readonly class="form-control form-control-line" value={{activity.team.teamName}} >                                      
-                                                        负责人：<input name="managePerson" class="form-control form-control-line" value={{activity.managePerson}} name='managePerson'>
-                                                        联系电话：<input name="managePhone" class="form-control form-control-line" value={{activity.managePhone}} name='managePhone'>
+                                                        状态：<input readonly class="form-control form-control-line"
+                                                            value={{activity.type}}>
+                                                        活动日期：<input name="starttime"
+                                                            class="form-control form-control-line"
+                                                            value={{activity.starttime}} name='starttime'>
+                                                        管理单位：<input readonly class="form-control form-control-line"
+                                                            value={{activity.team.teamName}}>
+                                                        负责人：<input name="managePerson"
+                                                            class="form-control form-control-line"
+                                                            value={{activity.managePerson}} name='managePerson'>
+                                                        联系电话：<input name="managePhone"
+                                                            class="form-control form-control-line"
+                                                            value={{activity.managePhone}} name='managePhone'>
                                                         <!-- <li class="list-group-item">邮箱：{{activity.email}} <a href="#"
                                                                 class="btn btn-success" style="float:right">修改</a></li> -->
-                                                        项目简介 <textarea name='content' class="form-control">{{activity.content}}</textarea>
-                                                        <input  type="submit" class="btn btn-success" value="保存">
-                                                        <button class="btn btn-danger" onclick="deleteActivity({{activity.id}});return false;">删除项目
-                                                    </ul>
+                                                        项目简介 <textarea name='content'
+                                                            class="form-control">{{activity.content}}</textarea>
+                                                        <input type="submit" class="btn btn-success" value="保存">
+                                                        <button class="btn btn-danger"
+                                                            onclick="deleteActivity({{activity.id}});return false;">删除项目
+                                                            </ul>
                                                 </div>
                                             </div>
                                         </div>
@@ -103,7 +113,9 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title">成员列表{{activity.appliedRecruits.__str__()+'/'+activity.totalRecruits.__str__()}}</h4>
+                                        <h4 class="card-title">
+                                            成员列表{{activity.appliedRecruits.__str__()+'/'+activity.totalRecruits.__str__()}}
+                                        </h4>
                                         <h6 class="card-subtitle">在这里查看已经加入您项目的志愿者。</h6>
                                     </div>
                                     <div class="table-responsive">
@@ -138,7 +150,8 @@
 
 
                         </div>
-                        <div class="tab-pane" id="messages{{activity.id}}" role="tabpanel" aria-labelledby="messages-tab">
+                        <div class="tab-pane" id="messages{{activity.id}}" role="tabpanel"
+                            aria-labelledby="messages-tab">
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
@@ -195,8 +208,8 @@
 
     <!-- Modal message-->
     {% for userActivity in activity.userActivities %}
-    <div class="modal fade" id="userActivityApply{{userActivity.id}}" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="userActivityApply{{userActivity.id}}" tabindex="-1" role="dialog"
+        aria-labelledby="messageModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -239,8 +252,10 @@
                             <a href="#" class="card-link">志愿者详情</a>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-success" onclick="replyApply({{userActivity.id}},'1')">同意</button>
-                    <button type="button" class="btn btn-danger" onclick="replyApply({{userActivity.id}},'0')">拒绝</button>
+                    <button type="button" class="btn btn-success"
+                        onclick="replyApply({{userActivity.id}},'1')">同意</button>
+                    <button type="button" class="btn btn-danger"
+                        onclick="replyApply({{userActivity.id}},'0')">拒绝</button>
                 </div>
 
                 <div class="modal-footer">
@@ -254,8 +269,8 @@
 
     <!-- Modal person-->
     {% for userActivity in activity.userActivities %}
-    <div class="modal fade" id="userActivity{{userActivity.id}}" tabindex="-1" role="dialog" aria-labelledby="personModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="userActivity{{userActivity.id}}" tabindex="-1" role="dialog"
+        aria-labelledby="personModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -292,12 +307,15 @@
                                                 <li class="list-group-item">微信号：{{userActivity.user.wx}}</li>
                                                 <li class="list-group-item">邮箱：{{userActivity.user.email}}</li>
                                                 <li class="list-group-item">联系电话：{{userActivity.user.phone}} </li>
-                                                <li class="list-group-item">加入项目：{{userActivity.activity.title}}（{{userActivity.activity.id}}）
+                                                <li class="list-group-item">
+                                                    加入项目：{{userActivity.activity.title}}（{{userActivity.activity.id}}）
                                                 </li>
                                                 <li class="list-group-item">工作职位：工作岗位</li>
                                                 <li class="list-group-item">工作时间：工作时间</li>
                                                 <li class="list-group-item"><a href="#" class="btn btn-danger"
-                                                        style="float:right" onclick="deleteMember({{userActivity.id}});return false;">删除成员</a></li>
+                                                        style="float:right"
+                                                        onclick="deleteMember({{userActivity.id}});return false;">删除成员</a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -314,7 +332,66 @@
         </div>
     </div>
     {% endfor %}
-{% endfor %}
+
+    <!-- Modal finish activity-->
+    <div class="modal fade" id="assign{{activity.id}}" tabindex="-1" role="dialog"
+        aria-labelledby="assignModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="assignModalLabel">项目详情</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    成员列表{{activity.appliedRecruits.__str__()+'/'+activity.totalRecruits.__str__()}}</h4>
+                                <h6 class="card-subtitle">在这里查看已经加入您项目的志愿者。</h6>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">姓名</th>
+                                            <th scope="col">学号</th>
+                                            <th scope="col">院系</th>
+                                            <!--th scope="col">工作职位</th-->
+                                            <th scope="col">工作时间</th>
+                                            <th scope="col">分配工时</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for userActivity in activity.userActivities %}
+                                        {% if userActivity.type=='applied' %}
+                                        <tr>
+                                            <th scope="row">{{userActivity.user.userName}}</th>
+                                            <td>{{userActivity.user.schoolId}}</td>
+                                            <td>{{userActivity.user.department}}</td>
+                                            <!--td>{{userActivity.user.job}}</td-->
+                                            <td>{{userActivity.activity.starttime}}</td>
+                                            <td><input type="number" class="form-control" name="workinghour{{userActivity.id}}"></td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">确认提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 
     <!-- Container fluid  -->
     <!-- ============================================================== -->
@@ -346,8 +423,7 @@
                                             <div class="card mb-3" style="max-width: 450px;">
                                                 <div class="row no-gutters">
                                                     <div class="col-md-4">
-                                                        <img src="{{activity.thumb}}"
-                                                            class="d-block w-100" alt="...">
+                                                        <img src="{{activity.thumb}}" class="d-block w-100" alt="...">
                                                     </div>
                                                     <div class="col-md-8">
                                                         <div class="card-body">
@@ -404,20 +480,20 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
     axios.defaults.withCredentials = true;
-    var deleteActivity = function(id) {
-        axios.get("/api/activities/deleteActivity",{params:{'id':id}}).then((res)=>{
+    var deleteActivity = function (id) {
+        axios.get("/api/activities/deleteActivity", { params: { 'id': id } }).then((res) => {
             alert("删除成功");
             location.reload()
         })
     }
-    var deleteMember=function(id){
-        axios.get("/api/activities/deleteMember",{params:{'id':id}}).then((res)=>{
+    var deleteMember = function (id) {
+        axios.get("/api/activities/deleteMember", { params: { 'id': id } }).then((res) => {
             alert("删除成功");
             location.reload()
         })
     }
-    var replyApply=function(id,res){
-        axios.get("/api/activities/replyApply",{params:{'id':id,'res':res}}).then((res)=>{
+    var replyApply = function (id, res) {
+        axios.get("/api/activities/replyApply", { params: { 'id': id, 'res': res } }).then((res) => {
             alert("回复成功")
             location.reload()
         })
