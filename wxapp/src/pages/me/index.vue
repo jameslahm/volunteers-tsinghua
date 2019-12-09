@@ -58,9 +58,7 @@ export default {
 				fail(res){
 					console.log(res)
 				},
-				success(res){
-					this.isLogIn=true
-				}})
+			})
 		},
 		'bindClick1':function(){
 			wx.navigateTo({url:'/pages/info/main'})
