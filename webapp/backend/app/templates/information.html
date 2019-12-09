@@ -12,7 +12,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="profile">主页</a>
+                                <a href="/">主页</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">消息中心</li>
                         </ol>
@@ -84,7 +84,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-secondary" onclick="changeIsRead({{userActivity.id}},'userActivity')" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
@@ -147,7 +147,7 @@
                 </li>
             </ul>
 
-            <div class="tab-pane active" id="applyMessage" role="tabpanel" aria-labelledby="applyMessag-tab">
+            <div class="tab-pane" id="applyMessage" role="tabpanel" aria-labelledby="applyMessag-tab">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
@@ -170,15 +170,19 @@
                                 <tbody>
                                     {% for activity in activities %}
                                     {% for userActivity in activity.userActivities %}
-                                    {% if not userActivity.isRead %}
+                                    {% if userActivity.type=='applying' %}
                                     <tr class="table-success" style="cursor:pointer;"
-                                        onclick="$('#userActivity{{userActivity.id}}').modal('toggle')">
+                                        onclick="$('#userActivity{{userActivity.id}}').modal('toggle');">
                                         <th scope="row">志愿申请</th>
                                         <td>志愿者</td>
-                                        <td>{{userActivity.user.name}}</td>
+                                        <td>{{userActivity.user.userName}}</td>
                                         <td>{{userActivity.activity.title}}</td>
-                                        <td>{{userActivity.applytime}}</td>
-                                        <td>未读</td>
+                                        <td>{{userActivity.applyTime}}</td>
+                                        {% if userActivity.isRead %}
+                                            <td>已读</td>
+                                        {% else %}
+                                            <td>未读</td>
+                                        {% endif %}
                                         <td>回复</td>
                                     </tr>
                                     {% endif %}
@@ -212,15 +216,18 @@
                                 </thead>
                                 <tbody>
                                     {% for activity in activities %}
-                                    {% if not activity.isRead %}
+                                    {% if activity.isMessage and (not activity.isRead) %}
                                     <tr class="table-success" style="cursor:pointer;"
                                         onclick="$('#Activity{{activity.id}}').modal('toggle')">
                                         <th scope="row">管理员消息</th>
                                         <td>管理员</td>
-                                        <td>管理员</td>
                                         <td>{{activity.title}}</td>
-                                        <td>{{activity.applytime}}</td>
-                                        <td>{{activity.isRead}}</td>
+                                        <td>{{activity.time}}</td>
+                                        {% if activity.isRead%}
+                                            <td>未读</td>
+                                        {% else %}
+                                            <td>已读</td>
+                                        {% endif %}
                                         <td>阅读</td>
                                     </tr>
                                     {% endif %}
@@ -272,16 +279,24 @@
 <script>
     axios.defaults.withCredentials = true;
     var replyApply=function(id,res){
-        axios.get("http://127.0.0.1:5000/api/replyApply",{params:{'id':id,'res':res}}).then((res)=>{
+        axios.get("/api/activities/replyApply",{params:{'id':id,'res':res}}).then((res)=>{
             alert("回复成功")
             location.reload()
         })
     }
-    var changeIsRead=function(id){
-        axios.get("http://127.0.0.1:5000/api/changeIsRead",{params:{'id':id}}).then((res)=>{
-            alert("回复成功")
-            location.reload()
-        })
+    var changeIsRead=function(id,type){
+        if(type=='activity'){
+            axios.get("/api/activities/changeIsRead",{params:{'id':id}}).then((res)=>{
+                alert("阅读完毕")
+                location.reload()
+            })
+        }
+        else{
+            axios.get('/api/userActivities/changeIsRead',{params:{'id':id}}).then(res=>{
+                alert('阅读完毕')
+                location.reload()
+            })
+        }
     }
 </script>
 {% endblock %}

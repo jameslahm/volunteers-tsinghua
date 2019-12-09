@@ -108,7 +108,6 @@ export default {
           this.notInputing=true
         }
       }
-      console.log(this.text)
     },
     'toSearch':function(e){
       this.text=e.target.detail.value
@@ -124,7 +123,6 @@ export default {
         })
         this.notInputing=true
       }
-      console.log(this.text)
     },
     'bindClick1':function(key){
       this.type=key
@@ -133,7 +131,6 @@ export default {
       this.$store.commit('clearGlobalItems')
     },
     'bindClick2':function(item){
-      console.log("navigate")
       wx.navigateTo({ url: '/pages/activity/main?id=' + item.id })
     },
     'clickReturn':function(){

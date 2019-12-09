@@ -1,6 +1,7 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
 import { get, post } from '../utils/api'
+import config from '../config'
 
 Vue.use(Vuex)
 
@@ -11,11 +12,11 @@ const store = new Vuex.Store({
     messages: [], // 用户消息，
     globalItems: [], // 所有活动，分页默认20个
     total: 0, // 所有globalItems总数
-    token: '',
-    password: ''
+    token: ''
   },
   getters: {
     'getItemById': (state) => {
+      console.log(state.items)
       return function (id) {
         return state.items.filter((item) => {
           return item.id === parseInt(id)
@@ -38,9 +39,14 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
-    getItems (state, page) {
-      get({ 'url': `/users/${state.user.id}/activities`, 'data': {'page': page} }).then((res) => {
+    getItems (state) {
+      console.log('getItems')
+      get({ 'url': `/users/${state.user.id}/activities` }).then((res) => {
         state.items = res
+        state.items.forEach(elem => {
+          elem.thumb = config.host + ':' + config.port + elem.thumb
+        })
+        console.log(state.items)
       })
     },
     getMessages (state) {
@@ -48,6 +54,7 @@ const store = new Vuex.Store({
         state.messages = res
         state.messages.forEach(elem => {
           elem.decription = elem.content.slice(0, 20) + '...'
+          elem.qrcode = config.host + ':' + config.port + elem.qrcode
         })
       })
     },
@@ -55,19 +62,18 @@ const store = new Vuex.Store({
       state.messages.forEach(elem => {
         if (elem.id === id) {
           elem.isRead = true
-          get({ 'url': `/messages/${elem.id}/changeIsRead` })
+          post({ 'url': `/messages/${elem.id}/changeIsRead`, 'data': {'token': state.token} })
         }
       })
     },
     getUser (state, id) {
-      console.log(id)
-      // post({'url': '/token', 'data': {'schoolId': state.user.schoolId, 'password': state.password}}).then((res) => {
-      //   state.token = res.token
-      // })
       get({ 'url': `/users/${id}` }).then(res => {
-        console.log(res)
         state.user = res
-        console.log('User')
+        console.log(state.user)
+        post({'url': '/token', 'data': {'id': state.user.id}}).then(res => {
+          state.token = res.token
+          console.log(state.token)
+        })
       })
     },
     logIn (state, data) {
@@ -86,27 +92,30 @@ const store = new Vuex.Store({
       for (let k in info) {
         state.user[k] = info[k]
       }
-      post({ 'url': `/users/${state.user.id}`, 'data': state.user })
+      var data = info
+      data.token = state.token
+      post({ 'url': `/users/${state.user.id}`, 'data': data })
     },
     getGlobalItems (state, params) {
       get({ 'url': '/activities', 'data': params }).then(res => {
-        console.log(res)
         state.globalItems = res.items
+        state.globalItems.forEach(elem => {
+          elem.thumb = config.host + ':' + config.port + elem.thumb
+        })
         state.total = res.total
-        console.log(res.total)
+        console.log(state.globalItems)
       })
     },
     applyItem (state, data) {
-      get({'url': `/users/${state.user.id}/apply`, 'data': data}).then(res => {
-        console.log(res)
+      data.token = state.token
+      post({'url': `/users/${state.user.id}/apply`, 'data': data}).then(res => {
       })
     },
     clearGlobalItems (state) {
       state.globalItems = []
     },
     deleteMessage (state, id) {
-      get(`/message/${id}/delete`).then(res => {
-        console.log(res)
+      post({'url': `/messages/${id}/delete`, 'data': {'token': state.token}}).then(res => {
       })
     }
   }

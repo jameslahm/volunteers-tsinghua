@@ -34,7 +34,7 @@ export default {
 	},
 	onShow () {
       this.$store.commit('getMessages')
-      console.log("notice")
+      this.$store.commit('getItems')
   },
   methods:{
     'bindClick':function(item){

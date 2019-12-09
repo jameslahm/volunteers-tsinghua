@@ -1,12 +1,25 @@
-from flask import Blueprint, render_template, redirect, jsonify,request
+from flask import Blueprint, render_template, redirect, jsonify,request,abort
 from ..model import User,UserActivity,Message,Activity
 from . import api
 from .authentication import verify_token
 from .. import db
 
 
-@api.route('/users/<int:id>', methods=['GET'])
+@api.route('/users/<int:id>', methods=['GET','POST'])
 def query_by_id(id):
+    if request.method=='POST':
+        data=request.json
+        user=verify_token(data.get('token'))
+        if not user:
+            abort(402)
+        user.userName=data.get('userName')
+        user.department=data.get('department')
+        user.wx=data.get('wx')
+        user.email=data.get('email')
+        user.phone=data.get('phone')
+        user.description=data.get('description')
+        db.session.commit()
+        return jsonify(user.to_json())
     user_info = User.query.filter(User.id == id).first()
     if user_info is None:
         return jsonify({})
@@ -30,13 +43,17 @@ def get_user_messages(id):
     res=[x.to_json() for x in messages]
     return jsonify(res)
 
-@api.route('/users/<int:id>/apply',methods=['GET'])
+@api.route('/users/<int:id>/apply',methods=['POST'])
 def user_apply(id):
-    user=User.query.filter_by(id=id).first()
-    content=request.args.get('content')
-    itemId=request.args.get('id')
+    data=request.json
+    token=data.get('token')
+    u=verify_token(token)
+    if not u:
+        abort(402)
+    content=data.get('content')
+    itemId=data.get('id')
     activity=Activity.query.filter_by(id=itemId).first()
-    userA=UserActivity(user=user,activity=activity,content=content,type='applying')
+    userA=UserActivity(user=u,activity=activity,content=content,type='applying')
     db.session.add(userA)
     db.session.commit()
     return jsonify({})

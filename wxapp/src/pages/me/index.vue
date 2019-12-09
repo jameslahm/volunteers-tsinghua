@@ -60,7 +60,6 @@ export default {
 			this.isLogIn=true
 		},
 		'bindClick1':function(){
-			console.log('info')
 			wx.navigateTo({url:'/pages/info/main'})
 		},
 		'logOut':function(){
@@ -77,7 +76,6 @@ export default {
 			this.$store.commit('logOut')
 		},
 		'bindClick3':function(){
-			console.log('my activities')
 			wx.navigateTo({url:'/pages/myactivity/main'})
 		}
 	}

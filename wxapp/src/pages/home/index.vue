@@ -79,23 +79,22 @@ export default {
     },
   },
   onLoad(options) {
-    wx.setStorageSync('schoolId','1')
+    wx.setStorageSync('id','1')
     // wx.setStorageSync('password':'')
     // 查看是否有登录学号
+  },
+  onShow(){
+    this.$store.commit("getGlobalItems")
     try{
-      var schoolId=wx.getStorageSync('schoolId')
+      var id=wx.getStorageSync('id')
       // var password=wx.getStorageSync('password')
-      console.log(schoolId)
-      if(schoolId){
-        this.$store.commit("getUser",schoolId)
+      console.log(id)
+      if(id){
+        this.$store.commit("getUser",id)
       }
     }catch(e){
       console.log("no login")
     }
-  },
-  onShow(){
-    let params={'page':this.current}
-    this.$store.commit("getGlobalItems",params)
   },
   created() {
   },

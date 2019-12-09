@@ -11,6 +11,7 @@ from werkzeug.security import check_password_hash,generate_password_hash
 import re
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from datetime import datetime
+from uuid import uuid1
 
 
 class User(db.Model):
@@ -19,9 +20,9 @@ class User(db.Model):
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     # TODO: how to get openId?
-    openId = db.Column("openId", db.String(64), unique=False, nullable=False) # 改
+    openId = db.Column("openId", db.String(64), unique=False) # 改
     userName = db.Column("userName", db.String(16), unique=False, nullable=False)
-    wx = db.Column("wx", db.String(64), unique=False, nullable=False) # 改
+    wx = db.Column("wx", db.String(64), unique=False) # 改
     email = db.Column("email", db.String(64), unique=False) # 改
     avatar = db.Column("avatar", db.String(128))
     schoolId = db.Column('schoolID', db.String(30), unique=False)  # 改
@@ -67,16 +68,16 @@ class User(db.Model):
 
     def generate_auth_token(self,expiration):
         s=Serializer(current_app.config['SECRET_KEY'],expires_in=expiration)
-        return s.dumps({'id',self.id})
+        return s.dumps(self.id).decode('utf-8')
 
     @staticmethod
     def verify_auth_token(token):
         s=Serializer(current_app.config['SECRET_KEY'])
         try:
-            data=s.loads(token)
+            id=s.loads(token.encode('utf-8'))
         except:
             return False
-        return User.query.filter_by(id=data.get('id')).first()
+        return User.query.filter_by(id=id).first()
 
 
 
@@ -94,7 +95,6 @@ class Team(db.Model,UserMixin):
     description=db.Column('description',db.Text)
     phone=db.Column('phone',db.String(64))
     activities = db.relationship('Activity', backref='team',lazy='dynamic',cascade='all, delete-orphan')
-    messages = db.relationship('Message', backref='team',cascade='all, delete-orphan')
 
 
     @property
@@ -151,25 +151,39 @@ class Activity(db.Model):
     '''活动'''
     __tablename__ = 'activities'
 
+    def generateAID():
+        s=str(uuid1())
+        return s
+
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    AID = db.Column('AID', db.String(12))
+    AID = db.Column('AID', db.String(36),default=generateAID)
     teamId = db.Column('teamId', db.Integer, db.ForeignKey('teams.id',ondelete='cascade'))
-    thumb = db.Column('thumb', db.String(128), nullable=False)
+    thumb = db.Column('thumb', db.String(128))
     starttime = db.Column('starttime', db.DateTime, nullable=False)
     endtime = db.Column('endtime',db.DateTime,nullable=False)
     location = db.Column('location', db.String(50), nullable=False)
     title = db.Column('title', db.String(70), nullable=False)
     content = db.Column('content', db.String(400), nullable=False)
     totalRecruits = db.Column('totalRecruits', db.Integer)
-    appliedRecruits = db.Column('appliedRecruits', db.Integer)
+    appliedRecruits = db.Column('appliedRecruits', db.Integer,default=0)
     managePerson = db.Column('manageperson', db.String(70), nullable=False) # 增加
     managePhone = db.Column('managephone', db.String(70), nullable=False) # 增加
     manageEmail = db.Column('manageemail', db.String(70), nullable=False) # 增加
     qrcode = db.Column('qrcode',db.String(128))
     userActivities = db.relationship('UserActivity', backref='activity',lazy='dynamic',cascade='all, delete-orphan')
     messages = db.relationship('Message',backref='activity',cascade='all, delete-orphan')
-    type = db.Column('type', db.Enum('creating', 'created','finished'))
+    type = db.Column('type', db.Enum('creating', 'created','refused'),default='creating')
     isRead=db.Column('isRead',db.Boolean)
+    time=db.Column('time',db.DateTime,default=datetime.now)
+    isMessage=db.Column('isMessage',db.Boolean,default=False)
+
+    @staticmethod
+    def on_changed_type(target,value,oldvalue,initiator):
+        target.isMessage=True
+        target.time=datetime.now()
+        target.isRead=False
+        db.session.commit()
+        print("type")
 
     @staticmethod
     def generate_fake(count=100):
@@ -273,6 +287,8 @@ class Activity(db.Model):
             'content':self.content,
             'totalRecruits':self.totalRecruits,
             'appliedRecruits':self.appliedRecruits,
+            'thumb':self.thumb,
+            'endtime':self.endtime
         }
         return json_activity
 
@@ -281,6 +297,7 @@ class Activity(db.Model):
         res=[x.user for x in l]
         return res
 
+db.event.listen(Activity.type,'set',Activity.on_changed_type)
 
 class Message(db.Model):
     '''消息'''
@@ -288,12 +305,10 @@ class Message(db.Model):
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     userId = db.Column('userId', db.Integer, db.ForeignKey('users.id',ondelete='cascade'))
-    teamId = db.Column('teamId', db.Integer, db.ForeignKey('teams.id',ondelete='cascade'))
     activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id',ondelete='cascade'))
     content = db.Column('content', db.Text)
-    qrCode = db.Column('qrCode', db.String(64))
     time = db.Column('time', db.DateTime)
-    isRead = db.Column('isRead', db.Boolean)
+    isRead = db.Column('isRead', db.Boolean,default=False)
 
     @staticmethod
     def generate_fake(count=100):
@@ -320,10 +335,10 @@ class Message(db.Model):
         json_message={
             'id':self.id,
             'userId':self.userId,
-            'team':self.team.to_json(),
+            'team':self.activity.team.to_json(),
             'activityId':self.activityId,
             'content':self.content,
-            'qrcode':self.qrCode,
+            'qrcode':self.activity.qrcode,
             'time':self.time,
             'isRead':self.isRead,
         }
@@ -338,9 +353,9 @@ class UserActivity(db.Model):
     activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id',ondelete='cascade'))
     # workDate = db.Column('workdate', db.DateTime, nullable=False) # 增加
     content = db.Column('content', db.String(400), nullable=False) # 增加
-    applyTime = db.Column('applytime', db.DateTime, nullable=False,default=datetime.now) # 增加
-    type = db.Column('type', db.Enum('applying', 'applied','finished')) # 志愿团体是否已阅申请消息？
-    isRead=db.Column('isRead',db.Boolean)
+    applyTime = db.Column('applytime', db.DateTime,default=datetime.now) # 增加
+    type = db.Column('type', db.Enum('applying', 'applied','finished'),default='applying') # 志愿团体是否已阅申请消息？
+    isRead=db.Column('isRead', db.Boolean,default=False)
 
     @staticmethod
     def generate_fake(count=100):

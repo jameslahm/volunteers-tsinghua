@@ -8,7 +8,7 @@
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script-->
-<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="../static/js/bootstrap-fileinput.js"></script>
 <div class="page-wrapper">
     <!-- ============================================================== -->
@@ -24,7 +24,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="profile">主页</a>
+                                <a href="/">主页</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">新建项目</li>
                         </ol>
@@ -179,6 +179,25 @@
                                 </div>
                                 <div id="titleImageError" style="color: #a94442"></div>
                             </div>
+                            <div class="col-md-8">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput" id="uploadImageDiv">
+                                        <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                            <img src="" alt="" />
+                                        </div>
+                                        <div class="fileinput-preview fileinput-exists thumbnail"
+                                            style="max-width: 200px; max-height: 150px;"></div>
+                                        <div class="row">
+                                            <span class="btn default btn-file" class='col-sm-6'>
+                                                <button class="btn btn-secondary btn-file"
+                                                    class="fileinput-new">选择图片</button>
+                                                <input type="file" name="qrcode" id="uploadImage" />
+                                            </span>
+                                        </div>
+                                        <a href="#" class="btn default fileinput-exists" data-dismiss="fileinput">移除</a>
+                                        <span>您可以上传活动群二维码便于成员加入</span>
+                                    </div>
+                                    <div id="titleImageError" style="color: #a94442"></div>
+                                </div>
                         </div>
                         <input class="btn btn-lg btn-primary btn-block" type="submit"></button>
                     </form>

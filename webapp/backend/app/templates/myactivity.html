@@ -15,7 +15,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="profile">主页</a>
+                                <a href="/">主页</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">我的项目</li>
                         </ol>
@@ -68,15 +68,8 @@
                                     <div class="row">
                                         <div class="col-sm-5">
                                             <div class="card">
-                                                <img src="../static/img/myactivity/thu2.jpeg" class="card-img-top"
+                                                <img src="{{activity.thumb}}" class="card-img-top"
                                                     alt="...">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">项目简介</h5>
-                                                    <p class="card-text">{{activity.description}}
-                                                        <a href="#" class="btn btn-success" style="float:right">修改
-                                                        </a>
-                                                    </p>
-                                                </div>
                                                 <button class="btn btn-lg btn-info btn-block">招募公告</button>
                                                 <button class="btn btn-lg btn-primary btn-block">导入成员</button>
                                                 <button class="btn btn-lg btn-secondary btn-block"
@@ -87,13 +80,15 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <form class="form-control" method="POST">
+                                                        <input name='id' value={{activity.id}} hidden>
                                                         状态：<input readonly class="form-control form-control-line" value={{activity.type}}>
-                                                        活动日期：<input name="starttime" class="form-control form-control-line" value={{activity.starttime}}>
+                                                        活动日期：<input name="starttime" class="form-control form-control-line" value={{activity.starttime}} name='starttime'>
                                                         管理单位：<input readonly class="form-control form-control-line" value={{activity.team.teamName}} >                                      
-                                                        负责人：<input name="managePerson" class="form-control form-control-line" value={{activity.managePerson}}>
-                                                        联系电话：<input name="managePhone" class="form-control form-control-line" value={{activity.managePhone}}>
+                                                        负责人：<input name="managePerson" class="form-control form-control-line" value={{activity.managePerson}} name='managePerson'>
+                                                        联系电话：<input name="managePhone" class="form-control form-control-line" value={{activity.managePhone}} name='managePhone'>
                                                         <!-- <li class="list-group-item">邮箱：{{activity.email}} <a href="#"
                                                                 class="btn btn-success" style="float:right">修改</a></li> -->
+                                                        项目简介 <textarea name='content' class="form-control">{{activity.content}}</textarea>
                                                         <input  type="submit" class="btn btn-success" value="保存">
                                                         <button class="btn btn-danger" onclick="deleteActivity({{activity.id}});return false;">删除项目
                                                     </ul>
@@ -351,14 +346,12 @@
                                             <div class="card mb-3" style="max-width: 450px;">
                                                 <div class="row no-gutters">
                                                     <div class="col-md-4">
-                                                        <img src="../static/img/myactivity/thu2.jpeg"
+                                                        <img src="{{activity.thumb}}"
                                                             class="d-block w-100" alt="...">
                                                     </div>
                                                     <div class="col-md-8">
                                                         <div class="card-body">
                                                             <h5 class="card-title">{{activity.title}}</h5>
-                                                            <p class="card-text">
-                                                                {{activity.title}}</p>
                                                             <p class="card-text"><small
                                                                     class="text-muted">更新于3分钟之前</small>
                                                             </p>
@@ -412,19 +405,19 @@
 <script>
     axios.defaults.withCredentials = true;
     var deleteActivity = function(id) {
-        axios.get("http://127.0.0.1:5000/api/deleteActivity",{params:{'id':id}}).then((res)=>{
+        axios.get("/api/activities/deleteActivity",{params:{'id':id}}).then((res)=>{
             alert("删除成功");
             location.reload()
         })
     }
     var deleteMember=function(id){
-        axios.get("http://127.0.0.1:5000/api/deleteMember",{params:{'id':id}}).then((res)=>{
+        axios.get("/api/activities/deleteMember",{params:{'id':id}}).then((res)=>{
             alert("删除成功");
             location.reload()
         })
     }
     var replyApply=function(id,res){
-        axios.get("http://127.0.0.1:5000/api/replyApply",{params:{'id':id,'res':res}}).then((res)=>{
+        axios.get("/api/activities/replyApply",{params:{'id':id,'res':res}}).then((res)=>{
             alert("回复成功")
             location.reload()
         })

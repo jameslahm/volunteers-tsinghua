@@ -8,7 +8,7 @@
     <i-panel v-if="current==='0'">
       <view style="padding:15px;">
         <div v-for="(item,index) in applyingItems" :key=index style="padding-bottom:15px">
-          <i-card full @click='bindClick(item)' :title="item.title" :extra="item.appliedRecruits+'/'+item.totalRecruits" i-class="card-thumb">
+          <i-card full @click='bindClick(item)' :title="item.teamName" :extra="item.appliedRecruits+'/'+item.totalRecruits" i-class="card-thumb">
             <view slot="content">{{item.title}}</view>
             <view slot="footer">{{item.starttime+" "+item.location}}</view>
           </i-card>
@@ -18,7 +18,7 @@
     <i-panel v-if="current==='1'">
       <view style="padding:15px;">
         <div v-for="(item,index) in appliedItems" :key=index style="padding-bottom:15px">
-          <i-card full @click='bindClick(item)' :title="item.title" :extra="item.appliedRecruits+'/'+item.totalRecruits" i-class="card-thumb">
+          <i-card full @click='bindClick(item)' :title="item.teamName" :extra="item.appliedRecruits+'/'+item.totalRecruits" i-class="card-thumb">
             <view slot="content">{{item.title}}</view>
             <view slot="footer">{{item.starttime+" "+item.location}}</view>
           </i-card>
@@ -28,7 +28,7 @@
     <i-panel v-if="current==='2'">
       <view style="padding:15px;">
         <div v-for="(item,index) in endedItems" :key=index style="padding-bottom:15px">
-          <i-card full @click='bindClick(item)' :title="item.title" :extra="item.appliedRecruits+'/'+item.totalRecruits" i-class="card-thumb">
+          <i-card full @click='bindClick(item)' :title="item.teamName" :extra="item.appliedRecruits+'/'+item.totalRecruits" i-class="card-thumb">
             <view slot="content">{{item.title}}</view>
             <view slot="footer">{{item.starttime+" "+item.location}}</view>
           </i-card>
@@ -54,10 +54,9 @@ export default {
   computed: {
     'appliedItems': function () {
       return this.$store.state.items.filter((item,index) => {
-        let date=new Date(item.time)
+        let date=new Date(item.endtime)
         let now=new Date()
-        console.log(item)
-        return item.type === 'applied' && now.getTime()< (date.getTime()+86400000)
+        return item.type === 'applied' && now.getTime()< date.getTime()
       })
     },
     'applyingItems': function () {
@@ -69,7 +68,7 @@ export default {
       return this.$store.state.items.filter((item) => {
         let date=new Date(item.time)
         let now=new Date()
-        return item.type === 'applied' && now.getTime()>= (date.getTime()+86400000)
+        return item.type === 'applied' && now.getTime()>= date.getTime()
       })
     }
   },

@@ -33,19 +33,49 @@ def create_app(config_name):
 
     # flask-user
 
-    class MyUserView(ModelView):
-        column_display_pk=True
+    class MyBaseView(ModelView):
+        
         def is_accessible(self):
             return current_user.is_administrator()
 
         def inaccessible_callback(self, name, **kwargs):
             return redirect(url_for("auth.login"))
 
+    class MyUserView(MyBaseView):
+        column_list=['id','userName','email','schoolId','phone','department']
+        column_searchable_list=['id','userName','email','schoolId']
+        form_excluded_columns=['openId','avatar','wx']
+
+    class MyTeamView(MyBaseView):
+        column_list=['id','teamName','email','phone']
+        column_searchable_list=['id','teamName','email','phone']
+        form_excluded_columns=['avatar']
+        
+        def on_model_change(self, form, team, is_created):
+            team.password = form.password_hash.data
+
+    class MyActivityView(MyBaseView):
+        column_list=['id','AID','title','starttime','location','managePhone']
+        column_searchable_list=['id','AID','title']
+        form_excluded_columns=['managePhone','managePerson','manageEmail','thumb','starttime','endtime','qrcode','AID','isMessage','isRead','time']
+
+    class MyUserActivityView(MyBaseView):
+        column_list=['id','content','applyTime','type']
+        column_searchable_list=['id']
+
+    class MyMessageView(MyBaseView):
+        column_list=['id','content','time']
+        column_searchable_list=['id']
+
+    class MyIntroCodeView(MyBaseView):
+        column_list=['id','code']
+        column_searchable_list=['id']
+
     class MyAdminIndexView(AdminIndexView):
 
         @expose('/')
         def index(self):
-            if not current_user.is_authenticated:
+            if not current_user.is_administrator():
                 return redirect(url_for('auth.login'))
             return super(MyAdminIndexView, self).index()
 
@@ -56,11 +86,11 @@ def create_app(config_name):
 
     admin = Admin(app,name="admin",template_mode="bootstrap3",index_view=MyAdminIndexView())
     admin.add_view(MyUserView(User, db.session))
-    admin.add_view(MyUserView(Team, db.session))
-    admin.add_view(MyUserView(Activity, db.session))
-    admin.add_view(MyUserView(IntroCode, db.session))
-    admin.add_view(MyUserView(UserActivity, db.session))
-    admin.add_view(MyUserView(Message, db.session))
+    admin.add_view(MyTeamView(Team, db.session))
+    admin.add_view(MyActivityView(Activity, db.session))
+    admin.add_view(MyIntroCodeView(IntroCode, db.session))
+    admin.add_view(MyUserActivityView(UserActivity, db.session))
+    admin.add_view(MyMessageView(Message, db.session))
 
 
     from .api import api as api_blueprint

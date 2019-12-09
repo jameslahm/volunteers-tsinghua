@@ -11,7 +11,7 @@ def get_activities():
     type=request.args.get('type','',type=str)
     text=request.args.get('text','',type=str)
     if(type==''):
-        pagination = Activity.query.order_by(Activity.starttime.desc()).paginate(
+        pagination = Activity.query.filter_by(type='created').order_by(Activity.starttime.desc()).paginate(
             page,per_page=current_app.config['FLASKY_POSTS_PER_PAGE'],error_out=False
         )
         total=int(len(Activity.query.all())/current_app.config['FLASKY_POSTS_PER_PAGE'])
@@ -44,7 +44,7 @@ def get_activity_members(id):
     return jsonify(members)
 
 
-@api.route('/deleteActivity',methods=['GET'])
+@api.route('/activities/deleteActivity',methods=['GET'])
 @login_required
 def deleteActivity():
     id=request.args.get('id')
@@ -53,7 +53,7 @@ def deleteActivity():
     db.session.commit()
     return jsonify({})
 
-@api.route('/deleteMember',methods=['GET'])
+@api.route('/activities/deleteMember',methods=['GET'])
 @login_required
 def deleteMember():
     id=request.args.get('id')
@@ -62,19 +62,23 @@ def deleteMember():
     db.session.commit()
     return jsonify({})
 
-@api.route('/replyApply',methods=['GET'])
+@api.route('/activities/replyApply',methods=['GET'])
 @login_required
 def replyApply():
     id=request.args.get('id')
     res=request.args.get('res')
     userA=UserActivity.query.filter_by(id=id).first()
-    userA.type='applied' if res=='1' else 'applying'
-    message=Message(user=userA.user,activity=userA.activity,content="拒绝")
+    if res=='1':
+        userA.type='applied'
+        message=Message(user=userA.user,activity=userA.activity,content="同意")
+    else:
+        message=Message(user=userA.user,activity=userA.activity,content="拒绝")
+        db.session.delete(userA)
     db.session.add(message)
     db.session.commit()
     return jsonify({})
 
-@api.route('/changeIsRead',methods=['GET'])
+@api.route('/activities/changeIsRead',methods=['GET'])
 @login_required
 def changeIsRead():
     id=request.args.get('id')
