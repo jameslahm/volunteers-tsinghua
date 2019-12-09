@@ -47,7 +47,7 @@ def get_user_messages(id):
 def user_apply(id):
     data=request.json
     token=data.get('token')
-    u=verify_token(id,token)
+    u=verify_token(token)
     if not u:
         abort(402)
     content=data.get('content')
