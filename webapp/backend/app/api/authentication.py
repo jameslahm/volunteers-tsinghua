@@ -24,9 +24,9 @@ def verifyTHU():
     url="https://alumni-test.iterator-traits.com/fake-id-tsinghua-proxy/api/user/session/token"
     res=requests.post(url,data).json().get('user')
     print(res)
-    u=User.query.filter_by(schoolId=res.card).first()
+    u=User.query.filter_by(schoolId=res.get('card')).first()
     if not u:
-        u=User(schoolId=res.card,userName=res.name,department=res.department)
+        u=User(schoolId=res.card,userName=res.get('name'),department=res.get('department'))
         db.session.add(u)
         db.session.commit()
     return jsonify({'user':u.to_json(),'token':u.generate_auth_token(3600*24*30)})
