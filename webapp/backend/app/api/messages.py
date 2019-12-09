@@ -27,7 +27,7 @@ def delete_message(id):
         abort(402)
     print(id)
     message=Message.query.filter_by(id=id).first()
-    if message.user!=u:
+    if message and message.user!=u:
         abort(402)
     db.session.delete(message)
     db.session.commit()
