@@ -79,7 +79,7 @@ export default {
     },
   },
   onLoad(options) {
-    wx.setStorageSync('id','1')
+    // wx.setStorageSync('id','1')
     // wx.setStorageSync('password':'')
     // 查看是否有登录学号
   },

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <i-message id="message"/>
     <i-panel title="审批消息">
     <i-cell-group>
       <i-cell  @click='bindClick(item)' :title="item.team.teamName" v-for="(item,index) in messages" :label="item.decription" :key=index is-link>
@@ -12,6 +13,8 @@
 </template>
 
 <script>
+const { $Message } = require('../../../static/iview/base/index');
+
 export default {
   data(){
     return {
@@ -29,12 +32,21 @@ export default {
 					return this.$store.state.user.id
 			},
 			messages:function(){
+        if(this.$store.state.user.id)
 					return this.$store.state.messages
 			}
 	},
 	onShow () {
-      this.$store.commit('getMessages')
-      this.$store.commit('getItems')
+      if(this.$store.state.user.id){
+        this.$store.commit('getMessages')
+        this.$store.commit('getItems')
+      }
+      else{
+        $Message({
+        content:"抱歉，您还未登录",
+        type:'warning'
+      })
+      }
   },
   methods:{
     'bindClick':function(item){

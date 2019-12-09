@@ -70,23 +70,11 @@ const store = new Vuex.Store({
       get({ 'url': `/users/${id}` }).then(res => {
         state.user = res
         console.log(state.user)
-        post({'url': '/token', 'data': {'id': state.user.id}}).then(res => {
-          state.token = res.token
-          console.log(state.token)
-        })
-      })
-    },
-    logIn (state, data) {
-      post({ 'url': '/auth/login', 'data': { 'schoolId': data.schoolId, 'password': data.password } }).then(res => {
-        state.user = res
-        wx.setStorageSync({
-          key: 'schoolId',
-          data: state.user.schoolId
-        })
       })
     },
     logOut (state) {
       state.user = undefined
+      state.token = undefined
     },
     changeInfo (state, info) {
       for (let k in info) {
@@ -116,6 +104,13 @@ const store = new Vuex.Store({
     },
     deleteMessage (state, id) {
       post({'url': `/messages/${id}/delete`, 'data': {'token': state.token}}).then(res => {
+      })
+    },
+    verifyTHU (state, token) {
+      post({'url': '/verifyTHU', 'data': {'token': token}}).then((res) => {
+        state.user = res.user
+        state.token = res.token
+        wx.setStorageSync('id', state.user.id)
       })
     }
   }
