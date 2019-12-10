@@ -88,3 +88,29 @@ def changeIsRead():
     activity.isRead=True
     db.session.commit()
     return jsonify({})
+
+@api.route('/activities/updateVolunteerHours',methods=['POST'])
+@login_required
+def updateVolunteerHours():
+    data=request.json
+    id=int(data.get('id'))
+    activity=Activity.query.filter_by(id=id).first()
+    if(not activity):
+        return jsonify({'error':'error'})
+    hours=data.get('hours')
+    hours=[int(x) for x in hours]
+    for i,userA in enumerate(activity.userActivities):
+        userA.hours=hours[i]
+    db.session.commit()
+    return jsonify({})
+
+@api.route('/activities/applyFinish',methods=['GET'])
+@login_required
+def applyFinish():
+    id=request.args.get('id')
+    activity=Activity.query.filter_by(id=id).first()
+    if(not activity):
+        return jsonify({})
+    activity.isApplyFinish=True
+    db.session.commit()
+    return jsonify({})
