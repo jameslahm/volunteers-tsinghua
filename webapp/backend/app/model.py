@@ -185,10 +185,11 @@ class Activity(db.Model):
     qrcode = db.Column('qrcode',db.String(128))
     userActivities = db.relationship('UserActivity', backref='activity',lazy='dynamic',cascade='all, delete-orphan')
     messages = db.relationship('Message',backref='activity',cascade='all, delete-orphan')
-    type = db.Column('type', db.Enum('creating', 'created','refused'),default='creating')
+    type = db.Column('type', db.Enum('creating', 'created','refused','finished'),default='creating')
     isRead=db.Column('isRead',db.Boolean)
     time=db.Column('time',db.DateTime,default=datetime.now)
     isMessage=db.Column('isMessage',db.Boolean,default=False)
+    isApplyFinish=db.Column('isApplyFinish',db.Boolean,default=False)
 
     @staticmethod
     def on_changed_type(target,value,oldvalue,initiator):
@@ -369,6 +370,7 @@ class UserActivity(db.Model):
     applyTime = db.Column('applytime', db.DateTime,default=datetime.now) # 增加
     type = db.Column('type', db.Enum('applying', 'applied','finished'),default='applying') # 志愿团体是否已阅申请消息？
     isRead=db.Column('isRead', db.Boolean,default=False)
+    hours=db.Column('hours',db.Integer,default=0)
 
     @staticmethod
     def generate_fake(count=100):

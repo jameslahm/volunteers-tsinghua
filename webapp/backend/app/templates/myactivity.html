@@ -70,18 +70,11 @@
                                         <div class="col-sm-5">
                                             <div class="card">
                                                 <img src="{{activity.thumb}}" class="card-img-top"
-<<<<<<< HEAD
                                                     alt="../static/img/myactivity/thu2.jpeg">
-                                                <button class="btn btn-lg btn-info btn-block">招募公告</button>
-                                                <button class="btn btn-lg btn-primary btn-block">导入成员</button>
-                                                <button class="btn btn-lg btn-secondary btn-block" onclick="$('#assign{{activity.id}}').modal('toggle')">申请结项</button>
-=======
-                                                    alt="...">
                                                 <!-- <button class="btn btn-lg btn-info btn-block">招募公告</button>
                                                 <button class="btn btn-lg btn-primary btn-block">导入成员</button> -->
                                                 <button class="btn btn-lg btn-secondary btn-block"
-                                                    disabled>申请结项</button>
->>>>>>> 15c51d862ab5d39d47ad76c70900255a6fc02dbf
+                                                     onclick="applyFinish({{activity.id}})">申请结项</button>
                                             </div>
                                         </div>
                                         <div class="col-sm-7">
@@ -134,7 +127,7 @@
                                                     <th scope="col">学号</th>
                                                     <th scope="col">院系</th>
                                                     <!--th scope="col">工作职位</th-->
-                                                    <th scope="col">工作时间</th>
+                                                    <th scope="col">志愿工时</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -146,7 +139,9 @@
                                                     <td>{{userActivity.user.schoolId}}</td>
                                                     <td>{{userActivity.user.department}}</td>
                                                     <!--td>{{userActivity.user.job}}</td-->
-                                                    <td>{{userActivity.activity.starttime}}</td>
+                                                    <td onclick="event.stopPropagation()">
+                                                        <input type="number" class="volunteerHours" class="form-control" value={{userActivity.hours}}>
+                                                    </td>
                                                 </tr>
                                                 {% endif %}
                                                 {% endfor %}
@@ -189,7 +184,11 @@
                                                     <td>{{userActivity.user.userName}}</td>
                                                     <td>{{userActivity.activity.title}}</td>
                                                     <td>{{userActivity.applyTime}}</td>
-                                                    <td>{{userActivity.isRead}}</td>
+                                                    {% if userActivity.isRead %}
+                                                    <td>已读</td>
+                                                    {% else %}
+                                                    <td>未读</td>
+                                                    {% endif %}
                                                     <td>回复</td>
                                                 </tr>
                                                 {% endif %}
@@ -207,7 +206,7 @@
 
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="update()" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-secondary" onclick="update();updateVolunteerHours({{activity.id}})" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
@@ -343,8 +342,8 @@
     </div>
     {% endfor %}
 
-    <!-- Modal finish activity-->
-    <div class="modal fade" id="assign{{activity.id}}" tabindex="-1" role="dialog"
+    <!-- Modal finish activity -->
+    <!-- <div class="modal fade" id="assign{{activity.id}}" tabindex="-1" role="dialog"
         aria-labelledby="assignModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -370,7 +369,6 @@
                                             <th scope="col">姓名</th>
                                             <th scope="col">学号</th>
                                             <th scope="col">院系</th>
-                                            <!--th scope="col">工作职位</th-->
                                             <th scope="col">工作时间</th>
                                             <th scope="col">分配工时</th>
                                         </tr>
@@ -382,7 +380,6 @@
                                             <th scope="row">{{userActivity.user.userName}}</th>
                                             <td>{{userActivity.user.schoolId}}</td>
                                             <td>{{userActivity.user.department}}</td>
-                                            <!--td>{{userActivity.user.job}}</td-->
                                             <td>{{userActivity.activity.starttime}}</td>
                                             <td><input type="number" class="form-control" name="workinghour{{userActivity.id}}"></td>
                                         </tr>
@@ -400,7 +397,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     {% endfor %}
 
     <!-- Container fluid  -->
@@ -507,6 +504,17 @@
     }
     var update=function(){
         setTimeout('$("#main").load("/myactivity #content")',500)
+    }
+    var updateVolunteerHours=function(id){
+        var arr=$(".volunteerHours").map(function(){return this.value}).get()
+        axios.post("/api/activities/updateVolunteerHours", { 'id': id, 'hours': arr  }).then((res) => {
+            
+        })
+    }
+    var applyFinish=function(id){
+        axios.get("/api/activities/applyFinish",{ params: { 'id': id} }).then(res=>{
+            alert("申请成功")
+        })
     }
 </script>
 {% endblock %}
