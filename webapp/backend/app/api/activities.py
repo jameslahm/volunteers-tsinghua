@@ -57,7 +57,9 @@ def deleteActivity():
 @login_required
 def deleteMember():
     id=request.args.get('id')
+    print(id)
     userA=UserActivity.query.filter_by(id=id).first()
+    print(userA)
     db.session.delete(userA)
     db.session.commit()
     return jsonify({})

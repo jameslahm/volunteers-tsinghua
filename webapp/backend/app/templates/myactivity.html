@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block page %}
-<div class="page-wrapper" id="app">
+<div class="page-wrapper" id="content" style="display: block">
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
@@ -70,18 +70,11 @@
                                         <div class="col-sm-5">
                                             <div class="card">
                                                 <img src="{{activity.thumb}}" class="card-img-top"
-<<<<<<< HEAD
-                                                    alt="../static/img/myactivity/thu2.jpeg">
-                                                <button class="btn btn-lg btn-info btn-block">招募公告</button>
-                                                <button class="btn btn-lg btn-primary btn-block">导入成员</button>
-                                                <button class="btn btn-lg btn-secondary btn-block">申请结项</button>
-=======
                                                     alt="...">
                                                 <!-- <button class="btn btn-lg btn-info btn-block">招募公告</button>
                                                 <button class="btn btn-lg btn-primary btn-block">导入成员</button> -->
                                                 <button class="btn btn-lg btn-secondary btn-block"
                                                     disabled>申请结项</button>
->>>>>>> 904581f725173975b4532520aa5215396934654b
                                             </div>
                                         </div>
                                         <div class="col-sm-7">
@@ -187,8 +180,8 @@
                                                     <th scope="row">志愿申请</th>
                                                     <td>志愿者</td>
                                                     <td>{{userActivity.user.userName}}</td>
-                                                    <td>{{userActivity.activity.teamName}}</td>
-                                                    <td>{{userActivity.starttime}}</td>
+                                                    <td>{{userActivity.activity.title}}</td>
+                                                    <td>{{userActivity.applyTime}}</td>
                                                     <td>{{userActivity.isRead}}</td>
                                                     <td>回复</td>
                                                 </tr>
@@ -207,8 +200,7 @@
 
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">确认</button>
+                    <button type="button" class="btn btn-secondary" onclick="update()" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
@@ -267,8 +259,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                    <!-- <button type="button" class="btn btn-primary">确认</button> -->
+                    <button type="button" class="btn btn-secondary" onclick="update()" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
@@ -321,12 +312,7 @@
                                                 <li class="list-group-item">微信号：{{userActivity.user.wx}}</li>
                                                 <li class="list-group-item">邮箱：{{userActivity.user.email}}</li>
                                                 <li class="list-group-item">联系电话：{{userActivity.user.phone}} </li>
-<<<<<<< HEAD
-                                                <li class="list-group-item">
-                                                    加入项目：{{userActivity.activity.title}}（{{userActivity.activity.id}}）
-=======
                                                 <li class="list-group-item">加入项目：{{userActivity.activity.title}}
->>>>>>> 904581f725173975b4532520aa5215396934654b
                                                 </li>
                                                 <!-- <li class="list-group-item">工作职位：工作岗位</li>
                                                 <li class="list-group-item">工作时间：工作时间</li> -->
@@ -343,8 +329,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">确认</button>
+                    <button type="button" class="btn btn-secondary" onclick="update()" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
@@ -403,7 +388,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-secondary" onclick="update()" data-dismiss="modal">关闭</button>
                     <button type="button" class="btn btn-primary">确认提交</button>
                 </div>
             </div>
@@ -501,20 +486,20 @@
     var deleteActivity = function (id) {
         axios.get("/api/activities/deleteActivity", { params: { 'id': id } }).then((res) => {
             alert("删除成功");
-            location.reload()
         })
     }
     var deleteMember = function (id) {
         axios.get("/api/activities/deleteMember", { params: { 'id': id } }).then((res) => {
             alert("删除成功");
-            location.reload()
         })
     }
     var replyApply = function (id, res) {
         axios.get("/api/activities/replyApply", { params: { 'id': id, 'res': res } }).then((res) => {
             alert("回复成功")
-            location.reload()
         })
+    }
+    var update=function(){
+        setTimeout('$("#main").load("/myactivity #content")',500)
     }
 </script>
 {% endblock %}
