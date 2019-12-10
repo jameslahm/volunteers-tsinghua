@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block page %}
-<div class="page-wrapper">
+<div class="page-wrapper" id="content" style="display: block">
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-5 align-self-center">
@@ -84,7 +84,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="changeIsRead({{userActivity.id}},'userActivity')" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-secondary" onclick="changeIsRead({{userActivity.id}},'userActivity');update()" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
@@ -127,7 +127,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="changeIsRead({{activity.id}},'activity')" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-secondary" onclick="changeIsRead({{activity.id}},'activity');update()" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
@@ -277,26 +277,27 @@
 {{super()}}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+    
     axios.defaults.withCredentials = true;
     var replyApply=function(id,res){
         axios.get("/api/activities/replyApply",{params:{'id':id,'res':res}}).then((res)=>{
             alert("回复成功")
-            location.reload()
         })
     }
     var changeIsRead=function(id,type){
         if(type=='activity'){
             axios.get("/api/activities/changeIsRead",{params:{'id':id}}).then((res)=>{
                 alert("阅读完毕")
-                location.reload()
             })
         }
         else{
             axios.get('/api/userActivities/changeIsRead',{params:{'id':id}}).then(res=>{
                 alert('阅读完毕')
-                location.reload()
             })
         }
+    }
+    var update=function(){
+        setTimeout('$("#main").load("/information #content")',500)
     }
 </script>
 {% endblock %}

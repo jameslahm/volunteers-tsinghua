@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block page %}
-<div class="page-wrapper" id="app">
+<div class="page-wrapper" id="content" style="display: block">
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
@@ -70,10 +70,18 @@
                                         <div class="col-sm-5">
                                             <div class="card">
                                                 <img src="{{activity.thumb}}" class="card-img-top"
+<<<<<<< HEAD
                                                     alt="../static/img/myactivity/thu2.jpeg">
                                                 <button class="btn btn-lg btn-info btn-block">招募公告</button>
                                                 <button class="btn btn-lg btn-primary btn-block">导入成员</button>
                                                 <button class="btn btn-lg btn-secondary btn-block" onclick="$('#assign{{activity.id}}').modal('toggle')">申请结项</button>
+=======
+                                                    alt="...">
+                                                <!-- <button class="btn btn-lg btn-info btn-block">招募公告</button>
+                                                <button class="btn btn-lg btn-primary btn-block">导入成员</button> -->
+                                                <button class="btn btn-lg btn-secondary btn-block"
+                                                    disabled>申请结项</button>
+>>>>>>> 15c51d862ab5d39d47ad76c70900255a6fc02dbf
                                             </div>
                                         </div>
                                         <div class="col-sm-7">
@@ -179,8 +187,8 @@
                                                     <th scope="row">志愿申请</th>
                                                     <td>志愿者</td>
                                                     <td>{{userActivity.user.userName}}</td>
-                                                    <td>{{userActivity.activity.teamName}}</td>
-                                                    <td>{{userActivity.starttime}}</td>
+                                                    <td>{{userActivity.activity.title}}</td>
+                                                    <td>{{userActivity.applyTime}}</td>
                                                     <td>{{userActivity.isRead}}</td>
                                                     <td>回复</td>
                                                 </tr>
@@ -199,8 +207,7 @@
 
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">确认</button>
+                    <button type="button" class="btn btn-secondary" onclick="update()" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
@@ -259,8 +266,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                    <!-- <button type="button" class="btn btn-primary">确认</button> -->
+                    <button type="button" class="btn btn-secondary" onclick="update()" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
@@ -330,8 +336,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">确认</button>
+                    <button type="button" class="btn btn-secondary" onclick="update()" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
@@ -390,7 +395,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-secondary" onclick="update()" data-dismiss="modal">关闭</button>
                     <button type="button" class="btn btn-primary">确认提交</button>
                 </div>
             </div>
@@ -488,20 +493,20 @@
     var deleteActivity = function (id) {
         axios.get("/api/activities/deleteActivity", { params: { 'id': id } }).then((res) => {
             alert("删除成功");
-            location.reload()
         })
     }
     var deleteMember = function (id) {
         axios.get("/api/activities/deleteMember", { params: { 'id': id } }).then((res) => {
             alert("删除成功");
-            location.reload()
         })
     }
     var replyApply = function (id, res) {
         axios.get("/api/activities/replyApply", { params: { 'id': id, 'res': res } }).then((res) => {
             alert("回复成功")
-            location.reload()
         })
+    }
+    var update=function(){
+        setTimeout('$("#main").load("/myactivity #content")',500)
     }
 </script>
 {% endblock %}
