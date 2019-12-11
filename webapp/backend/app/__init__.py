@@ -11,10 +11,12 @@ from config import config
 import os
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
+from flask_session import Session
 
 mail = Mail()
 db = SQLAlchemy()
 bootstrap=Bootstrap()
+sess=Session()
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.login'
@@ -28,6 +30,7 @@ def create_app(config_name):
     login_manager.init_app(app)
     bootstrap.init_app(app)
     mail.init_app(app)
+    sess.init_app(app)
     app.db = db
 
 

@@ -1,5 +1,6 @@
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
+from redis import Redis
 
 class Config():
     SECRET_KEY = os.getenv('SECRET_KEY') or "hard to guess"
@@ -18,6 +19,8 @@ class Config():
     MAIL_USE_TLS = True
     MAIL_USERNAME = 'jameslahm17@gmail.com'
     MAIL_PASSWORD = 'dkcqjdrpmswxrjtw'
+    SESSION_TYPE='redis'
+    
 
 
     @staticmethod
@@ -29,7 +32,9 @@ class Development(Config):
     ENV='development'
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://  \
-                            root:Lucius1998password@localhost:3306/volunteers?charset=utf8'
+                            root:Waqing121!@localhost:3306/volunteers?charset=utf8'
+    SESSION_REDIS=Redis(host='127.0.0.1',port=6379)
+    
 
 class TestConfig(Config):
     TESTING = True
@@ -41,8 +46,8 @@ class TestConfig(Config):
 class ProductionConfig(Config):
     ENV='production'
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://  \
-                            root:Lucius1998password@mysql:3306/volunteers?charset=utf8'
-
+                            root:zhizaitsinghua@mysql:3306/volunteers?charset=utf8'
+    SESSION_REDIS=Redis(host='redis',port=6379)
 
 config = {
     'development': Development,
