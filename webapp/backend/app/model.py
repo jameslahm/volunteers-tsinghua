@@ -20,7 +20,7 @@ class User(db.Model):
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     # TODO: how to get openId?
-    # openId = db.Column("openId", db.String(64), unique=False) # 改
+    openId = db.Column("openId", db.String(64), unique=False) # 改
     userName = db.Column("userName", db.String(16), unique=False, nullable=False)
     wx = db.Column("wx", db.String(64), unique=False) # 改
     email = db.Column("email", db.String(64), unique=False) # 改
