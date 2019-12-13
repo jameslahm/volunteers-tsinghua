@@ -86,6 +86,7 @@ const store = new Vuex.Store({
     },
     getGlobalItems (state, params) {
       get({ 'url': '/activities', 'data': params }).then(res => {
+        console.log(res)
         state.globalItems = res.items
         state.globalItems.forEach(elem => {
           elem.thumb = config.host + ':' + config.port + elem.thumb
@@ -143,6 +144,11 @@ const store = new Vuex.Store({
           }
         })
         console.log('Avatar')
+      })
+    },
+    suggestion (state, content) {
+      post({'url': '/suggestions', 'data': {'content': content}}).then(res => {
+        console.log(res)
       })
     }
   }

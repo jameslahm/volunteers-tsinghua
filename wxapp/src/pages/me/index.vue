@@ -5,11 +5,10 @@
 		</i-cell>
 		<i-cell-group>
 			<i-cell @click='bindClick3()' title="我的活动" is-link></i-cell>
-			<i-cell title="我的工时" is-link></i-cell>
+			<i-cell @click='bindClick4()' title="我的工时" is-link></i-cell>
 			<i-cell title="我的证书" is-link></i-cell>
 			<i-cell title="我的关注" is-link></i-cell>
-			<i-cell title="意见反馈" is-link></i-cell>
-			<i-cell title="投诉中心" is-link></i-cell>
+			<i-cell @click='bindClick5()' title="意见反馈" is-link></i-cell>
 			<i-cell @click='logOut()' title="退出登录" is-link></i-cell>
 		</i-cell-group>
 	</div>
@@ -43,7 +42,10 @@ export default {
 		}
 		else{
 			this.isLogIn=true
+			this.$store.commit('getItems')
 		}
+	},
+	onLoad(){
 	},
 	methods:{
 		'bindClick2':function(){
@@ -69,6 +71,13 @@ export default {
 		},
 		'bindClick3':function(){
 			wx.navigateTo({url:'/pages/myactivity/main'})
+		},
+		'bindClick4':function(){
+			wx.navigateTo({url:'/pages/volunteerhours/main'})
+		},
+		'bindClick5':function(){
+			console.log('suggestion')
+			wx.navigateTo({url:'/pages/suggestion/main'})
 		}
 	}
 }
