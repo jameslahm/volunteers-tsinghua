@@ -1,0 +1,42 @@
+{% extends "auth/authbase.html" %}
+
+{% block page%}
+<style>
+img{
+    border-radius: 10%;
+}</style>
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-warning" style="position: absolute;top: 3px;left: 50%;width: 570px;margin-left:-285px;text-align: center;">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+  {% endfor %}
+  <form class="form-signin" method="POST" oninput='password2.setCustomValidity(password2.value != password.value ? "Passwords do not match." : "")'>
+    <div class="jumbotron" style=background-color:rgba(219,177,247,0.336);>
+
+
+      <div class="form-group">
+        <label for="introcode">签到二维码</label>
+        <br/>
+        <div id='qrcode'></div>
+        <small id="emailHelp" class="form-text text-muted">请注意保管您自己活动的签到码。</small>
+      </div>
+
+      <p class="mt-5 mb-3 text-muted text-center">&copy; 2019-2029</p>
+
+    </div>
+
+  </form>
+{% endblock %}
+
+{% block script %}
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/qrcode.min.js"></script>
+<script>
+    qrcode = new QRCode("qrcode");
+    function makeCode() {
+        qrcode.makeCode("{{id}}");
+    }
+    makeCode();
+</script>
+{% endblock %}

@@ -31,5 +31,3 @@ def verifyTHU():
         db.session.commit()
     return jsonify({'user':u.to_json(),'token':u.generate_auth_token(3600*24*30)})
     
-
-
