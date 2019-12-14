@@ -105,8 +105,13 @@
                                                         <span>您可以上传二维码更改活动二维码</span>
                                                     </div>
                                                     <div id="titleImageError" style="color: #a94442"></div>
+                                                {% if activity.type=='created' %}
                                                 <button class="btn btn-lg btn-secondary btn-block"
                                                      onclick="applyFinish({{activity.id}})">申请结项</button>
+                                                {% else %}
+                                                <button class="btn btn-lg btn-secondary btn-block"
+                                                     disabled onclick="applyFinish({{activity.id}})">申请结项</button>
+                                                {% endif %}
                                                 <a href="/api/activities/{{activity.id}}/createQrCode" class="btn btn-lg btn-secondary btn-block"
                                                      >生成签到二维码</a>
                                             </div>
@@ -116,8 +121,19 @@
                                                 <div class="card-body">
                                                     <div class="form-control">
                                                         <input name='id' value={{activity.id}} hidden>
-                                                        状态：<input readonly class="form-control form-control-line"
-                                                            value={{activity.type}}>
+                                                        状态：{%if activity.type=='creating'%}
+                                                        <input readonly class="form-control form-control-line"
+                                                            value="未审批">
+                                                            {%elif activity.type=='created'%}
+                                                            <input readonly class="form-control form-control-line"
+                                                            value="已通过审批">
+                                                            {%elif activity.type=='refused'%}
+                                                            <input readonly class="form-control form-control-line"
+                                                            value="未通过审批">
+                                                            {%elif activity.type=='finished'%}
+                                                            <input readonly class="form-control form-control-line"
+                                                            value="已结项">
+                                                            {% endif %}
                                                         活动日期：<input name="starttime"
                                                             class="form-control form-control-line"  name='starttime'
                                                             value="{{activity.starttime.__str__()}}">
