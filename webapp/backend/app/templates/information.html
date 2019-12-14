@@ -50,7 +50,7 @@
                     <div class="card" style="width: 45rem;">
                         <div class="card-body">
                             <h5 class="card-title">项目：{{userActivity.activity.title}}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">消息时间：时间</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">消息时间{{userActivity.applyTime}}</h6>
 
                             <table class="table">
                                 <thead>
@@ -67,7 +67,7 @@
                                     <tr class="table-success">
                                         <th scope="row">{{userActivity.activity.title}}</th>
                                         <td>工作职位</td>
-                                        <td>申请工作的时间</td>
+                                        <td>{{userActivity.applyTime}}</td>
                                         <td>{{userActivity.user.name}}</td>
                                         <td>{{userActivity.user.schoolId}}</td>
                                         <td>{{userActivity.user.department}}</td>
@@ -79,8 +79,8 @@
                             <a href="#" class="card-link">志愿者详情</a>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-success" onclick="replyApply({{userActivity.id}},'1')">同意</button>
-                    <button type="button" class="btn btn-danger" onclick="replyApply({{userActivity.id}},'0')">拒绝</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" onclick="replyApply({{userActivity.id}},'1');update()">同意</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="replyApply({{userActivity.id}},'0');update()">拒绝</button>
                 </div>
 
                 <div class="modal-footer">
@@ -108,7 +108,7 @@
                     <div class="card" style="width: 45rem;">
                         <div class="card-body">
                             <h5 class="card-title">项目：{{activity.title}}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">消息时间：时间</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">消息时间：{{activity.time}}</h6>
 
                             <table class="table">
                                 <thead>
@@ -118,7 +118,15 @@
                                 </thead>
                                 <tbody>
                                     <tr class="table-success">
-                                        <th scope="row">{{activity.type}}</th>
+                                        {% if activity.type=='creating' %}
+                                        <th scope="row">您的项目创建已成功申请，但还未被管理员审批</th>
+                                        {% elif activity.type=='created' %}
+                                        <th scope="row">您的项目已通过管理员的审批</th>
+                                        {% elif activity.type=='refused' %}
+                                        <th scope="row">您的项目未通过管理员的审批</th>
+                                        {% elif activity.type=='finished' %}
+                                        <th scope='row'>您的项目已经被管理员批准结项</th>
+                                        {% endif %}
                                     </tr>
                                 </tbody>
                             </table>
@@ -127,6 +135,7 @@
                 </div>
 
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="deleteMessage({{activity.id}});update()" data-dismiss="modal">删除</button>
                     <button type="button" class="btn btn-secondary" onclick="changeIsRead({{activity.id}},'activity');update()" data-dismiss="modal">关闭</button>
                 </div>
             </div>
@@ -138,7 +147,7 @@
         <div class="tab-content">
             <ul class="nav nav-tabs" id="myTab" role="tablist" style="padding-left: 10px;">
                 <li class="nav-item">
-                    <a class="nav-link active" id="applyMessage-tab" data-toggle="tab" href="#applyMessage" role="tab"
+                    <a class="nav-link active show" id="applyMessage-tab" data-toggle="tab" href="#applyMessage" role="tab"
                         aria-controls="applyMessage" aria-selected="true">志愿者申请</a>
                 </li>
                 <li class="nav-item">
@@ -169,8 +178,20 @@
                                 </thead>
                                 <tbody>
                                     {% for activity in activities %}
-                                    {% for userActivity in activity.userActivities %}
+                                    {% for userActivity in activity.userActivities.order_by(UserActivity.isRead) %}
                                     {% if userActivity.type=='applying' %}
+                                    {% if userActivity.isRead %}
+                                    <tr class="" style="cursor:pointer;"
+                                        onclick="$('#userActivity{{userActivity.id}}').modal('toggle');">
+                                        <th scope="row">志愿申请</th>
+                                        <td>志愿者</td>
+                                        <td>{{userActivity.user.userName}}</td>
+                                        <td>{{userActivity.activity.title}}</td>
+                                        <td>{{userActivity.applyTime}}</td>
+                                        <td>已读</td>
+                                        <td>回复</td>
+                                    </tr>
+                                    {% else %}
                                     <tr class="table-success" style="cursor:pointer;"
                                         onclick="$('#userActivity{{userActivity.id}}').modal('toggle');">
                                         <th scope="row">志愿申请</th>
@@ -178,13 +199,10 @@
                                         <td>{{userActivity.user.userName}}</td>
                                         <td>{{userActivity.activity.title}}</td>
                                         <td>{{userActivity.applyTime}}</td>
-                                        {% if userActivity.isRead %}
-                                            <td>已读</td>
-                                        {% else %}
-                                            <td>未读</td>
-                                        {% endif %}
+                                        <td>未读</td>
                                         <td>回复</td>
                                     </tr>
+                                    {% endif %}
                                     {% endif %}
                                     {% endfor %}
                                     {% endfor %}
@@ -216,20 +234,28 @@
                                 </thead>
                                 <tbody>
                                     {% for activity in activities %}
-                                    {% if activity.isMessage and (not activity.isRead) %}
-                                    <tr class="table-success" style="cursor:pointer;"
+                                    {% if activity.isMessage %}
+                                    {% if activity.isRead %}
+                                    <tr class="" style="cursor:pointer;"
                                         onclick="$('#Activity{{activity.id}}').modal('toggle')">
                                         <th scope="row">管理员消息</th>
                                         <td>管理员</td>
                                         <td>{{activity.title}}</td>
                                         <td>{{activity.time}}</td>
-                                        {% if activity.isRead%}
-                                            <td>未读</td>
-                                        {% else %}
-                                            <td>已读</td>
-                                        {% endif %}
+                                        <td>已读</td>
                                         <td>阅读</td>
                                     </tr>
+                                    {% else %}
+                                    <tr class="table-primary" style="cursor:pointer;"
+                                        onclick="$('#Activity{{activity.id}}').modal('toggle')">
+                                        <th scope="row">管理员消息</th>
+                                        <td>管理员</td>
+                                        <td>{{activity.title}}</td>
+                                        <td>{{activity.time}}</td>
+                                        <td>未读</td>
+                                        <td>阅读</td>
+                                    </tr>
+                                    {% endif %}
                                     {% endif %}
                                     {% endfor %}
                                 </tbody>
@@ -242,7 +268,7 @@
 
         <script>
             $(function () {
-                $('#myTab li:last-child a').tab('show')
+                $('#myTab li:first-child a').tab('show')
             })
         </script>
         <!-- ============================================================== -->
@@ -295,6 +321,11 @@
                 alert('阅读完毕')
             })
         }
+    }
+    var deleteMessage=function(id){
+        axios.get("/api/activities/deleteMessage",{params:{'id':id}}).then((res)=>{
+                alert("成功删除")
+            })
     }
     var update=function(){
         setTimeout('$("#main").load("/information #content")',500)

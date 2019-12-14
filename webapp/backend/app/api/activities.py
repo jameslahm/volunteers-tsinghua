@@ -24,6 +24,8 @@ def get_activities():
         items=[x.to_json() for x in activities]
         res={'total':total,'items':items}
     else:
+        if(type=='general'):
+            type=='activity'
         items=Activity.search(text,type)
         total=len(items)
         res={'total':total,'items':items}
@@ -134,3 +136,12 @@ def signin(id):
 @api.route('/activities/<int:id>/createQrCode',methods=['GET'])
 def createQrCode(id):
     return render_template('qrcode.html',id=id)
+
+@api.route('/activities/deleteMessage',methods=['GET'])
+@login_required
+def deleteMessage():
+    id=request.args.get('id')
+    activity=Activity.query.filter_by(id=id).first()
+    activity.isMessage=False
+    db.session.commit()
+    return jsonify({})
