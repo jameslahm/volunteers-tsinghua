@@ -170,7 +170,7 @@ class Activity(db.Model):
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     AID = db.Column('AID', db.String(36),default=generateAID)
     teamId = db.Column('teamId', db.Integer, db.ForeignKey('teams.id',ondelete='cascade'))
-    thumb = db.Column('thumb', db.String(128))
+    thumb = db.Column('thumb', db.String(128),default='/static/img/myactivity/thu2.jpeg')
     starttime = db.Column('starttime', db.DateTime, nullable=False)
     endtime = db.Column('endtime',db.DateTime,nullable=False)
     location = db.Column('location', db.String(50), nullable=False)
