@@ -32,7 +32,7 @@ class Development(Config):
     ENV='development'
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://  \
-                            root:Waqing121!@localhost:3306/volunteers?charset=utf8'
+                            root:Lucius1998password@localhost:3306/volunteers?charset=utf8'
     SESSION_REDIS=Redis(host='127.0.0.1',port=6379)
     
 
@@ -46,7 +46,7 @@ class TestConfig(Config):
 class ProductionConfig(Config):
     ENV='production'
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://  \
-                            root:zhizaitsinghua@mysql:3306/volunteers?charset=utf8'
+                            root:Lucius1998password@mysql:3306/volunteers?charset=utf8'
     SESSION_REDIS=Redis(host='redis',port=6379)
 
 config = {
