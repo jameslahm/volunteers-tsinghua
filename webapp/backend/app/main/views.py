@@ -32,9 +32,7 @@ def index():
             print(filename)
             avatar.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename).replace('\\','/'))
             file='/static/img/'+filename
-        else:
-            file=None
-        team.avatar=file
+            team.avatar=file
         db.session.commit()
     return render_template(
         'profile.html',team=current_user
@@ -55,7 +53,23 @@ def myactivity():
         activitie.managePerson=managePerson
         activitie.managePhone=managePhone
         activitie.content=content
+
+        thumb=request.files['thumb']
+        qrcode=request.files['qrcode']
+        if thumb and allowed_file(thumb.filename):
+            filename = secure_filename(thumb.filename)
+            print(filename)
+            thumb.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename).replace('\\','/'))
+            file='/static/img/'+filename
+            activitie.thumb=file
+        if qrcode and allowed_file(qrcode.filename):
+            filename = secure_filename(qrcode.filename)
+            print(filename)
+            qrcode.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename).replace('\\','/'))
+            qrcode='/static/img/'+filename
+            activitie.qrcode=qrcode
         db.session.commit()
+    
     page=request.args.get('page',1,type=int)
     pagination=Activity.query.filter_by(team=current_user).order_by(Activity.starttime.desc()).paginate(
         page,per_page=current_app.config['FLASKY_POSTS_PER_PAGE'],error_out=False
@@ -116,9 +130,9 @@ def createactivity():
 @main.route('/information', methods=['GET', 'POST'])
 @login_required
 def information():
-    activities=Activity.query.filter_by(team=current_user).all()
+    activities=Activity.query.filter_by(team=current_user).order_by(Activity.isRead).all()
     return render_template(
-        'information.html',activities=activities,team=current_user
+        'information.html',activities=activities,team=current_user,UserActivity=UserActivity
     )
 
 

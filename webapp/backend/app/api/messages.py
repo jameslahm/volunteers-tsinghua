@@ -10,10 +10,10 @@ def change_message_isread(id):
     token=data.get('token')
     u=verify_token(token)
     if not u:
-        abort(402)
+        abort(403)
     message=Message.query.filter_by(id=id).first()
     if message.user!=u:
-        abort(402)
+        abort(403)
     message.isRead=True
     db.session.commit()
     return jsonify({})
@@ -24,11 +24,11 @@ def delete_message(id):
     token=data.get('token')
     u=verify_token(token)
     if not u:
-        abort(402)
+        abort(403)
     print(id)
     message=Message.query.filter_by(id=id).first()
     if message and message.user!=u:
-        abort(402)
+        abort(403)
     db.session.delete(message)
     db.session.commit()
     return jsonify({})
