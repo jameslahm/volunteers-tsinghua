@@ -28,6 +28,7 @@ def get_activities():
             type='activity'
         items=Activity.search(text,type)
         total=len(items)
+        items=[x.to_json() for x in items]
         res={'total':total,'items':items}
     return jsonify(res)
 
@@ -75,7 +76,9 @@ def replyApply():
     userA=UserActivity.query.filter_by(id=id).first()
     if res=='1':
         userA.type='applied'
+        userA.activity.appliedRecruits+=1
         message=Message(user=userA.user,activity=userA.activity,content="同意")
+
     else:
         message=Message(user=userA.user,activity=userA.activity,content="拒绝")
         db.session.delete(userA)

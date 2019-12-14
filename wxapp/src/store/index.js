@@ -112,6 +112,7 @@ const store = new Vuex.Store({
         state.user = res.user
         state.token = res.token
         wx.setStorageSync('id', state.user.id)
+        wx.setStorageSync('token', state.token)
         wx.getSetting({
           success (res) {
             if (res.authSetting['scope.userInfo']) {
