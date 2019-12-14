@@ -15,3 +15,5 @@ __pycache__/
 *.ntvs*
 *.njsproj
 *.sln
+
+test_report/

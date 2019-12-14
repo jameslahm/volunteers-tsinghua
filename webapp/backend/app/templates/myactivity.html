@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block page %}
+<script src="/static/js/bootstrap-fileinput.js"></script>
+<link rel="stylesheet" href="/static/css/bootstrap-fileinput.css">
 <div class="page-wrapper" id="content" style="display: block">
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
@@ -62,17 +64,47 @@
                         <div class="tab-pane active" id="home{{activity.id}}" role="tabpanel"
                             aria-labelledby="home-tab">
 
-                            <div class="card" style="width: 45rem;">
+                            <form class="card" style="width: 45rem;" method='POST' enctype="multipart/form-data" oninput='starttime.setCustomValidity(/^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\s+(2[0-3]|0[0-9]|1[0-9]):[0-5][0-9]:[0-5][0-9]$/.test(starttime.value)?"":"请输入YYYY-MM-DD HH-MM-SS的日期格式")'>
                                 <div class="card-body">
-                                    <h5 class="card-title">{{activity.title}}</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">项目编号：{{activity.AID}}</h6>
+                                    <!-- <h5 class="card-title">{{activity.title}}</h5> -->
+                                    <!-- <h6 class="card-subtitle mb-2 text-muted">项目编号：{{activity.AID}}</h6> -->
                                     <div class="row">
                                         <div class="col-sm-5">
                                             <div class="card">
-                                                <img src="{{activity.thumb}}" class="card-img-top"
-                                                    alt="">
-                                                <!-- <button class="btn btn-lg btn-info btn-block">招募公告</button>
-                                                <button class="btn btn-lg btn-primary btn-block">导入成员</button> -->
+                                                <div class="fileinput fileinput-new" data-provides="fileinput" id="uploadImageDiv">
+                                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                                        <img src="{{activity.thumb}}" alt="" />
+                                                    </div>
+                                                    <div class="fileinput-preview fileinput-exists thumbnail"
+                                                        style="max-width: 200px; max-height: 150px;"></div>
+                                                    <div class="row">
+                                                        <span class="btn default btn-file" class='col-sm-6'>
+                                                            <button class="btn btn-secondary btn-file"
+                                                                class="fileinput-new">选择图片</button>
+                                                            <input type="file" name="thumb" id="uploadImage" />
+                                                        </span>
+                                                    </div>
+                                                    <a href="#" class="btn default fileinput-exists" data-dismiss="fileinput">移除</a>
+                                                    <span>您可以上传图片更改活动图片</span>
+                                                </div>
+                                                <div id="titleImageError" style="color: #a94442"></div>
+                                                <div class="fileinput fileinput-new" data-provides="fileinput" id="uploadImageDiv">
+                                                        <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                                            <img src="{{activity.qrcode}}" alt="" />
+                                                        </div>
+                                                        <div class="fileinput-preview fileinput-exists thumbnail"
+                                                            style="max-width: 200px; max-height: 150px;"></div>
+                                                        <div class="row">
+                                                            <span class="btn default btn-file" class='col-sm-6'>
+                                                                <button class="btn btn-secondary btn-file"
+                                                                    class="fileinput-new">选择图片</button>
+                                                                <input type="file" name="qrcode" id="uploadImage" />
+                                                            </span>
+                                                        </div>
+                                                        <a href="#" class="btn default fileinput-exists" data-dismiss="fileinput">移除</a>
+                                                        <span>您可以上传二维码更改活动二维码</span>
+                                                    </div>
+                                                    <div id="titleImageError" style="color: #a94442"></div>
                                                 <button class="btn btn-lg btn-secondary btn-block"
                                                      onclick="applyFinish({{activity.id}})">申请结项</button>
                                                 <a href="/api/activities/{{activity.id}}/createQrCode" class="btn btn-lg btn-secondary btn-block"
@@ -82,13 +114,13 @@
                                         <div class="col-sm-7">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <form class="form-control" method="POST">
+                                                    <div class="form-control">
                                                         <input name='id' value={{activity.id}} hidden>
                                                         状态：<input readonly class="form-control form-control-line"
                                                             value={{activity.type}}>
                                                         活动日期：<input name="starttime"
-                                                            class="form-control form-control-line"
-                                                            value={{activity.starttime}} name='starttime'>
+                                                            class="form-control form-control-line"  name='starttime'
+                                                            value="{{activity.starttime.__str__()}}">
                                                         管理单位：<input readonly class="form-control form-control-line"
                                                             value={{activity.team.teamName}}>
                                                         负责人：<input name="managePerson"
@@ -100,7 +132,7 @@
                                                         <!-- <li class="list-group-item">邮箱：{{activity.email}} <a href="#"
                                                                 class="btn btn-success" style="float:right">修改</a></li> -->
                                                         项目简介 <textarea name='content'
-                                                            class="form-control">{{activity.content}}</textarea>
+                                                            class="form-control" rows="7">{{activity.content}}</textarea>
                                                         <input type="submit" class="btn btn-success" value="保存">
                                                         <button class="btn btn-danger"
                                                             onclick="deleteActivity({{activity.id}});return false;">删除项目
@@ -443,9 +475,6 @@
                                                     <div class="col-md-8">
                                                         <div class="card-body">
                                                             <h5 class="card-title">{{activity.title}}</h5>
-                                                            <p class="card-text"><small
-                                                                    class="text-muted">更新于3分钟之前</small>
-                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -454,7 +483,15 @@
                                         </td>
                                         <td style='vertical-align: middle;'>{{activity.AID}}</td>
                                         <td style='vertical-align: middle;'>{{activity.managePerson}}</td>
-                                        <td style='vertical-align: middle;'>{{activity.type}}</td>
+                                        {% if activity.type=='creating' %}
+                                        <td style='vertical-align: middle;'>未审批</td>
+                                        {% elif activity.type=='created' %}
+                                        <td style='vertical-align: middle;'>已批准</td>
+                                        {% elif activity.type=='refused' %}
+                                        <td style='vertical-align: middle;'>未批准</td>
+                                        {% elif activity.type=='finished' %}
+                                        <td style='vertical-align: middle;'>已完成</td>
+                                        {% endif %} 
                                         <td style='vertical-align: middle;'>{{activity.starttime}}</td>
                                     </tr>
                                     {% endfor %}

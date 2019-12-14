@@ -54,7 +54,7 @@
           <i-card
             full
             @click="bindClick2(item)"
-            :title="item.team"
+            :title="item.teamName"
             :extra="item.appliedRecruits+'/'+item.totalRecruits"
             i-class="card-thumb"
           >
@@ -93,7 +93,7 @@ export default {
   },
   onShow(){
     this.text=''
-    this.type=''
+    this.type='general'
   },
   methods: {
     'changeInput':function(e){
@@ -104,7 +104,7 @@ export default {
         this.notInputing=false
       }
       else{
-        if(this.type.length===0){
+        if(this.type==='general'){
           this.notInputing=true
         }
       }
@@ -135,7 +135,7 @@ export default {
     },
     'clickReturn':function(){
       this.notInputing=true
-      this.type=''
+      this.type='general'
       this.text=''
       this.placeholder="搜索"
     }
