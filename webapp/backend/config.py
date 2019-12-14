@@ -40,7 +40,7 @@ class TestConfig(Config):
     TESTING = True
     WTF_CSRF_ENABLED=False
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://  \
-                            root:Waqing121!@localhost:3306/volunteers?charset=utf8'
+                            root:Lucius1998password@localhost:3306/volunteers?charset=utf8'
 
 
 class ProductionConfig(Config):
