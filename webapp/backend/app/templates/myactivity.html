@@ -111,6 +111,7 @@
                                                 {% else %}
                                                 <button class="btn btn-lg btn-secondary btn-block"
                                                      disabled onclick="applyFinish({{activity.id}})">申请结项</button>
+                                                {% endif %}
                                                 <a href="/api/activities/{{activity.id}}/createQrCode" class="btn btn-lg btn-secondary btn-block"
                                                      >生成签到二维码</a>
                                             </div>
