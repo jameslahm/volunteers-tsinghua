@@ -1,4 +1,4 @@
-var DEBUG = true
+var DEBUG = false
 let host
 let port
 if (DEBUG) {
