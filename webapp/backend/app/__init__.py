@@ -12,6 +12,7 @@ import os
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 from flask_session import Session
+from datetime import datetime
 
 mail = Mail()
 db = SQLAlchemy()
@@ -32,7 +33,6 @@ def create_app(config_name):
     mail.init_app(app)
     sess.init_app(app)
     app.db = db
-
 
     # flask-admin
     from .model import User, Team, Activity, UserActivity,IntroCode,Message,Suggestion

@@ -70,11 +70,13 @@
                                         <div class="col-sm-5">
                                             <div class="card">
                                                 <img src="{{activity.thumb}}" class="card-img-top"
-                                                    alt="../static/img/myactivity/thu2.jpeg">
+                                                    alt="">
                                                 <!-- <button class="btn btn-lg btn-info btn-block">招募公告</button>
                                                 <button class="btn btn-lg btn-primary btn-block">导入成员</button> -->
                                                 <button class="btn btn-lg btn-secondary btn-block"
                                                      onclick="applyFinish({{activity.id}})">申请结项</button>
+                                                <a href="/api/activities/{{activity.id}}/createQrCode" class="btn btn-lg btn-secondary btn-block"
+                                                     >生成签到二维码</a>
                                             </div>
                                         </div>
                                         <div class="col-sm-7">
@@ -128,11 +130,12 @@
                                                     <th scope="col">院系</th>
                                                     <!--th scope="col">工作职位</th-->
                                                     <th scope="col">志愿工时</th>
+                                                    <th scope='col'>是否签到</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {% for userActivity in activity.userActivities %}
-                                                {% if userActivity.type=='applied' %}
+                                                {% if userActivity.type=='applied' or userActivity.type=='finished' %}
                                                 <tr class="table-success" style="cursor:pointer;"
                                                     onclick="$('#userActivity{{userActivity.id}}').modal('toggle')">
                                                     <th scope="row">{{userActivity.user.userName}}</th>
@@ -142,6 +145,11 @@
                                                     <td onclick="event.stopPropagation()">
                                                         <input type="number" class="volunteerHours" class="form-control" value={{userActivity.hours}}>
                                                     </td>
+                                                    {% if userActivity.isSignIn %}
+                                                    <td>已签到</td>
+                                                    {% else %}
+                                                    <td>未签到</td>
+                                                    {% endif %}
                                                 </tr>
                                                 {% endif %}
                                                 {% endfor %}

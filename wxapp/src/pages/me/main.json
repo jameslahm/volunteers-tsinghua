@@ -3,6 +3,7 @@
         "i-cell":"../../static/iview/cell/index",
         "i-cell-group":"../../static/iview/cell-group/index",
         "i-input": "../../static/iview/input/index",
-        "i-button": "../../static/iview/button/index"
+        "i-button": "../../static/iview/button/index",
+        "i-message": "../../static/iview/message/index"
     }
 }
