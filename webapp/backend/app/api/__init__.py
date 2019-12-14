@@ -5,4 +5,4 @@ from flask import Blueprint
 
 api = Blueprint('api', __name__)
 
-from . import users, activities,messages,userActivities,authentication
+from . import users, activities,messages,userActivities,authentication,suggestions

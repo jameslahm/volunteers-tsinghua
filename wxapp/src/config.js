@@ -1,7 +1,14 @@
-const host = 'https://2019-a16.iterator-traits.com'
-const port = '443'
-// const host = 'http://127.0.0.1'
-// const port = '5000'
+var DEBUG = false
+let host
+let port
+if (DEBUG) {
+  host = 'http://127.0.0.1'
+  port = '5000'
+} else {
+  host = 'https://2019-a16.iterator-traits.com'
+  port = '443'
+}
+
 const appid = ''
 const appSecret = ''
 
@@ -9,7 +16,7 @@ const config = {
   host,
   appid,
   appSecret,
-  DEBUG: false,
+  DEBUG: DEBUG,
   port
 }
 

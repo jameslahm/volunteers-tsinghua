@@ -20,7 +20,7 @@ class User(db.Model):
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     # TODO: how to get openId?
-    # openId = db.Column("openId", db.String(64), unique=False) # 改
+    openId = db.Column("openId", db.String(64), unique=False) # 改
     userName = db.Column("userName", db.String(16), unique=False, nullable=False)
     wx = db.Column("wx", db.String(64), unique=False) # 改
     email = db.Column("email", db.String(64), unique=False) # 改
@@ -54,7 +54,6 @@ class User(db.Model):
     def to_json(self):
         json_user={
             'id':self.id,
-            'openId':self.openId,
             'userName':self.userName,
             'wx':self.wx,
             'email': self.email,
@@ -196,6 +195,10 @@ class Activity(db.Model):
         target.isMessage=True
         target.time=datetime.now()
         target.isRead=False
+        if(value=='finished'):
+            userAs=UserActivity.query.filter_by(activity=target).all()
+            for userA in userAs:
+                userA.type='finished'
         db.session.commit()
         print("type")
 
@@ -302,7 +305,7 @@ class Activity(db.Model):
             'totalRecruits':self.totalRecruits,
             'appliedRecruits':self.appliedRecruits,
             'thumb':self.thumb,
-            'endtime':self.endtime
+            'endtime':self.endtime,
         }
         return json_activity
 
@@ -409,3 +412,9 @@ class IntroCode(db.Model):
     @staticmethod
     def verify_code(code):
         return IntroCode.query.filter_by(code=code).first()
+
+
+class Suggestion(db.Model):
+    __tablname__='suggestions'
+    id=db.Column('id',db.Integer,primary_key=True,autoincrement=True)
+    content=db.Column('content',db.Text)

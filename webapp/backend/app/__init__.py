@@ -35,7 +35,7 @@ def create_app(config_name):
 
 
     # flask-admin
-    from .model import User, Team, Activity, UserActivity,IntroCode,Message
+    from .model import User, Team, Activity, UserActivity,IntroCode,Message,Suggestion
 
     # flask-user
 
@@ -78,6 +78,10 @@ def create_app(config_name):
         column_list=['id','code']
         column_searchable_list=['id']
 
+    class MySuggestionView(MyBaseView):
+        column_list=['id','content']
+        column_searchable_list=['id']
+
     class MyAdminIndexView(AdminIndexView):
 
         @expose('/')
@@ -98,7 +102,7 @@ def create_app(config_name):
     admin.add_view(MyIntroCodeView(IntroCode, db.session))
     admin.add_view(MyUserActivityView(UserActivity, db.session))
     admin.add_view(MyMessageView(Message, db.session))
-
+    admin.add_view(MySuggestionView(Suggestion,db.session))
 
     from .api import api as api_blueprint
     app.register_blueprint(api_blueprint, url_prefix='/api')

@@ -34,6 +34,7 @@ def get_user_activities(id):
     for x in activities:
         temp=x.activity.to_json()
         temp['type']=x.type
+        temp['hours']=x.hours
         res.append(temp)
     return jsonify(res)
 

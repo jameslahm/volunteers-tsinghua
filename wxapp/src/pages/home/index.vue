@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import config from '../../config'
+
 export default {
   data() {
     return {
@@ -84,6 +86,9 @@ export default {
     // 查看是否有登录学号
   },
   onShow(){
+    if(config.DEBUG){
+      wx.setStorageSync('id',1)
+    }
     this.$store.commit("getGlobalItems")
     try{
       var id=wx.getStorageSync('id')

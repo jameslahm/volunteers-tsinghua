@@ -54,9 +54,7 @@ export default {
   computed: {
     'appliedItems': function () {
       return this.$store.state.items.filter((item,index) => {
-        let date=new Date(item.endtime)
-        let now=new Date()
-        return item.type === 'applied' && now.getTime()< date.getTime()
+        return item.type === 'applied'
       })
     },
     'applyingItems': function () {
@@ -66,9 +64,7 @@ export default {
     },
     'endedItems':function(){
       return this.$store.state.items.filter((item) => {
-        let date=new Date(item.time)
-        let now=new Date()
-        return item.type === 'applied' && now.getTime()>= date.getTime()
+        return item.type === 'finished'
       })
     }
   },
