@@ -163,7 +163,7 @@ class Activity(db.Model):
     '''活动'''
     __tablename__ = 'activities'
 
-    def generateAID():
+    def generateAID(self):
         s=str(uuid1())
         return s
 
@@ -243,9 +243,9 @@ class Activity(db.Model):
     def search_bytime(time):
         l = Activity.query.all()
         # input example : '2017-04-09 15:25'
-        time=datetime.datetime.strptime(time,'%Y-%m-%d %H:%M')
-        time_date=time.date()
-        return [x for x in l if time_date.__eq__(x.datetime.date())]
+        time = datetime.strptime(time,'%Y-%m-%d %H:%M')
+        time_date = time.date()
+        return [x for x in l if time_date.__eq__(x.starttime.date())]
     @staticmethod
     def search_bylocation(location):
         l = Activity.query.all()
@@ -264,7 +264,7 @@ class Activity(db.Model):
         l = Activity.query.all()
         ans=[]
         for x in l:
-            Name=x.team.first().teamName
+            Name = x.team.teamName
             if (len(teamname) < len(Name)):
                 if re.search(teamname, Name) != None:
                     ans.append(x)
@@ -305,7 +305,6 @@ class Activity(db.Model):
             'totalRecruits':self.totalRecruits,
             'appliedRecruits':self.appliedRecruits,
             'thumb':self.thumb,
-            'endtime':self.endtime,
         }
         return json_activity
 
@@ -408,7 +407,7 @@ login_manager.anonymous_user=AnonymousUser
 class IntroCode(db.Model):
     __tablename__="introcodes"
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    code=db.Column('code',db.String(30))
+    code = db.Column('code',db.String(30))
 
     @staticmethod
     def verify_code(code):

@@ -1,6 +1,6 @@
 from flask import current_app, json
 from app import create_app, db
-from app.model import (User, Team, Activity, Message, UserActivity, IntroCode)
+from app.model import (User, Team, Activity, Message, UserActivity, IntroCode, Suggestion)
 
 import unittest, random
 
@@ -16,12 +16,17 @@ class APITestCase(unittest.TestCase):
 
         new_user = User(userName='testUser', email='test@user', phone='123456')
         new_team = Team(teamName='testTeam', email='test@team', password='123456')
-        db.session.add_all([new_user, new_team])
+        new_activity = Activity(AID=998, team=new_team, starttime='2017-04-09 15:25',
+                                endtime='2017-04-09 15:30', location="testLocation",
+                                title="testActivity", content="testContent", managePerson="testManager",
+                                managePhone=110, manageEmail='test@activity')
+        db.session.add_all([new_user, new_team, new_activity])
         db.session.commit()
 
     def tearDown(self):
         User.query.filter_by(userName='testUser').delete()
         Team.query.filter_by(teamName='testTeam').delete()
+        Activity.query.filter_by(title='testActivity').delete()
         db.session.commit()
 
         db.session.remove()
@@ -36,6 +41,18 @@ class APITestCase(unittest.TestCase):
     def test_add_data(self):
         self.assertIsNotNone(User.query.filter_by(userName='testUser').first())
         self.assertIsNotNone(Team.query.filter_by(teamName='testTeam').first())
+
+        new_suggestion = Suggestion(content="test suggestion")
+        new_intro_code = IntroCode(code="12345678")
+        db.session.add_all([new_suggestion, new_intro_code])
+        db.session.commit()
+
+        self.assertIsNotNone(Suggestion.query.first())
+        self.assertIsNotNone(IntroCode.query.filter_by(code="12345678"))
+
+        Suggestion.query.filter_by(content="test suggestion").delete()
+        IntroCode.query.filter_by(code="12345678").delete()
+        db.session.commit()
 
     def test_to_json(self):
         self.assertEqual('testUser',
@@ -65,3 +82,10 @@ class APITestCase(unittest.TestCase):
         token = new_team.generate_reset_token(expiration=3600 * 24 * 30)
         self.assertIsNotNone(token)
         self.assertTrue(new_team.verify_reset_token(token))
+
+    def test_search_activity(self):
+        # new_activity = Activity.query.filter_by(title='testActivity').first()
+        self.assertIsNotNone(Activity.search_bytime('2017-04-09 15:25'))
+        self.assertIsNotNone(Activity.search_bytitle('testActivity'))
+        self.assertIsNotNone(Activity.search_bylocation('testLocation'))
+        self.assertIsNotNone(Activity.search_byteam('testTeam'))
