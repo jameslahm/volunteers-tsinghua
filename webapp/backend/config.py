@@ -20,7 +20,8 @@ class Config():
     MAIL_USERNAME = 'jameslahm17@gmail.com'
     MAIL_PASSWORD = 'dkcqjdrpmswxrjtw'
     SESSION_TYPE='redis'
-    
+    appid='wxf3aa74b41b1f555c'
+    appsecret='669223961b70204ffbd023015ea9decb'
 
 
     @staticmethod

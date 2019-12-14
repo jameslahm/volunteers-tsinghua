@@ -1,9 +1,11 @@
 <template>
 	<div v-if="isLogIn">
+		<i-message id="message"/>
 		<i-cell @click='bindClick1(user)' :title="user.userName" :label="user.wx" is-link style="padding-top:15px;padding-bottom:15px;">
 			<image :src="user.avatar" slot="icon" style="width:28px;height:28px"  mode="aspectFill"></image>
 		</i-cell>
 		<i-cell-group>
+			<i-cell @click='bindClick6()' title='签到'></i-cell>
 			<i-cell @click='bindClick3()' title="我的活动" is-link></i-cell>
 			<i-cell @click='bindClick4()' title="我的工时" is-link></i-cell>
 			<i-cell title="我的证书" is-link></i-cell>
@@ -22,6 +24,8 @@
 </template>
 
 <script>
+import { get, post } from '../../utils/api'
+const { $Message } = require('../../../static/iview/base/index');
 
 export default {
 	data(){
@@ -78,11 +82,24 @@ export default {
 		'bindClick5':function(){
 			console.log('suggestion')
 			wx.navigateTo({url:'/pages/suggestion/main'})
+		},
+		'bindClick6':function(){
+			wx.scanCode({
+      			success: (res) => {
+						var data = parseInt(res.result);
+						post({url:`/activities/${data}/signin`,data:{'token':this.$store.state.token}}).then(res=>{
+							console.log(res)
+							$Message({
+								content:'签到成功',
+								type:'success'
+							})
+						})
+				  }
+			})	
 		}
 	}
 }
 </script>
 
 <style>
-
 </style>

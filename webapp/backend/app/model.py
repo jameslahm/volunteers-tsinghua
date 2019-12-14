@@ -374,6 +374,7 @@ class UserActivity(db.Model):
     type = db.Column('type', db.Enum('applying', 'applied','finished'),default='applying') # 志愿团体是否已阅申请消息？
     isRead=db.Column('isRead', db.Boolean,default=False)
     hours=db.Column('hours',db.Integer,default=0)
+    isSignIn=db.Column('isSignIn',db.Boolean,default=False)
 
     @staticmethod
     def generate_fake(count=100):

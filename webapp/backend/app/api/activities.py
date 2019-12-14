@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, redirect, jsonify,request,current_app
+from flask import Blueprint, render_template, redirect, jsonify,request,current_app,abort
 from ..model import Activity,UserActivity,Message
 from . import api
 from .. import db
 from flask_login import login_required
+from .authentication import verify_token
 
 
 @api.route('/activities', methods=['GET'])
@@ -100,6 +101,7 @@ def updateVolunteerHours():
     hours=data.get('hours')
     hours=[int(x) for x in hours]
     for i,userA in enumerate(activity.userActivities):
+        print(userA)
         userA.hours=hours[i]
     db.session.commit()
     return jsonify({})
@@ -114,3 +116,21 @@ def applyFinish():
     activity.isApplyFinish=True
     db.session.commit()
     return jsonify({})
+
+@api.route('/activities/<int:id>/signin',methods=['GET'])
+@login_required
+def signin(id):
+    data=request.json
+    token=data.get('token')
+    u=verify_token(token)
+    if not u:
+        abort(402)
+    userA=UserActivity.query.filter_by(activityId=id,user=u).first()
+    userA.isSignIn=True
+    db.session.commit()
+    return jsonify({})
+
+
+@api.route('/activities/<int:id>/createQrCode',methods=['GET'])
+def createQrCode(id):
+    return render_template('qrcode.html',id=id)
