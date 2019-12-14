@@ -25,7 +25,7 @@ def get_activities():
         res={'total':total,'items':items}
     else:
         if(type=='general'):
-            type=='activity'
+            type='activity'
         items=Activity.search(text,type)
         total=len(items)
         res={'total':total,'items':items}
@@ -126,7 +126,7 @@ def signin(id):
     token=data.get('token')
     u=verify_token(token)
     if not u:
-        abort(402)
+        abort(403)
     userA=UserActivity.query.filter_by(activityId=id,user=u).first()
     userA.isSignIn=True
     db.session.commit()
