@@ -88,14 +88,17 @@ export default {
   onShow(){
     if(config.DEBUG){
       wx.setStorageSync('id',1)
+      wx.setStorageSync('token','eyJhbGciOiJIUzUxMiIsImlhdCI6MTU3NjMyNzYxNSwiZXhwIjoxNTc4OTE5NjE1fQ.MQ.NezEZef3_s1fJiG-_UdJe_BWOfoK9qsS1m3Y7EDcLWDesodpr6_V9tlDSBnBefkNuK4nGjPgTApyYJf_BHaRzw')
     }
     this.$store.commit("getGlobalItems")
     try{
       var id=wx.getStorageSync('id')
+      var token=wx.getStorageSync('token')
       // var password=wx.getStorageSync('password')
       console.log(id)
       if(id){
         this.$store.commit("getUser",id)
+        this.$store.state.token=token
       }
     }catch(e){
       console.log("no login")

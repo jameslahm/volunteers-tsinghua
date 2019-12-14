@@ -134,10 +134,16 @@ export default {
       wx.navigateTo({ url: '/pages/activity/main?id=' + item.id })
     },
     'clickReturn':function(){
-      this.notInputing=true
-      this.type='general'
-      this.text=''
-      this.placeholder="搜索"
+      if(this.type!='general'){
+        this.notInputing=true
+        this.type='general'
+        this.text=''
+        this.placeholder="搜索"
+      }
+      else{
+        console.log('home')
+        wx.navigateBack({ url: '/pages/home/main'})
+      }
     }
   },
   onLoad (options) {
