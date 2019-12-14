@@ -33,11 +33,26 @@ class APITestCase(unittest.TestCase):
             'auth/login',
             data={"email": "test@team", "password": "wrongpw", "remember_me": 0})
         json_data = response.data
-        self.assertIsNotNone(json_data)
+        self.assertIn("remember-me", str(json_data))  # 登陆页面
 
         response2 = current_app.test_client().post(
             'auth/login',
             data={"email": "test@team", "password": "123456", "remember_me": 0})
         json_data2 = response2.data
-        self.assertIsNotNone(json_data2)
-        self.assertNotEqual(json_data, json_data2)
+        self.assertNotIn("remember-me", str(json_data2))  # 团体主页
+
+    def test_register(self):
+        new_intro_code = IntroCode(code="12345678")
+        db.session.add(new_intro_code)
+        db.session.commit()
+
+        response = current_app.test_client().post(
+            'auth/register',
+            data={"code": new_intro_code.code, "email": "test@register",
+                  "username": "test_user_name", "password": "test_user_pw"}
+        )
+        json_data = response.data
+        self.assertIn("login", str(json_data))  # 登陆页面
+
+        IntroCode.query.filter_by(code="12345678").delete()
+        db.session.commit()
