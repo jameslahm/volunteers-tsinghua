@@ -228,7 +228,7 @@ class Activity(db.Model):
             db.session.commit()
     @staticmethod
     def search_bytitle(title):
-        l = Activity.query.all()
+        l = Activity.query.filter_by(type='created').all()
         ans=[]
         for x in l:
             if (len(title) < len(x.title)):
@@ -241,14 +241,14 @@ class Activity(db.Model):
         return ans
     @staticmethod
     def search_bytime(time):
-        l = Activity.query.all()
+        l = Activity.query.filter_by(type='created').all()
         # input example : '2017-04-09 15:25'
         time = datetime.strptime(time,'%Y-%m-%d %H:%M')
         time_date = time.date()
         return [x for x in l if time_date.__eq__(x.starttime.date())]
     @staticmethod
     def search_bylocation(location):
-        l = Activity.query.all()
+        l = Activity.query.filter_by(type='created').all()
         ans=[]
         for x in l:
             if (len(location) < len(x.location)):
@@ -261,7 +261,7 @@ class Activity(db.Model):
         return ans
     @staticmethod
     def search_byteam(teamname):
-        l = Activity.query.all()
+        l = Activity.query.filter_by(type='created').all()
         ans=[]
         for x in l:
             Name = x.team.teamName
@@ -276,7 +276,7 @@ class Activity(db.Model):
 
     @staticmethod
     def search_byAID(aid):
-        return Activity.query.filter_by(Activity.AID.startswith(aid)).all()
+        return Activity.query.filter_by(type='created').filter_by(Activity.AID.startswith(aid)).all()
 
     @staticmethod
     def search(param,type):
