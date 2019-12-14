@@ -23,7 +23,8 @@ def index():
         team=current_user
         team.teamName=teamName
         team.phone=phone
-        team.password=password
+        if(password):
+            team.password=password
         team.description=description
         avatar=request.files['avatar']
         if avatar and allowed_file(avatar.filename):
