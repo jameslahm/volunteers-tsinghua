@@ -1,13 +1,14 @@
 {% extends "auth/authbase.html" %}
 {% block page %}
 {% for message in get_flashed_messages() %}
-  <div class="alert alert-warning" style="position: absolute;top: 3px;left: 50%;width: 570px;margin-left:-285px;text-align: center;">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      {{ message }}
-  </div>
+<div class="alert alert-warning"
+  style="position: absolute;top: 3px;left: 50%;width: 570px;margin-left:-285px;text-align: center;">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  {{ message }}
+</div>
 {% endfor %}
 <form class="form-signin" method="POST">
-  <div class="jumbotron" style=background-color:rgba(219,177,247,0.336);>
+  <div class="jumbotron" style=background-color:rgba(239,237,247,0.736);>
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -16,13 +17,16 @@
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="../static/img/login/thu1.jpg" class="d-block w-100" alt="...">
+          <img src="../../static/img/login/thvol1.jpg" class="d-block w-100" alt="...">
         </div>
         <div class="carousel-item">
-          <img src="../static/img/login/vol1.jpg" class="d-block w-100" alt="...">
+          <img src="../../static/img/login/thvol2.jpg" class="d-block w-100" alt="...">
         </div>
         <div class="carousel-item">
-          <img src="../static/img/login/vol2.jpeg" class="d-block w-100" alt="...">
+          <img src="../../static/img/login/thvol3.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="../../static/img/login/thvol4.jpg" class="d-block w-100" alt="...">
         </div>
       </div>
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -35,15 +39,37 @@
       </a>
     </div>
 
-    <div class="text-center mb-4">
-      <!--img class="mb-4" src="login/bootstrap-solid.svg" alt="" width="72" height="72"-->
-      <h1 class="line"></h1>
-      <h2 class="h3 mb-3 font-weight-normal">志在清华</h2>
-
+    <h1 class="line"></h1>
+    <div class="centerrow">
+      <div class="subdiv_centerrow">
+        <div class="row">
+          <img src="../static/img/myactivity/tsinghua.png" height="40">
+          <h2 class="h3 mb-3 font-weight-normal">&nbsp;志在清华</h2>
+        </div>
+      </div>
     </div>
+    <style type="text/css">
+      .centerrow {
+        text-align: center;
+        margin: 0 auto;
+        padding: 0;
+        clear: both;
+      }
+
+      .subdiv_centerrow {
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+        _display: inline;
+        *display: inline;
+        zoom: 1;
+      }
+    </style>
+
 
     <div class="form-label-group">
-      <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+      <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required
+        autofocus>
       <label for="inputEmail">邮箱</label>
     </div>
 
@@ -64,4 +90,3 @@
   </div>
 </form>
 {% endblock%}
-
