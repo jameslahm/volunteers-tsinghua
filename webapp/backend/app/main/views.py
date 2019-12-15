@@ -29,7 +29,10 @@ def index():
         avatar=request.files['avatar']
         if avatar and allowed_file(avatar.filename):
             filename = secure_filename(avatar.filename)
-            print(filename)
+            if(filename.find('.')!=-1):
+                filename='teamavatar_'+str(team.id)+'_'+filename
+            else:
+                filename='teamavatar_'+str(team.id)+'_.'+filename
             avatar.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename).replace('\\','/'))
             file='/static/img/'+filename
             team.avatar=file
@@ -58,12 +61,20 @@ def myactivity():
         qrcode=request.files['qrcode']
         if thumb and allowed_file(thumb.filename):
             filename = secure_filename(thumb.filename)
+            if(filename.find('.')!=-1):
+                filename='activitythumb_'+str(activitie.id)+'_'+filename
+            else:
+                filename='activitythumb_'+str(activitie.id)+'_.'+filename
             print(filename)
             thumb.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename).replace('\\','/'))
             file='/static/img/'+filename
             activitie.thumb=file
         if qrcode and allowed_file(qrcode.filename):
             filename = secure_filename(qrcode.filename)
+            if(filename.find('.')!=-1):
+                filename='activityqrcode_'+str(activitie.id)+'_'+filename
+            else:
+                filename='activityqrcode_'+str(activitie.id)+'_.'+filename
             print(filename)
             qrcode.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename).replace('\\','/'))
             qrcode='/static/img/'+filename
@@ -102,8 +113,13 @@ def createactivity():
         thumb=request.files['thumb']
         qrcode=request.files['qrcode']
         type='creating'
+        id=Activity.query.order_by(Activity.id.desc()).first().id+1
         if thumb and allowed_file(thumb.filename):
             filename = secure_filename(thumb.filename)
+            if(filename.find('.')!=-1):
+                filename='activitythumb_'+str(id)+'_'+filename
+            else:
+                filename='activitythumb_'+str(id)+'_.'+filename
             print(filename)
             thumb.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename).replace('\\','/'))
             file='/static/img/'+filename
@@ -111,6 +127,10 @@ def createactivity():
             file=None
         if qrcode and allowed_file(qrcode.filename):
             filename = secure_filename(qrcode.filename)
+            if(filename.find('.')!=-1):
+                filename='activitythumb_'+str(id)+'_'+filename
+            else:
+                filename='activitythumb_'+str(id)+'_.'+filename
             print(filename)
             qrcode.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename).replace('\\','/'))
             qrcode='/static/img/'+filename
