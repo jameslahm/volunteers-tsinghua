@@ -40,9 +40,8 @@ def register():
         else:
             print(code)
             introcode=IntroCode.verify_code(code)
-            print(introcode)
-            if introcode is None:
-                flash('Code is not correct')
+            if not introcode:
+                flash('Code is not valid')
             else:
                 flash('You have registered successfully')
                 team=Team(email=email,teamName=username,password=password)

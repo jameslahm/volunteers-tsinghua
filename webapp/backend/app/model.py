@@ -408,10 +408,16 @@ class IntroCode(db.Model):
     __tablename__="introcodes"
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     code = db.Column('code',db.String(30))
+    time=db.Column('time',db.DateTime,default=datetime.now)
 
     @staticmethod
     def verify_code(code):
-        return IntroCode.query.filter_by(code=code).first()
+        intro=IntroCode.query.filter_by(code=code).first()
+        now=datetime.now()
+        if((now-intro.time).days!=0):
+            return False
+        else:
+            return True
 
 
 class Suggestion(db.Model):
