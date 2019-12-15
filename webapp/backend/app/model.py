@@ -370,7 +370,7 @@ class UserActivity(db.Model):
     # workDate = db.Column('workdate', db.DateTime, nullable=False) # 增加
     content = db.Column('content', db.String(400), nullable=False) # 增加
     applyTime = db.Column('applytime', db.DateTime,default=datetime.now) # 增加
-    type = db.Column('type', db.Enum('applying', 'applied','finished'),default='applying') # 志愿团体是否已阅申请消息？
+    type = db.Column('type', db.Enum('applying', 'applied','finished','refused'),default='applying') # 志愿团体是否已阅申请消息？
     isRead=db.Column('isRead', db.Boolean,default=False)
     hours=db.Column('hours',db.Integer,default=0)
     isSignIn=db.Column('isSignIn',db.Boolean,default=False)

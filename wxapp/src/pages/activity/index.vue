@@ -34,7 +34,11 @@ export default {
       return this.$store.getters.getGlobalItemById(this.itemId) || this.$store.getters.getItemById(this.itemId)
     },
     'isApplyed':function(){
-      return this.$store.getters.getItemById(this.itemId)
+      item=this.$store.getters.getItemById(this.itemId)
+      if(item && item.type!='refused')
+        return true
+      else
+        return false
     }
   },
   components: {},

@@ -77,10 +77,11 @@ def replyApply():
     if res=='1':
         userA.type='applied'
         userA.activity.appliedRecruits+=1
-        message=Message(user=userA.user,activity=userA.activity,content="同意")
+        message=Message(user=userA.user,activity=userA.activity,content='恭喜您，您申请参加的活动:{}，已被活动负责人批准，请及时扫描下方二维码加入活动群'.format(userA.activity.title))
 
     else:
-        message=Message(user=userA.user,activity=userA.activity,content="拒绝")
+        userA.type='refused'
+        message=Message(user=userA.user,activity=userA.activity,content="抱歉，很遗憾的通知您，您申请参加的活动:{}，已被活动负责人拒绝".format(userA.activity.title))
         db.session.delete(userA)
     db.session.add(message)
     db.session.commit()
@@ -129,7 +130,7 @@ def signin(id):
     token=data.get('token')
     u=verify_token(token)
     if not u:
-        abort(403)
+        return jsonify({'error':'invalid token'})
     userA=UserActivity.query.filter_by(activityId=id,user=u).first()
     userA.isSignIn=True
     db.session.commit()

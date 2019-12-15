@@ -11,7 +11,7 @@ def query_by_id(id):
         data=request.json
         user=verify_token(data.get('token'))
         if not user:
-            abort(403)
+            return jsonify({'error':'invalid token'})
         user.userName=data.get('userName')
         user.department=data.get('department')
         user.wx=data.get('wx')
@@ -51,7 +51,7 @@ def user_apply(id):
     token=data.get('token')
     u=verify_token(token)
     if not u:
-        abort(403)
+        return jsonify({'error':'invalid token'}) # token失效
     content=data.get('content')
     itemId=data.get('id')
     activity=Activity.query.filter_by(id=itemId).first()

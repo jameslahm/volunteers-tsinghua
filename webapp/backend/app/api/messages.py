@@ -10,7 +10,7 @@ def change_message_isread(id):
     token=data.get('token')
     u=verify_token(token)
     if not u:
-        abort(403)
+        return jsonify({'error':'invalid token'})
     message=Message.query.filter_by(id=id).first()
     if message.user!=u:
         abort(403)
@@ -24,7 +24,7 @@ def delete_message(id):
     token=data.get('token')
     u=verify_token(token)
     if not u:
-        abort(403)
+        return jsonify({'error':'invalid token'})
     print(id)
     message=Message.query.filter_by(id=id).first()
     if message and message.user!=u:
