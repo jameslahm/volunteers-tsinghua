@@ -70,6 +70,38 @@ const store = new Vuex.Store({
       get({ 'url': `/users/${id}` }).then(res => {
         state.user = res
         console.log(state.user)
+        wx.getSetting({
+          success (res) {
+            if (res.authSetting['scope.userInfo']) {
+              // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+              wx.getUserInfo({
+                success: function (res) {
+                  state.user.avatar = res.userInfo.avatarUrl
+                  var data = state.user
+                  console.log(state.user)
+                  data.token = state.token
+                  post({ 'url': `/users/${state.user.id}`, 'data': data })
+                }
+              })
+            } else {
+              wx.authorize({
+                scope: 'scope.userInfo',
+                success () {
+                  wx.getUserInfo({
+                    success: function (res) {
+                      state.user.avatar = res.userInfo.avatarUrl
+                      var data = state.user
+                      console.log(state.user)
+                      data.token = state.token
+                      post({ 'url': `/users/${state.user.id}`, 'data': data })
+                    }
+                  })
+                }
+              })
+            }
+          }
+        })
+        console.log('Avatar')
       })
     },
     logOut (state) {

@@ -24,7 +24,7 @@ class User(db.Model):
     userName = db.Column("userName", db.String(16), unique=False, nullable=False)
     wx = db.Column("wx", db.String(64), unique=False) # 改
     email = db.Column("email", db.String(64), unique=False) # 改
-    avatar = db.Column("avatar", db.String(128))
+    avatar = db.Column("avatar", db.String(250))
     schoolId = db.Column('schoolID', db.String(30), unique=False)  # 改
     phone = db.Column('phone', db.String(20))
     department = db.Column('department', db.Text)
