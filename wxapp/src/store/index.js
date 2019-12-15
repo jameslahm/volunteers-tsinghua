@@ -44,7 +44,7 @@ const store = new Vuex.Store({
       get({ 'url': `/users/${state.user.id}/activities` }).then((res) => {
         state.items = res
         state.items.forEach(elem => {
-          elem.thumb = config.host + ':' + config.port + elem.thumb
+          elem.thumb = config.host + config.port + elem.thumb
         })
         console.log(state.items)
       })
@@ -54,7 +54,7 @@ const store = new Vuex.Store({
         state.messages = res
         state.messages.forEach(elem => {
           elem.decription = elem.content.slice(0, 20) + '...'
-          elem.qrcode = config.host + ':' + config.port + elem.qrcode
+          elem.qrcode = config.host + config.port + elem.qrcode
         })
       })
     },
@@ -121,7 +121,7 @@ const store = new Vuex.Store({
         console.log(res)
         state.globalItems = res.items
         state.globalItems.forEach(elem => {
-          elem.thumb = config.host + ':' + config.port + elem.thumb
+          elem.thumb = config.host + config.port + elem.thumb
         })
         state.total = res.total
         console.log(state.globalItems)

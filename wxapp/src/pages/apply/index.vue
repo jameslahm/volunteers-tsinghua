@@ -1,7 +1,7 @@
 <template>
   <div>
     <i-message id="message"/>
-    <i-card :thumb="item.thumb" :title="item.title">
+    <i-card :thumb="item.thumb" :title="item.title" i-class="card-thumb">
       <view slot="content">
         <i-input title="姓名" id="userName" :value="info.userName" type="text" placeholder="name" @change="changeInput"></i-input>
         <i-input title="院系" id="department" :value="info.department" type="text" placeholder="department" @change="changeInput"></i-input>
@@ -62,4 +62,9 @@ export default {
 </script>
 
 <style>
+.card-thumb image {
+  border-radius: 50%;
+  width:30px;
+  height:30px;
+}
 </style>

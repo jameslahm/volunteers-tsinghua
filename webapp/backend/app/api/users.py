@@ -41,7 +41,7 @@ def get_user_activities(id):
 
 @api.route('/users/<int:id>/messages', methods=['GET'])
 def get_user_messages(id):
-    messages=User.query.filter_by(id=id).first().messages
+    messages=Message.query.filter_by(userId=id).order_by(Message.isRead).order_by(Message.time.desc()).all()
     res=[x.to_json() for x in messages]
     return jsonify(res)
 

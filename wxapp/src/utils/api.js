@@ -5,9 +5,9 @@ let host = config.host
 let port = config.port
 
 export const get = (params) => {
-  return fly.get(`${host}:${port}/api${params.url}`, params.data)
+  return fly.get(`${host}${port}/api${params.url}`, params.data)
 }
 
 export const post = (params) => {
-  return fly.post(`${host}:${port}/api${params.url}`, params.data)
+  return fly.post(`${host}${port}/api${params.url}`, params.data)
 }

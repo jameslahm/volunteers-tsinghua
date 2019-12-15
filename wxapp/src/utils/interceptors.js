@@ -7,7 +7,7 @@ var fly = new Fly()
 // let DEBUG = config.DEBUG
 // let host = config.host
 
-fly.config.timeout = 1000
+fly.config.timeout = 10000
 fly.config.baseUrl = config.host
 
 fly.interceptors.request.use((request) => {

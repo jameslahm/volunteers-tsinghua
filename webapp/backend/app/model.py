@@ -323,7 +323,7 @@ class Message(db.Model):
     userId = db.Column('userId', db.Integer, db.ForeignKey('users.id',ondelete='cascade'))
     activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id',ondelete='cascade'))
     content = db.Column('content', db.Text)
-    time = db.Column('time', db.DateTime)
+    time = db.Column('time', db.DateTime,default=datetime.now)
     isRead = db.Column('isRead', db.Boolean,default=False)
 
     @staticmethod
