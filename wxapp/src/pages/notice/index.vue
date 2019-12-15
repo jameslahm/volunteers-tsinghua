@@ -50,7 +50,12 @@ export default {
   },
   methods:{
     'bindClick':function(item){
-      this.$store.commit('changeIsRead',item.id)
+      if(! this.$store.commit('changeIsRead',item.id)){
+        $Message({
+        content:"抱歉，您的登录凭证已失效，请重新登录",
+        type:'warning'
+        })
+      }
       wx.navigateTo({ url: '/pages/message/main?id=' + item.id })
     }
   }

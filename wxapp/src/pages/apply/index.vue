@@ -40,11 +40,18 @@ export default {
   },
   methods: {
     'bindClick': function() {
-      this.$store.commit('applyItem',{'content':this.content,'id':this.itemId})
-      $Message({
-        content:"报名成功",
-        type:'success'
-      })
+      if(this.$store.commit('applyItem',{'content':this.content,'id':this.itemId})){
+        $Message({
+          content:"报名成功",
+          type:'success'
+        })
+      }
+      else{
+        $Message({
+          content:"抱歉，您的登录凭证已失效，请重新登录",
+          type:'warning'
+        })
+      }
       this.$store.commit('getItems')
     },
     'changeInput':function(event){

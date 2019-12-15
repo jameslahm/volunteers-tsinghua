@@ -55,6 +55,7 @@ const store = new Vuex.Store({
         state.messages.forEach(elem => {
           elem.decription = elem.content.slice(0, 20) + '...'
           elem.qrcode = config.host + config.port + elem.qrcode
+          elem.team.avatar = config.host + config.port + elem.team.avatar
         })
       })
     },
@@ -62,46 +63,19 @@ const store = new Vuex.Store({
       state.messages.forEach(elem => {
         if (elem.id === id) {
           elem.isRead = true
-          post({ 'url': `/messages/${elem.id}/changeIsRead`, 'data': {'token': state.token} })
+          post({ 'url': `/messages/${elem.id}/changeIsRead`, 'data': {'token': state.token} }).then(res => {
+            if (res.error) {
+              return false
+            }
+          })
         }
       })
+      return true
     },
     getUser (state, id) {
       get({ 'url': `/users/${id}` }).then(res => {
         state.user = res
         console.log(state.user)
-        wx.getSetting({
-          success (res) {
-            if (res.authSetting['scope.userInfo']) {
-              // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-              wx.getUserInfo({
-                success: function (res) {
-                  state.user.avatar = res.userInfo.avatarUrl
-                  var data = state.user
-                  console.log(state.user)
-                  data.token = state.token
-                  post({ 'url': `/users/${state.user.id}`, 'data': data })
-                }
-              })
-            } else {
-              wx.authorize({
-                scope: 'scope.userInfo',
-                success () {
-                  wx.getUserInfo({
-                    success: function (res) {
-                      state.user.avatar = res.userInfo.avatarUrl
-                      var data = state.user
-                      console.log(state.user)
-                      data.token = state.token
-                      post({ 'url': `/users/${state.user.id}`, 'data': data })
-                    }
-                  })
-                }
-              })
-            }
-          }
-        })
-        console.log('Avatar')
       })
     },
     logOut (state) {
@@ -114,7 +88,12 @@ const store = new Vuex.Store({
       }
       var data = info
       data.token = state.token
-      post({ 'url': `/users/${state.user.id}`, 'data': data })
+      post({ 'url': `/users/${state.user.id}`, 'data': data }).then(res => {
+        if (res.error) {
+          return false
+        }
+      })
+      return true
     },
     getGlobalItems (state, params) {
       get({ 'url': '/activities', 'data': params }).then(res => {
@@ -130,14 +109,22 @@ const store = new Vuex.Store({
     applyItem (state, data) {
       data.token = state.token
       post({'url': `/users/${state.user.id}/apply`, 'data': data}).then(res => {
+        if (res.error) {
+          return false
+        }
       })
+      return true
     },
     clearGlobalItems (state) {
       state.globalItems = []
     },
     deleteMessage (state, id) {
       post({'url': `/messages/${id}/delete`, 'data': {'token': state.token}}).then(res => {
+        if (res.error) {
+          return false
+        }
       })
+      return true
     },
     verifyTHU (state, token) {
       post({'url': '/verifyTHU', 'data': {'token': token}}).then((res) => {
