@@ -5,7 +5,7 @@ from app.model import (User, Team, Activity, Message, UserActivity, IntroCode, S
 import unittest, random
 
 
-class APITestCase(unittest.TestCase):
+class ModelTestCase(unittest.TestCase):
 
     def setUp(self):
         self.app = create_app('testing')
