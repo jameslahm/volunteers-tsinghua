@@ -50,7 +50,7 @@ class APITestCase(unittest.TestCase):
             db.session.commit()
 
         data = {"introcode": "12345678", "email": "test@register",
-                "username": "test_user_name", "password": "test_user_pw"}
+                "username": "test_user_name", "password": "test_user_pw","password2":"test_user_pw"}
 
         response = current_app.test_client().post(
             url_for('auth.register'),
