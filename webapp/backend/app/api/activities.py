@@ -27,8 +27,12 @@ def get_activities():
         if(type=='general'):
             type='activity'
         items=Activity.search(text,type)
-        total=len(items)
-        items=[x.to_json() for x in items]
+        if items is not None:
+            total=len(items)
+            items=[x.to_json() for x in items]
+        else:
+            total=0
+            items=[]
         res={'total':total,'items':items}
     return jsonify(res)
 
