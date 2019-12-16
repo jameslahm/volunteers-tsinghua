@@ -50,6 +50,7 @@ def myactivity():
         managePerson=request.form.get('managePerson')
         managePhone=request.form.get('managePhone')
         id=request.form.get('id')
+        print(id)
         content=request.form.get('content')
         activitie=Activity.query.filter_by(id=id).first()
         activitie.starttime=starttime

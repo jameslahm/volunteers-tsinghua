@@ -365,8 +365,8 @@ class UserActivity(db.Model):
     __tablename__ = 'useractivities'
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    userId = db.Column('userId', db.Integer, db.ForeignKey('users.id',ondelete='cascade'))
-    activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id',ondelete='cascade'))
+    userId = db.Column('userId', db.Integer, db.ForeignKey('users.id',ondelete='cascade'),nullable=False)
+    activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id',ondelete='cascade'),nullable=False)
     # workDate = db.Column('workdate', db.DateTime, nullable=False) # 增加
     content = db.Column('content', db.String(400), nullable=False) # 增加
     applyTime = db.Column('applytime', db.DateTime,default=datetime.now) # 增加

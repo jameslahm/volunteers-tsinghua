@@ -34,11 +34,16 @@ export default {
       return this.$store.getters.getGlobalItemById(this.itemId) || this.$store.getters.getItemById(this.itemId)
     },
     'isApplyed':function(){
-      item=this.$store.getters.getItemById(this.itemId)
-      if(item && item.type!='refused')
+      if(this.$store.state.user.id!=undefined){
+        let item=this.$store.getters.getItemById(this.itemId)
+        if(item && item.type!='refused')
+          return true
+        else
+          return false
+      }
+      else{
         return true
-      else
-        return false
+      }
     }
   },
   components: {},
@@ -48,6 +53,13 @@ export default {
   },
   methods: {
     'bindClick':function(){
+      if(this.$store.state.user.id===undefined){
+        $Message({
+          content:"抱歉，请先登录",
+          type : "warning"
+        })
+        return
+      }
       if(this.isApplyed){
         $Message({
           content:"抱歉，你已经报名了",
@@ -61,13 +73,6 @@ export default {
           type:'warning'
         })
         return 
-      }
-      if(this.$store.state.user===undefined){
-        $Message({
-          content:"抱歉，请先登录",
-          type : "warning"
-        })
-        return
       }
       wx.navigateTo({ url: '/pages/apply/main?id=' + this.item.id })
     }
