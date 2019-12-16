@@ -47,7 +47,7 @@ def get_activity_info(id):
 
 @api.route('/activities/<int:id>/members', methods=['GET'])
 def get_activity_members(id):
-    activity=Activity.query.filter_by(id == id).first()
+    activity=Activity.query.filter_by(id=id).first()
     members=[x.to_json() for x in activity.members()]
     return jsonify(members)
 

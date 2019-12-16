@@ -5,7 +5,7 @@ from app.model import (User, Team, Activity, Message, UserActivity, IntroCode, S
 import unittest, random
 
 
-class APITestCase(unittest.TestCase):
+class ModelTestCase(unittest.TestCase):
 
     def setUp(self):
         self.app = create_app('testing')
@@ -16,7 +16,7 @@ class APITestCase(unittest.TestCase):
 
         new_user = User(userName='testUser', email='test@user', phone='123456')
         new_team = Team(teamName='testTeam', email='test@team', password='123456')
-        new_activity = Activity(AID=998, team=new_team, starttime='2017-04-09 15:25',
+        new_activity = Activity(AID='998', team=new_team, starttime='2017-04-09 15:25',
                                 endtime='2017-04-09 15:30', location="testLocation",
                                 title="testActivity", content="testContent", managePerson="testManager",
                                 managePhone=110, manageEmail='test@activity')
@@ -84,8 +84,11 @@ class APITestCase(unittest.TestCase):
         self.assertTrue(new_team.verify_reset_token(token))
 
     def test_search_activity(self):
-        # new_activity = Activity.query.filter_by(title='testActivity').first()
-        self.assertIsNotNone(Activity.search_bytime('2017-04-09 15:25'))
+        self.assertIsNotNone(Activity.search('2017-04-09 15:25', 'time'))
+        self.assertIsNotNone(Activity.search('testActivity', 'activity'))
+        self.assertIsNotNone(Activity.search('testLocation', 'coordinates'))
+        self.assertIsNotNone(Activity.search('testTeam', 'group'))
+        self.assertIsNotNone(Activity.search('998', 'barrage'))
+
+    def test_members(self):
         self.assertIsNotNone(Activity.search_bytitle('testActivity'))
-        self.assertIsNotNone(Activity.search_bylocation('testLocation'))
-        self.assertIsNotNone(Activity.search_byteam('testTeam'))

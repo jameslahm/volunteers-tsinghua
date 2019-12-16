@@ -276,7 +276,7 @@ class Activity(db.Model):
 
     @staticmethod
     def search_byAID(aid):
-        return Activity.query.filter_by(type='created').filter_by(Activity.AID.startswith(aid)).all()
+        return Activity.query.filter_by(type='created').filter(Activity.AID.startswith(aid)).all()
 
     @staticmethod
     def search(param,type):
