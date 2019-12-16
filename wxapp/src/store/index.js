@@ -46,7 +46,6 @@ const store = new Vuex.Store({
         state.items.forEach(elem => {
           elem.thumb = config.host + config.port + elem.thumb
         })
-        console.log(state.items)
       })
     },
     getMessages (state) {
@@ -64,13 +63,9 @@ const store = new Vuex.Store({
         if (elem.id === id) {
           elem.isRead = true
           post({ 'url': `/messages/${elem.id}/changeIsRead`, 'data': {'token': state.token} }).then(res => {
-            if (res.error) {
-              return false
-            }
           })
         }
       })
-      return true
     },
     getUser (state, id) {
       get({ 'url': `/users/${id}` }).then(res => {
@@ -89,11 +84,7 @@ const store = new Vuex.Store({
       var data = info
       data.token = state.token
       post({ 'url': `/users/${state.user.id}`, 'data': data }).then(res => {
-        if (res.error) {
-          return false
-        }
       })
-      return true
     },
     getGlobalItems (state, params) {
       get({ 'url': '/activities', 'data': params }).then(res => {
@@ -109,22 +100,14 @@ const store = new Vuex.Store({
     applyItem (state, data) {
       data.token = state.token
       post({'url': `/users/${state.user.id}/apply`, 'data': data}).then(res => {
-        if (res.error) {
-          return false
-        }
       })
-      return true
     },
     clearGlobalItems (state) {
       state.globalItems = []
     },
     deleteMessage (state, id) {
       post({'url': `/messages/${id}/delete`, 'data': {'token': state.token}}).then(res => {
-        if (res.error) {
-          return false
-        }
       })
-      return true
     },
     verifyTHU (state, token) {
       post({'url': '/verifyTHU', 'data': {'token': token}}).then((res) => {
@@ -169,6 +152,13 @@ const store = new Vuex.Store({
     suggestion (state, content) {
       post({'url': '/suggestions', 'data': {'content': content}}).then(res => {
         console.log(res)
+      })
+    },
+    verifyToken (state) {
+      get({'url': '/verifyToken', 'data': {'token': state.token}}).then(res => {
+        if (res.error) {
+          state.token = undefined
+        }
       })
     }
   }

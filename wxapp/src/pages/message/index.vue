@@ -23,7 +23,8 @@ export default {
     },
     methods:{
         'bindClick':function(){
-            if(this.$store.commit('deleteMessage',this.messageId)){
+            if(this.$store.state.token!=undefined){
+                this.$store.commit('deleteMessage',this.messageId)
                 $Message({
                     content:'删除成功',
                     type:'success'

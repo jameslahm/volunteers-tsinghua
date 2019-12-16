@@ -57,7 +57,11 @@ def user_apply(id):
     content=data.get('content')
     itemId=data.get('id')
     activity=Activity.query.filter_by(id=itemId).first()
-    userA=UserActivity(user=u,activity=activity,content=content,type='applying')
-    db.session.add(userA)
-    db.session.commit()
-    return jsonify({})
+    userA=UserActivity.query.filter_by(user=u,activity=activity).first()
+    if(userA):
+        return jsonify({})
+    else:
+        userA=UserActivity(user=u,activity=activity,content=content,type='applying')
+        db.session.add(userA)
+        db.session.commit()
+        return jsonify({})

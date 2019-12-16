@@ -88,7 +88,7 @@ export default {
   onShow(){
     if(config.DEBUG){
       wx.setStorageSync('id',1)
-      wx.setStorageSync('token','eyJhbGciOiJIUzUxMiIsImlhdCI6MTU3NjMyNzYxNSwiZXhwIjoxNTc4OTE5NjE1fQ.MQ.NezEZef3_s1fJiG-_UdJe_BWOfoK9qsS1m3Y7EDcLWDesodpr6_V9tlDSBnBefkNuK4nGjPgTApyYJf_BHaRzw')
+      wx.setStorageSync('token','eyJhbGciOiJIUzUxMiIsImlhdCI6MTU3NjUwNjY5OSwiZXhwIjoxNTc5MTg1MDk5fQ.MQ.DOr8gQnfduPEe8t-aACVszu3FYSryrq6llr7DwXCbscYvL1KLDJPugm_pgMY8zQnGb3fw93qWsHkF1MxUaT97w')
     }
     this.$store.commit("getGlobalItems")
     try{
@@ -99,6 +99,7 @@ export default {
       if(id){
         this.$store.commit("getUser",id)
         this.$store.state.token=token
+        this.$store.commit('verifyToken')
       }
     }catch(e){
       console.log("no login")

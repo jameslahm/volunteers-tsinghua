@@ -40,7 +40,8 @@ export default {
   },
   methods: {
     'bindClick': function() {
-      if(this.$store.commit('applyItem',{'content':this.content,'id':this.itemId})){
+      if(this.$store.state.token!=undefined){
+        this.$store.commit('applyItem',{'content':this.content,'id':this.itemId})
         $Message({
           content:"报名成功",
           type:'success'

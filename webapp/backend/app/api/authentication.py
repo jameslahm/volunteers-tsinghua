@@ -7,6 +7,12 @@ from .. import db
 def verify_token(token):
     return User.verify_auth_token(token)
 
+@api.route('/verifyToken',methods=['GET'])
+def verifyToken():
+    u=verify_token(request.args.get('token',''))
+    if not u:
+        return jsonify({'error':'invaild token'})
+    return jsonify({})
 
 @api.route('/token',methods=['POST','GET'])
 def get_token():

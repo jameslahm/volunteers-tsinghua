@@ -30,7 +30,8 @@ export default {
   },
   methods: {
     'bindClick': function() {
-      if(this.$store.commit('changeInfo',this.info)){
+      if(this.$store.state.token!=undefined){
+        this.$store.commit('changeInfo',this.info)
         $Message({
           content:'保存成功',
           type:'success'
