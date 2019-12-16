@@ -31,7 +31,7 @@ def query_by_id(id):
 def get_user_activities(id):
     activities=UserActivity.query.filter_by(userId=id).all()
     res=[]
-    if activities is None:
+    if len(activities)==0:
         return jsonify([])
     for x in activities:
         temp=x.activity.to_json()
