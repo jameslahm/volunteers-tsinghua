@@ -398,62 +398,6 @@
     </div>
     {% endfor %}
 
-    <!-- Modal finish activity -->
-    <!-- <div class="modal fade" id="assign{{activity.id}}" tabindex="-1" role="dialog"
-        aria-labelledby="assignModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="assignModalLabel">项目详情</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">
-                                    成员列表{{activity.appliedRecruits.__str__()+'/'+activity.totalRecruits.__str__()}}</h4>
-                                <h6 class="card-subtitle">在这里查看已经加入您项目的志愿者。</h6>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">姓名</th>
-                                            <th scope="col">学号</th>
-                                            <th scope="col">院系</th>
-                                            <th scope="col">工作时间</th>
-                                            <th scope="col">分配工时</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for userActivity in activity.userActivities %}
-                                        {% if userActivity.type=='applied' %}
-                                        <tr>
-                                            <th scope="row">{{userActivity.user.userName}}</th>
-                                            <td>{{userActivity.user.schoolId}}</td>
-                                            <td>{{userActivity.user.department}}</td>
-                                            <td>{{userActivity.activity.starttime}}</td>
-                                            <td><input type="number" class="form-control" name="workinghour{{userActivity.id}}"></td>
-                                        </tr>
-                                        {% endif %}
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="update()" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">确认提交</button>
-                </div>
-            </div>
-        </div>
-    </div> -->
     {% endfor %}
 
     <!-- Container fluid  -->
@@ -491,6 +435,8 @@
                                                     <div class="col-md-8">
                                                         <div class="card-body">
                                                             <h5 class="card-title">{{activity.title}}</h5>
+                                                            <p class="card-text">
+                                                                {{activity.content}}</p>
                                                         </div>
                                                     </div>
                                                 </div>
