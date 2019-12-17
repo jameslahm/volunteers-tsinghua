@@ -9,10 +9,8 @@ RUN apt-get update && apt-get install -y nginx && nginx
 #     && nginx \
 #     && rm -rf /usr/src/nginx-1.15.2
 RUN mkdir /backend
-COPY ./backend/requirements.txt /backend/requirements.txt
 WORKDIR /backend
-RUN ls && pip install uwsgi -i https://pypi.tuna.tsinghua.edu.cn/simple/ \
-    && pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/ 
+RUN ls && pip install uwsgi -i https://pypi.tuna.tsinghua.edu.cn/simple/  
 CMD  . /start.sh
 EXPOSE 80
 

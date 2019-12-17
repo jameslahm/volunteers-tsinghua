@@ -51,9 +51,15 @@
   <i-panel v-else>
       <view style="padding:15px;">
         <div v-for="(item,index) in items" :key=index style="padding-bottom:15px">
-          <i-card full @click='bindClick2(item)' :title="item.title" :extra="item.leaderName" :thumb="item.thumb" i-class="card-thumb">
-            <view slot="content">{{item.description}}</view>
-            <view slot="footer">{{item.time+" "+item.location}}</view>
+          <i-card
+            full
+            @click="bindClick2(item)"
+            :title="item.teamName"
+            :extra="item.appliedRecruits+'/'+item.totalRecruits"
+            i-class="card-thumb"
+          >
+            <view slot="content">{{item.title}}</view>
+            <view slot="footer">{{item.starttime+" "+item.location}}</view>
           </i-card>
         </div>
       </view>
@@ -85,6 +91,10 @@ export default {
       return this.$store.state.globalItems
     }
   },
+  onShow(){
+    this.text=''
+    this.type='general'
+  },
   methods: {
     'changeInput':function(e){
       this.text=e.target.detail.value
@@ -94,11 +104,10 @@ export default {
         this.notInputing=false
       }
       else{
-        if(this.type.length===0){
+        if(this.type==='general'){
           this.notInputing=true
         }
       }
-      console.log(this.text)
     },
     'toSearch':function(e){
       this.text=e.target.detail.value
@@ -114,7 +123,6 @@ export default {
         })
         this.notInputing=true
       }
-      console.log(this.text)
     },
     'bindClick1':function(key){
       this.type=key
@@ -123,13 +131,18 @@ export default {
       this.$store.commit('clearGlobalItems')
     },
     'bindClick2':function(item){
-      console.log("navigate")
       wx.navigateTo({ url: '/pages/activity/main?id=' + item.id })
     },
     'clickReturn':function(){
-      this.notInputing=true
-      this.type=''
-      this.text=''
+      if(this.type!='general'){
+        this.notInputing=true
+        this.type='general'
+        this.text=''
+        this.placeholder="搜索"
+      }
+      else{
+        wx.navigateBack({ url: '/pages/home/main'})
+      }
     }
   },
   onLoad (options) {

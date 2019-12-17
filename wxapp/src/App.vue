@@ -3,6 +3,13 @@ import store from '@/store/index'
 
 export default {
   store,
+  onShow (options) {
+    if (options.referrerInfo.extraData) {
+      var token = options.referrerInfo.extraData.token
+      this.$store.commit('verifyTHU', token)
+      wx.switchTab({url: '/pages/home/main'})
+    }
+  },
   created () {
     // 调用API从本地缓存中获取数据
     /*
@@ -28,7 +35,6 @@ export default {
     }
   },
   log () {
-    console.log(`log at:${Date.now()}`)
   }
 }
 </script>

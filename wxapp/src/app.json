@@ -4,6 +4,9 @@
     "pages/notice/main",
     "pages/me/main"
   ],
+  "navigateToMiniProgramAppIdList":[
+    "wx1ebe3b2266f4afe0"
+  ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",

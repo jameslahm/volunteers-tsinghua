@@ -2,25 +2,16 @@
 '''模型'''
 
 from . import db
-from flask import url_for,Flask
-from flask_user import UserMixin
+from flask import url_for,current_app
+from flask_login import AnonymousUserMixin,UserMixin
 import flask_sqlalchemy
 from flask import request
+import datetime
+from werkzeug.security import check_password_hash,generate_password_hash
+import re
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from datetime import datetime
-
-
-class AdminUser(db.Model, UserMixin):
-    '''后台操作人员'''
-    __tablename__ = 'AdminUser'
-
-    id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column("username", db.String(64), nullable=False)
-    # email = db.Column("email", db.String(64), nullable=False)
-    password = db.Column("password", db.String(255))
-    active = db.Column("active", db.Boolean(64), nullable=False)
-
-    def is_active(self):
-        return True
+from uuid import uuid1
 
 
 class User(db.Model):
@@ -29,19 +20,19 @@ class User(db.Model):
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     # TODO: how to get openId?
-    openId = db.Column("openId", db.String(64), unique=False, nullable=False) # 改
+    openId = db.Column("openId", db.String(64), unique=False) # 改
     userName = db.Column("userName", db.String(16), unique=False, nullable=False)
-    wx = db.Column("wx", db.String(64), unique=False, nullable=False) # 改
+    wx = db.Column("wx", db.String(64), unique=False) # 改
     email = db.Column("email", db.String(64), unique=False) # 改
-    avatar = db.Column("avatar", db.String(128))
+    avatar = db.Column("avatar", db.String(250))
     schoolId = db.Column('schoolID', db.String(30), unique=False)  # 改
     phone = db.Column('phone', db.String(20))
     department = db.Column('department', db.Text)
     profile = db.Column('profile', db.Text)
-    useractivities = db.relationship('UserActivity', backref='user',lazy='dynamic')
-    messages = db.relationship('Message', backref='user')
+    userActivities = db.relationship('UserActivity', backref='user',lazy='dynamic',cascade='all, delete-orphan')
+    messages = db.relationship('Message', backref='user',cascade='all, delete-orphan')
 
-
+    @staticmethod
     def generate_fake(count=100):
         from random import seed, randint
         import forgery_py as fp
@@ -62,40 +53,77 @@ class User(db.Model):
 
     def to_json(self):
         json_user={
-            'url':url_for('api.get_user',id=self.id,_external=True),
-            'openId':self.openId,
+            'id':self.id,
             'userName':self.userName,
             'wx':self.wx,
             'email': self.email,
             'avatar': self.avatar,
-            'schoolID': self.schoolID,
+            'schoolId': self.schoolId,
             'phone':self.phone,
             'department':self.department,
             'profile': self.profile,
         }
         return json_user
 
-    def applyedActivities(self):
-        l=self.UserActivity.filter_by(type='applyed').all()
-        res=[x.Activity for x in l]
-        return res
+    def generate_auth_token(self,expiration):
+        s=Serializer(current_app.config['SECRET_KEY'],expires_in=expiration)
+        return s.dumps(self.id).decode('utf-8')
 
-    def applyingActivities(self):
-        l=self.UserActivity.filter_by(type='applying').all()
-        res=[x.Activity for x in l]
-        return res
+    @staticmethod
+    def verify_auth_token(token):
+        s=Serializer(current_app.config['SECRET_KEY'])
+        try:
+            id=s.loads(token.encode('utf-8'))
+        except:
+            return False
+        return User.query.filter_by(id=id).first()
 
-class Team(db.Model):
+
+
+
+class Team(db.Model,UserMixin):
     '''志愿团体'''
     __tablename__ = 'teams'
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    userName = db.Column("userName", db.String(64), unique=False, nullable=False)
     email = db.Column("email", db.String(64), unique=False) #改
+    teamName=db.Column('teamname',db.String(64),unique=False) #改
+    establishedTime=db.Column('establishedtime',db.DateTime,default=datetime.now)
     avatar = db.Column("avatar", db.String(128))
-    teamactivities = db.relationship('TeamActivity', backref='team',lazy='dynamic')
-    messages = db.relationship('Message', backref='team')
+    password_hash=db.Column('password_hash',db.String(128))
+    description=db.Column('description',db.Text)
+    phone=db.Column('phone',db.String(64))
+    activities = db.relationship('Activity', backref='team',lazy='dynamic',cascade='all, delete-orphan')
 
+
+    def generate_reset_token(self,expiration):
+        s=Serializer(current_app.config['SECRET_KEY'],expires_in=expiration)
+        return s.dumps(self.id).decode('utf-8')
+    
+    @staticmethod
+    def verify_reset_token(token):
+        s=Serializer(current_app.config['SECRET_KEY'])
+        try:
+            id=s.loads(token.encode('utf-8'))
+        except:
+            return False
+        return Team.query.filter_by(id=id).first()
+
+    @property
+    def password(self):
+        raise AttributeError("password is not readable")
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def verify_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    def is_administrator(self):
+        return self.email==current_app.config['FLASK_ADMIN']
+
+    @staticmethod
     def generate_fake(count=100):
         from random import seed, randint
         import forgery_py as fp
@@ -103,131 +131,229 @@ class Team(db.Model):
         for i in range(count):
             t = Team(
                     email=fp.internet.email_address(),
-                    userName=fp.internet.user_name(True),
+                    teamName=fp.internet.user_name(True),
+                    establishedTime=fp.date.date(),
+                    description=fp.lorem_ipsum.sentence(),
+                    password=fp.basic.password()
             )
             db.session.add(t)
             db.session.commit()
 
+
     def to_json(self):
         json_team={
-            'url':url_for('api.get_team',id=self.id,_external=True),
-            'userName':self.userName,
+            'teamName':self.teamName,
             'email':self.email,
+            'establishedtime':self.establishedTime,
+            'description':self.description,
             'avatar':self.avatar,
         }
         return json_team
 
+    def finishedActivities(self):
+        return Activity.query.filter_by(teamId=self.id,type='finished').all()
+
     def createdActivities(self):
-        l=self.TeamActivity.filter_by(type='created').all()
-        res=[x.Activity for x in l]
-        return res
-
+        return Activity.query.filter_by(teamId=self.id,type='created').all()
+    
     def creatingActivities(self):
-        l=self.TeamActivity.filter_by(type='creating').all()
-        res=[x.Activity for x in l]
-        return res
-
+        return Activity.query.filter_by(teamId=self.id,type='creating').all()
 
 class Activity(db.Model):
     '''活动'''
     __tablename__ = 'activities'
 
+    def generateAID(self):
+        s=str(uuid1())
+        return s
+
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    AID = db.Column('AID', db.Integer)
-    thumb = db.Column('thumb', db.String(128), nullable=False)
-    time = db.Column('time', db.DateTime, nullable=False)
+    AID = db.Column('AID', db.String(36),default=generateAID)
+    teamId = db.Column('teamId', db.Integer, db.ForeignKey('teams.id',ondelete='cascade'))
+    thumb = db.Column('thumb', db.String(128),default='/static/img/myactivity/thu2.jpeg')
+    starttime = db.Column('starttime', db.DateTime, nullable=False)
+    endtime = db.Column('endtime',db.DateTime,nullable=False)
     location = db.Column('location', db.String(50), nullable=False)
     title = db.Column('title', db.String(70), nullable=False)
-    description = db.Column('description', db.String(400), nullable=False)
     content = db.Column('content', db.String(400), nullable=False)
     totalRecruits = db.Column('totalRecruits', db.Integer)
-    appliedRecruits = db.Column('appliedRecruits', db.Integer)
+    appliedRecruits = db.Column('appliedRecruits', db.Integer,default=0)
+    managePerson = db.Column('manageperson', db.String(70), nullable=False) # 增加
+    managePhone = db.Column('managephone', db.String(70), nullable=False) # 增加
+    manageEmail = db.Column('manageemail', db.String(70), nullable=False) # 增加
     qrcode = db.Column('qrcode',db.String(128))
-    userActivities = db.relationship('UserActivity', backref='activity',lazy='dynamic')
-    teamActivities = db.relationship('TeamActivity', backref='activity',lazy='dynamic')
-    messages = db.relationship('Message',backref='activity')
+    userActivities = db.relationship('UserActivity', backref='activity',lazy='dynamic',cascade='all, delete-orphan')
+    messages = db.relationship('Message',backref='activity',cascade='all, delete-orphan')
+    type = db.Column('type', db.Enum('creating', 'created','refused','finished'),default='creating')
+    isRead=db.Column('isRead',db.Boolean)
+    time=db.Column('time',db.DateTime,default=datetime.now)
+    isMessage=db.Column('isMessage',db.Boolean,default=False)
+    isApplyFinish=db.Column('isApplyFinish',db.Boolean,default=False)
 
+    @staticmethod
+    def on_changed_type(target,value,oldvalue,initiator):
+        target.isMessage=True
+        target.time=datetime.now()
+        target.isRead=False
+        if(value=='finished'):
+            userAs=UserActivity.query.filter_by(activity=target).all()
+            for userA in userAs:
+                userA.type='finished'
+        db.session.commit()
+
+    @staticmethod
     def generate_fake(count=100):
         from random import seed, randint
         import forgery_py as fp
         seed()
+        team_count=Team.query.count()
         for i in range(count):
             a = Activity(
                 AID=i,
+                team=Team.query.offset(randint(0,team_count-1)).first(),
                 thumb=fp.internet.domain_name(),
-                time=fp.date.date(),
+                starttime=fp.date.datetime(),
+                endtime=fp.date.datetime(),
                 location=fp.address.city(),
                 title=fp.lorem_ipsum.title(),
-                description=fp.lorem_ipsum.sentence(),
                 content=fp.lorem_ipsum.sentence(),
+                managePerson=fp.lorem_ipsum.title(),
+                manageEmail=fp.internet.email_address(),
+                managePhone=fp.address.phone(),
                 totalRecruits=fp.basic.number(at_least=20, at_most=100),
                 appliedRecruits=fp.basic.number(at_least=0, at_most=20),
             )
             db.session.add(a)
             db.session.commit()
+    @staticmethod
+    def search_bytitle(title):
+        l = Activity.query.filter_by(type='created').all()
+        ans=[]
+        for x in l:
+            if (len(title) < len(x.title)):
+                if re.search(title, x.title) != None:
+                    ans.append(x)
+            else:
+                title_length = len(x.title)
+                if re.search(title[0:int(title_length / 2)], x.title) != None:
+                    ans.append(x)
+        return ans
+    @staticmethod
+    def search_bytime(time):
+        l = Activity.query.filter_by(type='created').all()
+        # input example : '2017-04-09 15:25'
+        time = datetime.strptime(time,'%Y-%m-%d %H:%M')
+        time_date = time.date()
+        return [x for x in l if time_date.__eq__(x.starttime.date())]
+    @staticmethod
+    def search_bylocation(location):
+        l = Activity.query.filter_by(type='created').all()
+        ans=[]
+        for x in l:
+            if (len(location) < len(x.location)):
+                if re.search(location, x.location) != None:
+                    ans.append(x)
+            else:
+                location_length = len(x.location)
+                if re.search(location[0:int(location_length / 2)], x.location) != None:
+                    ans.append(x)
+        return ans
+    @staticmethod
+    def search_byteam(teamname):
+        l = Activity.query.filter_by(type='created').all()
+        ans=[]
+        for x in l:
+            Name = x.team.teamName
+            if (len(teamname) < len(Name)):
+                if re.search(teamname, Name) != None:
+                    ans.append(x)
+            else:
+                Name_length = len(Name)
+                if re.search(teamname[0:int(Name_length / 2)], Name) != None:
+                    ans.append(x)
+        return ans
+
+    @staticmethod
+    def search_byAID(aid):
+        return Activity.query.filter_by(type='created').filter(Activity.AID.startswith(aid)).all()
+
+    @staticmethod
+    def search(param,type):
+        if(type=='activity'):
+            return Activity.search_bytitle(param)
+        if(type=='coordinates'):
+            return Activity.search_bylocation(param)
+        if(type=='time'):
+            return Activity.search_bytime(param)
+        if(type=='group'):
+            return Activity.search_byteam(param)
+        if(type=='barrage'):
+            return Activity.search_byAID(param)
 
     def to_json(self):
         json_activity={
-            'url':url_for('api.get_activity',id=self.id,_external=True),
+            'id':self.id,
+            'teamId':self.teamId,
+            'teamName':self.team.teamName,
             'AID':self.AID,
-            'time':self.time,
+            'starttime':self.starttime,
+            'endtime':self.endtime,
             'location':self.location,
             'title':self.title,
-            'description':self.description,
             'content':self.content,
             'totalRecruits':self.totalRecruits,
             'appliedRecruits':self.appliedRecruits,
+            'thumb':self.thumb,
         }
         return json_activity
 
-
-    def leader(self):
-        return self.TeamActivity.first().User
-
     def members(self):
-        l=self.UserActivity.filter_by(type='applyed').all()
-        res=[x.User for x in l]
+        l=self.userActivities.filter_by(type='applied').all()
+        res=[x.user for x in l]
         return res
 
+db.event.listen(Activity.type,'set',Activity.on_changed_type)
 
 class Message(db.Model):
     '''消息'''
     __tablename__ = 'messages'
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    userId = db.Column('userId', db.Integer, db.ForeignKey('users.id'))
-    notifier = db.Column('notifier', db.Integer, db.ForeignKey('teams.id'))
-    activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id'))
+    userId = db.Column('userId', db.Integer, db.ForeignKey('users.id',ondelete='cascade'))
+    activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id',ondelete='cascade'))
     content = db.Column('content', db.Text)
-    qrCode = db.Column('qrCode', db.String(64))
-    time = db.Column('time', db.DateTime)
-    isRead = db.Column('isRead', db.Boolean)
+    time = db.Column('time', db.DateTime,default=datetime.now)
+    isRead = db.Column('isRead', db.Boolean,default=False)
 
+    @staticmethod
     def generate_fake(count=100):
         from random import seed,randint
         import forgery_py as fp
 
         seed()
         user_count=User.query.count()
-        notifier_count=Team.query.count()
         activity_count=Activity.query.count()
         for i in range(count):
             u=User.query.offset(randint(0,user_count-1)).first()
-            t=Team.query.offset(randint(0,notifier_count-1)).first()
-            a=Activity.query.offset(randint(0,activity_count-1)).first()
-            m=Message(Sender=u,Notifier=t,Activity=a,content = fp.lorem_ipsum.sentence(),
+            count=UserActivity.query.filter_by(user=u,type='applying').count()
+            if(count==0):
+                continue
+            userA=UserActivity.query.filter_by(user=u,type='applying').offset(randint(0,count-1)).first()
+            a=userA.activity
+            t=a.team
+            m=Message(user=u,team=t,activity=a,content = fp.lorem_ipsum.sentence(),
                       time = fp.date.date(),isRead = fp.basic.boolean())
             db.session.add(m)
             db.session.commit()
 
     def to_json(self):
         json_message={
-            'url':url_for('api.get_message',id=self.id,_external=True),
-            'sender': url_for('api.get_user', id=self.userId, _external=True),
-            'notifier':url_for('api.get_notifier',id=self.notifier,_external=True),
-            'activity':url_for('api.get_activity',id=self.notifier,_external=True),
+            'id':self.id,
+            'userId':self.userId,
+            'team':self.activity.team.to_json(),
+            'activityId':self.activityId,
             'content':self.content,
-            'qrcode':self.qrCode,
+            'qrcode':self.activity.qrcode,
             'time':self.time,
             'isRead':self.isRead,
         }
@@ -238,50 +364,62 @@ class UserActivity(db.Model):
     __tablename__ = 'useractivities'
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    userId = db.Column('userId', db.Integer, db.ForeignKey('users.id'))
-    activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id'))
-    type = db.Column('type', db.Enum('applying', 'applyed'))
+    userId = db.Column('userId', db.Integer, db.ForeignKey('users.id',ondelete='cascade'),nullable=False)
+    activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id',ondelete='cascade'),nullable=False)
+    # workDate = db.Column('workdate', db.DateTime, nullable=False) # 增加
+    content = db.Column('content', db.String(400), nullable=False) # 增加
+    applyTime = db.Column('applytime', db.DateTime,default=datetime.now) # 增加
+    type = db.Column('type', db.Enum('applying', 'applied','finished','refused'),default='applying') # 志愿团体是否已阅申请消息？
+    isRead=db.Column('isRead', db.Boolean,default=False)
+    hours=db.Column('hours',db.Integer,default=0)
+    isSignIn=db.Column('isSignIn',db.Boolean,default=False)
 
-
+    @staticmethod
     def generate_fake(count=100):
         from random import seed,randint
         import forgery_py as fp
-
         seed()
         user_count=User.query.count()
         activity_count=Activity.query.count()
         for i in range(count):
             u=User.query.offset(randint(0,user_count-1)).first()
             a=Activity.query.offset(randint(0,activity_count-1)).first()
-            t=randint(0,1)
-            u_activity=UserActivity(user=u,activity=a,type='applying'if t==0 else 'applyed')
+            t=randint(0,2)
+            u_activity=UserActivity(user=u,applyTime=fp.date.datetime(),content = fp.lorem_ipsum.sentence(),activity=a,type='applying'if t==0 else 'applied' if t==1 else 'finished')
             db.session.add(u_activity)
             db.session.commit()
 
 
+from . import login_manager
 
-class TeamActivity(db.Model):
-    '''团队活动'''
-    __tablename__ = 'teamactivities'
+@login_manager.user_loader
+def load_user(user_id):
+    return Team.query.get(user_id)
 
+class AnonymousUser(AnonymousUserMixin):
+    def is_administrator(self):
+        return False
+    
+
+login_manager.anonymous_user=AnonymousUser
+
+class IntroCode(db.Model):
+    __tablename__="introcodes"
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
-    teamId = db.Column('teamId', db.Integer, db.ForeignKey('teams.id'))
-    activityId = db.Column('activityId', db.Integer, db.ForeignKey('activities.id'))
-    type = db.Column('type', db.Enum('creating', 'created'))
+    code = db.Column('code',db.String(30))
+    time=db.Column('time',db.DateTime,default=datetime.now)
 
-    def generate_fake(count=100):
-        from random import seed,randint
-        import forgery_py as fp
-
-        seed()
-        team_count=Team.query.count()
-        activity_count=Activity.query.count()
-        for i in range(count):
-            team=Team.query.offset(randint(0,team_count-1)).first()
-            a=Activity.query.offset(randint(0,activity_count-1)).first()
-            t=randint(2,3)
-            t_activity=TeamActivity(team=team,activity=a,type='creating'if t==2 else 'created')
-            db.session.add(t_activity)
-            db.session.commit()
+    @staticmethod
+    def verify_code(code):
+        intro=IntroCode.query.filter_by(code=code).first()
+        now=datetime.now()
+        if((now-intro.time).days!=0):
+            return False
+        else:
+            return True
 
 
+class Suggestion(db.Model):
+    __tablname__='suggestions'
+    id=db.Column('id',db.Integer,primary_key=True,autoincrement=True)
+    content=db.Column('content',db.Text)
