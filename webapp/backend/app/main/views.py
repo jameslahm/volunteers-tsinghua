@@ -111,7 +111,11 @@ def createactivity():
         thumb=request.files['thumb']
         qrcode=request.files['qrcode']
         type='creating'
-        id=Activity.query.order_by(Activity.id.desc()).first().id+1
+        first=Activity.query.order_by(Activity.id.desc()).first()
+        if first:
+            id=first.id+1
+        else:
+            id=0
         if thumb and allowed_file(thumb.filename):
             filename = secure_filename(thumb.filename)
             if(filename.find('.')!=-1):
