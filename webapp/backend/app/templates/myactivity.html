@@ -2,8 +2,8 @@
 
 {% block page %}
 <div class="page-wrapper" id="content" style="display: block">
-    <script src="/static/js/bootstrap-fileinput.js"></script>
-    <link rel="stylesheet" href="/static/css/bootstrap-fileinput.css">
+    <script src="/static/js/bootstrap-fileinput.min.js"></script>
+    <link rel="stylesheet" href="/static/css/bootstrap-fileinput.min.css">
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
@@ -492,7 +492,7 @@
 
 {% block script %}
 {{super()}}
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/axios@0.19.0/dist/axios.min.js"></script>
 <script>
     axios.defaults.withCredentials = true;
     var deleteActivity = function (id) {
