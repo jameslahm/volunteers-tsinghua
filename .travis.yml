@@ -12,6 +12,9 @@ branches:
 python:
 - '3.7'
 
+env:
+  - FLASK_CONFIG=testing
+
 before_script:
   - echo "USE mysql;\nupdate mysql.user set authentication_string=password('Waqing121!') where user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
 
