@@ -13,10 +13,10 @@ def get_activities():
     text=request.args.get('text','',type=str)
     if(type==''):
         pagination = Activity.query.filter_by(type='created').order_by(Activity.starttime.desc()).paginate(
-            page,per_page=current_app.config['FLASKY_POSTS_PER_PAGE'],error_out=False
+            page,per_page=current_app.config['FLASK_WX_PER_PAGE'],error_out=False
         )
-        total=int(len(Activity.query.filter_by(type='created').all())/current_app.config['FLASKY_POSTS_PER_PAGE'])
-        if(len(Activity.query.filter_by(type='created').all())%current_app.config['FLASKY_POSTS_PER_PAGE']!=0):
+        total=int(len(Activity.query.filter_by(type='created').all())/current_app.config['FLASK_WX_PER_PAGE'])
+        if(len(Activity.query.filter_by(type='created').all())%current_app.config['FLASK_WX_PER_PAGE']!=0):
             total+=1
         activities=pagination.items
         if activities is None:

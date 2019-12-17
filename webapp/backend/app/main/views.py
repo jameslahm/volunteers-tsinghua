@@ -81,7 +81,7 @@ def myactivity():
     
     page=request.args.get('page',1,type=int)
     pagination=Activity.query.filter_by(team=current_user).order_by(Activity.starttime.desc()).paginate(
-        page,per_page=current_app.config['FLASKY_POSTS_PER_PAGE'],error_out=False
+        page,per_page=current_app.config['FLASK_ACTIVITY_PER_PAGE'],error_out=False
     )
     activities=pagination.items
     return render_template(
