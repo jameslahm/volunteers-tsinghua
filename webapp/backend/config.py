@@ -53,15 +53,10 @@ class ProductionConfig(Config):
     SESSION_TYPE='redis'
     SESSION_REDIS=Redis(host='redis',port=6379)
 
-class CIConfig(Config):
-    ENV='development'
-    SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://  \
-                            root:Waqing121!@localhost:3306/test?charset=utf8'
 
 config = {
     'development': Development,
     'testing': TestConfig,
     'production': ProductionConfig,
-    'default': Development,
-    'travis':CIConfig
+    'default': Development
 }

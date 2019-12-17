@@ -2,6 +2,7 @@ language: python
 
 services:
   - mysql
+  - redis-server
 
 sudo: required
 branches:
@@ -13,9 +14,6 @@ python:
 
 before_script:
   - echo "USE mysql;\nupdate mysql.user set authentication_string=password('Waqing121!') where user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
-
-env:
-  - FLASK_CONFIG=travis
 
 jobs:
   include:
