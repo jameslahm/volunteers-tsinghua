@@ -11,7 +11,7 @@ class Config():
     FLASK_ADMIN_PASSWORD = os.getenv('FLASK_ADMIN_PASSWORD') or '123456'
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg','bmp'])
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    FLASK_ACTIVITY_PER_PAGE=20
+    FLASK_ACTIVITY_PER_PAGE=5
     FLASK_WX_PER_PAGE=20
     UPLOAD_FOLDER=basedir+'/app/static/img/'
     MAIL_SERVER = 'smtp.gmail.com'
