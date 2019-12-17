@@ -115,7 +115,7 @@ def createactivity():
         if first:
             id=first.id+1
         else:
-            id=0
+            id=1
         if thumb and allowed_file(thumb.filename):
             filename = secure_filename(thumb.filename)
             if(filename.find('.')!=-1):
