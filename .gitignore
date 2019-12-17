@@ -17,5 +17,6 @@ __pycache__/
 *.sln
 
 test_report/
+.coverage
+coverage.xml
 
-webapp/.coverage
