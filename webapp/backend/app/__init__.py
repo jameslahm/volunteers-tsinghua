@@ -24,6 +24,7 @@ login_manager.login_view = 'auth.login'
 
 def create_app(config_name):
     app = Flask(__name__)
+    print(config_name)
     app.config.from_object(config[config_name])
     app.config['BASE_DIR']=os.path.abspath(os.path.dirname(__file__))
     db.init_app(app)

@@ -56,7 +56,7 @@ class ProductionConfig(Config):
 class CIConfig(Config):
     ENV='development'
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://  \
-                            root@localhost:3306/test?charset=utf8'
+                            root:Waqing121!@localhost:3306/test?charset=utf8'
 
 config = {
     'development': Development,
