@@ -26,7 +26,6 @@ def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
     app.config['BASE_DIR']=os.path.abspath(os.path.dirname(__file__))
-    print(app.config['BASE_DIR'])
     db.init_app(app)
     login_manager.init_app(app)
     bootstrap.init_app(app)

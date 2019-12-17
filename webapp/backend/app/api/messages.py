@@ -25,7 +25,6 @@ def delete_message(id):
     u=verify_token(token)
     if not u:
         return jsonify({'error':'invalid token'})
-    print(id)
     message=Message.query.filter_by(id=id).first()
     if message and message.user!=u:
         abort(403)

@@ -65,9 +65,7 @@ def deleteActivity():
 @login_required
 def deleteMember():
     id=request.args.get('id')
-    print(id)
     userA=UserActivity.query.filter_by(id=id).first()
-    print(userA)
     db.session.delete(userA)
     db.session.commit()
     return jsonify({})
@@ -111,7 +109,6 @@ def updateVolunteerHours():
     hours=data.get('hours')
     hours=[int(x) for x in hours]
     for i,userA in enumerate(activity.userActivities):
-        print(userA)
         userA.hours=hours[i]
     db.session.commit()
     return jsonify({})

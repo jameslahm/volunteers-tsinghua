@@ -1,10 +1,10 @@
-from selenium import webdriver
-from flask import current_app, jsonify, url_for
-from app import create_app, db
-from app.model import (User, Team, Activity, Message, UserActivity, IntroCode)
+import re
 import threading
-
-import unittest, random, json
+import time
+import unittest
+from selenium import webdriver
+from app import create_app, db
+from app.model import User, Team
 
 
 class SeleniumTestCase(unittest.TestCase):
@@ -12,61 +12,72 @@ class SeleniumTestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        # start Chrome
+        options = webdriver.ChromeOptions()
+        options.add_argument('headless')
         try:
-            cls.client = webdriver.Chrome()
+            cls.client = webdriver.Chrome('F:/Programs/chromedriver_win32/chromedriver.exe',chrome_options=options)
         except:
-            return
-        cls.app = create_app('testing')
-        cls.app.testing = True
-        cls.app_context = cls.app.app_context()
-        cls.app_context.push()
+            pass
 
-        import logging
-        logger = logging.getLogger('werkzeug')
-        logger.setLevel('ERROR')
+        # skip these tests if the browser could not be started
+        if cls.client:
+            # create the application
+            cls.app = create_app('testing')
+            cls.app_context = cls.app.app_context()
+            cls.app_context.push()
 
-        db.create_all()
+            # suppress logging to keep unittest output clean
+            import logging
+            logger = logging.getLogger('werkzeug')
+            logger.setLevel("ERROR")
 
-        new_user = User(userName='testUser', email='test@user', phone='123456')
-        new_team = Team(teamName='testTeam', email='test@team', password='123456')
-        new_activity = Activity(AID='998', team=new_team, starttime='2017-04-09 15:25',
-                                endtime='2017-04-09 15:30', location="testLocation",
-                                title="testActivity", content="testContent", managePerson="testManager",
-                                managePhone=110, manageEmail='test@activity')
-        db.session.add_all([new_user, new_team, new_activity])
-        db.session.commit()
-        threading.Thread(target=cls.app.run).start()
+            # create the database and populate with some fake data
+            db.create_all()
+            email = cls.app.config['FLASK_ADMIN']
+            name = 'admin'
+            password = cls.app.config['FLASK_ADMIN_PASSWORD']
+
+            if Team.query.filter_by(email=email).count() < 1:
+                admin = Team(teamName=name, email=email, password=password)
+                db.session.add(admin)
+                db.session.commit()
+
+            new_team = Team(teamName='testTeam', email='test@team', password='123456')
+            db.session.add(new_team)
+            db.session.commit()
+
+            # start the Flask server in a thread
+            cls.server_thread = threading.Thread(target=cls.app.run,
+                                                 kwargs={'debug': False})
+            cls.server_thread.start()
+
+            # give the server a second to ensure it is up
+            time.sleep(1)
 
     @classmethod
     def tearDownClass(cls):
-        User.query.filter_by(userName='testUser').delete()
-        Team.query.filter_by(teamName='testTeam').delete()
-        db.session.commit()
-        db.session.remove()
-
         if cls.client:
-            cls.client.get('http://localhost:5000/shutdown')
             cls.client.close()
-            db.drop_all()
+
+            # destroy database
             db.session.remove()
+            db.drop_all()
+
+            # remove application context
             cls.app_context.pop()
-
-    def test_activities(self):
-        response = current_app.test_client().get(
-            url_for('api.get_activity_members', id=Activity.query.filter_by(AID='998').first().id))
-        self.assertEqual(200, response.status_code)
-        self.assertEqual([], json.loads(response.data))
-
-        current_app.test_client().post(
-            url_for('auth.login'),
-            data={"email": "test@team", "password": "123456", "remember_me": 0}
-        )
-        response = current_app.test_client().get(
-            url_for('api.deleteActivity', id=Activity.query.filter_by(AID='998').first().id))
-        # self.assertEqual(200, response.status_code)
-        # self.assertIsNone(Activity.query.filter_by(AID='998').first())
-        current_app.test_client().get(url_for('auth.logout'))
 
     def setUp(self):
         if not self.client:
-            self.skipTest('web browser not available')
+            self.skipTest('Web browser not available')
+
+    def tearDown(self):
+        pass
+
+    def test_home_page(self):
+        self.client.get('http://127.0.0.1:5000')  
+        self.assertTrue(re.search('志在清华',self.client.page_source) is not None)
+        self.client.find_element_by_name('email').send_keys('test@team')
+        self.client.find_element_by_name('password').send_keys('123456')
+        self.client.find_element_by_name('submit').click()
+        self.assertTrue(re.search('上传头像',self.client.page_source) is not None)

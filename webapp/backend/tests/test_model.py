@@ -24,13 +24,9 @@ class ModelTestCase(unittest.TestCase):
         db.session.commit()
 
     def tearDown(self):
-        User.query.filter_by(userName='testUser').delete()
-        Team.query.filter_by(teamName='testTeam').delete()
-        Activity.query.filter_by(title='testActivity').delete()
-        db.session.commit()
-
+        
         db.session.remove()
-        # db.drop_all()
+        db.drop_all()
         self.app_context.pop()
 
     def test_generate_fake(self):

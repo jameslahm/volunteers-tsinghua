@@ -39,10 +39,11 @@ class Development(Config):
 
 class TestConfig(Config):
     TESTING = True
+    ENV='development'
     WTF_CSRF_ENABLED=False
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://  \
-                            root:Waqing121!@localhost:3306/volunteers?charset=utf8'
-
+                            root:Waqing121!@localhost:3306/test?charset=utf8'
+    SESSION_REDIS=Redis(host='127.0.0.1',port=6379)
 
 class ProductionConfig(Config):
     ENV='production'

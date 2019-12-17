@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 '''测试阶段-启动文件'''
 import os
+COV = None
+if os.environ.get('COVERAGE'):
+    import coverage
+    COV=coverage.coverage(branch=True,include='app/*')
+    COV.start()
 import sys
 import unittest
 
@@ -42,20 +47,13 @@ def init_db():
     init_admin(app)
 
 
-COV = None
-if os.environ.get('COVERAGE'):
-    import coverage
-    COV=coverage.coverage(branch=True,include='*')
-    COV.start()
-
-
 @manager.command
 def test(coverage=False):
     """Run the unit tests"""
     if coverage and not os.environ.get('COVERAGE'):
         os.environ['COVERAGE'] = '1'
         os.execvp(sys.executable, [sys.executable] + sys.argv)
-    tests = unittest.TestLoader().discover(r'tests')
+    tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner(verbosity=2).run(tests)
     if COV:
         COV.stop()

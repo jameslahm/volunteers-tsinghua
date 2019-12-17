@@ -200,7 +200,6 @@ class Activity(db.Model):
             for userA in userAs:
                 userA.type='finished'
         db.session.commit()
-        print("type")
 
     @staticmethod
     def generate_fake(count=100):

@@ -50,7 +50,6 @@ def myactivity():
         managePerson=request.form.get('managePerson')
         managePhone=request.form.get('managePhone')
         id=request.form.get('id')
-        print(id)
         content=request.form.get('content')
         activitie=Activity.query.filter_by(id=id).first()
         activitie.starttime=starttime
@@ -66,7 +65,6 @@ def myactivity():
                 filename='activitythumb_'+str(activitie.id)+'_'+filename
             else:
                 filename='activitythumb_'+str(activitie.id)+'_.'+filename
-            print(filename)
             thumb.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename).replace('\\','/'))
             file='/static/img/'+filename
             activitie.thumb=file
@@ -76,7 +74,6 @@ def myactivity():
                 filename='activityqrcode_'+str(activitie.id)+'_'+filename
             else:
                 filename='activityqrcode_'+str(activitie.id)+'_.'+filename
-            print(filename)
             qrcode.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename).replace('\\','/'))
             qrcode='/static/img/'+filename
             activitie.qrcode=qrcode
@@ -121,7 +118,6 @@ def createactivity():
                 filename='activitythumb_'+str(id)+'_'+filename
             else:
                 filename='activitythumb_'+str(id)+'_.'+filename
-            print(filename)
             thumb.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename).replace('\\','/'))
             file='/static/img/'+filename
         else:
@@ -132,7 +128,6 @@ def createactivity():
                 filename='activitythumb_'+str(id)+'_'+filename
             else:
                 filename='activitythumb_'+str(id)+'_.'+filename
-            print(filename)
             qrcode.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename).replace('\\','/'))
             qrcode='/static/img/'+filename
         else:

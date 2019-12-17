@@ -24,12 +24,9 @@ class APITestCase(unittest.TestCase):
         db.session.commit()
 
     def tearDown(self):
-        User.query.filter_by(userName='testUser').delete()
-        Team.query.filter_by(teamName='testTeam').delete()
-        db.session.commit()
-
+        
         db.session.remove()
-        # db.drop_all()
+        db.drop_all()
         self.app_context.pop()
 
     def test_activities(self):

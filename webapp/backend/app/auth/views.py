@@ -14,7 +14,6 @@ def login():
         password = request.form.get('password')
         remember_me = request.form.get('remember_me')
         team = Team.query.filter_by(email=email).first()
-        print(team)
         if team is not None and team.verify_password(password):
             login_user(team, remember=remember_me)
             if team.is_administrator():
@@ -38,7 +37,6 @@ def register():
             flash('The email have been registered')
             return redirect(url_for('auth.login'))
         else:
-            print(code)
             introcode=IntroCode.verify_code(code)
             if not introcode:
                 flash('Code is not valid')
