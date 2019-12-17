@@ -1,6 +1,6 @@
 language: python
 
-service:
+services:
   - mysql
 
 before_script:
@@ -26,7 +26,7 @@ jobs:
     script:
     - python webapp/backend/manage.py init_db
     - python webapp/backend/manage.py test
-    
+
 before_install:
 - openssl aes-256-cbc -K $encrypted_fc68b59f2946_key -iv $encrypted_fc68b59f2946_iv
   -in id_rsa_deploy.enc -out ~/.ssh/id_rsa -d
