@@ -1,6 +1,5 @@
 ## A mini-program for volunteer activity management
 [![Build Status](https://travis-ci.com/jameslahm/volunteers-tsinghua.svg?token=zMepxcNDKbRfwzCYs7iz&branch=master)](https://travis-ci.com/jameslahm/volunteers-tsinghua)
-
 [![codecov](https://codecov.io/gh/jameslahm/volunteers-tsinghua/branch/web/graph/badge.svg?token=sxCNZSRWjU)](https://codecov.io/gh/jameslahm/volunteers-tsinghua)
 
 - Run:
