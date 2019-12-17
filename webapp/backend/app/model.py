@@ -151,7 +151,7 @@ class Team(db.Model,UserMixin):
         return json_team
 
     def finishedActivities(self):
-        return Activity.query.filter_by(teamId=self.id,type='finished').filter(Activity.endtime<=datetime.now()).all()
+        return Activity.query.filter_by(teamId=self.id,type='finished').all()
 
     def createdActivities(self):
         return Activity.query.filter_by(teamId=self.id,type='created').all()
