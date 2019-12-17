@@ -31,7 +31,7 @@ def verifyTHU():
     res=requests.post(url,data).json().get('user')
     u=User.query.filter_by(schoolId=res.get('card')).first()
     if not u:
-        u=User(schoolId=res.card,userName=res.get('name'),department=res.get('department'))
+        u=User(schoolId=res.get('card'),userName=res.get('name'),department=res.get('department'))
         db.session.add(u)
         db.session.commit()
     return jsonify({'user':u.to_json(),'token':u.generate_auth_token(3600*24*30)})

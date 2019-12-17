@@ -80,7 +80,6 @@ export default {
 			wx.navigateTo({url:'/pages/volunteerhours/main'})
 		},
 		'bindClick5':function(){
-			console.log('suggestion')
 			wx.navigateTo({url:'/pages/suggestion/main'})
 		},
 		'bindClick6':function(){

@@ -95,7 +95,6 @@ export default {
       var id=wx.getStorageSync('id')
       var token=wx.getStorageSync('token')
       // var password=wx.getStorageSync('password')
-      console.log(id)
       if(id){
         this.$store.commit("getUser",id)
         this.$store.state.token=token

@@ -16,7 +16,6 @@ const store = new Vuex.Store({
   },
   getters: {
     'getItemById': (state) => {
-      console.log(state.items)
       return function (id) {
         return state.items.filter((item) => {
           return item.id === parseInt(id)
@@ -40,7 +39,6 @@ const store = new Vuex.Store({
   },
   mutations: {
     getItems (state) {
-      console.log('getItems')
       get({ 'url': `/users/${state.user.id}/activities` }).then((res) => {
         state.items = res
         state.items.forEach(elem => {
@@ -70,7 +68,6 @@ const store = new Vuex.Store({
     getUser (state, id) {
       get({ 'url': `/users/${id}` }).then(res => {
         state.user = res
-        console.log(state.user)
       })
     },
     logOut (state) {
@@ -88,13 +85,11 @@ const store = new Vuex.Store({
     },
     getGlobalItems (state, params) {
       get({ 'url': '/activities', 'data': params }).then(res => {
-        console.log(res)
         state.globalItems = res.items
         state.globalItems.forEach(elem => {
           elem.thumb = config.host + config.port + elem.thumb
         })
         state.total = res.total
-        console.log(state.globalItems)
       })
     },
     applyItem (state, data) {
@@ -112,6 +107,7 @@ const store = new Vuex.Store({
     verifyTHU (state, token) {
       post({'url': '/verifyTHU', 'data': {'token': token}}).then((res) => {
         state.user = res.user
+        console.log(state.user)
         state.token = res.token
         wx.setStorageSync('id', state.user.id)
         wx.setStorageSync('token', state.token)
@@ -123,7 +119,6 @@ const store = new Vuex.Store({
                 success: function (res) {
                   state.user.avatar = res.userInfo.avatarUrl
                   var data = state.user
-                  console.log(state.user)
                   data.token = state.token
                   post({ 'url': `/users/${state.user.id}`, 'data': data })
                 }
@@ -136,7 +131,6 @@ const store = new Vuex.Store({
                     success: function (res) {
                       state.user.avatar = res.userInfo.avatarUrl
                       var data = state.user
-                      console.log(state.user)
                       data.token = state.token
                       post({ 'url': `/users/${state.user.id}`, 'data': data })
                     }
@@ -146,12 +140,10 @@ const store = new Vuex.Store({
             }
           }
         })
-        console.log('Avatar')
       })
     },
     suggestion (state, content) {
       post({'url': '/suggestions', 'data': {'content': content}}).then(res => {
-        console.log(res)
       })
     },
     verifyToken (state) {

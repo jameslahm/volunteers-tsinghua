@@ -141,7 +141,6 @@ export default {
         this.placeholder="搜索"
       }
       else{
-        console.log('home')
         wx.navigateBack({ url: '/pages/home/main'})
       }
     }

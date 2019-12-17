@@ -35,7 +35,6 @@ export default {
       this.$store.state.items.filter(elem=>{
         return elem.type==='finished'
       }).forEach(elem => {
-        console.log(elem)
         hours+=elem.hours
       })
       return hours
