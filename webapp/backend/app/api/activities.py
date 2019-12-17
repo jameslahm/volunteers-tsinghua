@@ -124,7 +124,7 @@ def applyFinish():
     db.session.commit()
     return jsonify({})
 
-@api.route('/activities/<int:id>/signin',methods=['GET'])
+@api.route('/activities/<int:id>/signin',methods=['GET','POST'])
 @login_required
 def signin(id):
     data=request.json
