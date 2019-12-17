@@ -45,3 +45,18 @@ class APITestCase(unittest.TestCase):
         # self.assertIsNone(Activity.query.filter_by(AID='998').first())
         current_app.test_client().get(url_for('auth.logout'))
 
+    def test_user(self):
+        test_user = User.query.filter_by(userName='testUser').first()
+        user_info = test_user.to_json()
+        for i in list(user_info.keys()):
+            user_info[i] = str(user_info[i])
+        user_info['token'] = test_user.generate_auth_token(3600 * 24 * 30)
+        print(json.dumps(user_info))
+        # print(user_info)
+        response = current_app.test_client().post(
+            url_for('api.query_by_id', id=test_user.id,
+                    headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+                    data=json.dumps(user_info)))
+        # response code 400
+        self.assertEqual(200, response.status_code)
+        print(json.loads(response.data))
