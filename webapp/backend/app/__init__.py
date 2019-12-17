@@ -60,7 +60,7 @@ def create_app(config_name):
             team.password = form.password_hash.data
 
     class MyActivityView(MyBaseView):
-        column_list=['id','AID','title','starttime','location','managePhone','isApplyFinish']
+        column_list=['id','AID','title','starttime','location','managePhone','type','isApplyFinish']
         column_labels={'isApplyFinish':'isApplyFinish'}
         column_searchable_list=['id','AID','title']
         form_excluded_columns=['managePhone','managePerson','manageEmail','thumb','starttime','endtime','qrcode','AID','isMessage','isRead','time']
