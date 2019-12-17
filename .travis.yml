@@ -12,9 +12,6 @@ branches:
 python:
 - '3.7'
 
-env:
-  - FLASK_CONFIG=testing
-
 before_script:
   - echo "USE mysql;\nupdate mysql.user set authentication_string=password('Waqing121!') where user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
 
@@ -29,7 +26,6 @@ jobs:
   - install:
     - pip install -r webapp/backend/requirements.txt
     script:
-    - python webapp/backend/manage.py init_db
     - python webapp/backend/manage.py test
 
 before_install:
