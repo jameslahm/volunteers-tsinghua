@@ -1,4 +1,11 @@
 language: python
+
+service:
+  - mysql
+
+before_script:
+  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('Waqing121!') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
+
 sudo: required
 branches:
   only:
@@ -17,11 +24,14 @@ jobs:
   - install:
     - pip install -r webapp/backend/requirements.txt
     script:
+    - python webapp/backend/manage.py init_db
     - python webapp/backend/manage.py test
+    
 before_install:
 - openssl aes-256-cbc -K $encrypted_fc68b59f2946_key -iv $encrypted_fc68b59f2946_iv
   -in id_rsa_deploy.enc -out ~/.ssh/id_rsa -d
 - chmod 600 ~/.ssh/id_rsa
+- mysql -e 'create database test;'
 
 addons:
   ssh_known_hosts: 62.234.7.17
