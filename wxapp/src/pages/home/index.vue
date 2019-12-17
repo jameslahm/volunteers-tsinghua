@@ -88,7 +88,7 @@ export default {
   onShow(){
     if(config.DEBUG){
       wx.setStorageSync('id',1)
-      wx.setStorageSync('token','eyJhbGciOiJIUzUxMiIsImlhdCI6MTU3NjUwNjY5OSwiZXhwIjoxNTc5MTg1MDk5fQ.MQ.DOr8gQnfduPEe8t-aACVszu3FYSryrq6llr7DwXCbscYvL1KLDJPugm_pgMY8zQnGb3fw93qWsHkF1MxUaT97w')
+      wx.setStorageSync('token','eyJhbGciOiJIUzUxMiIsImlhdCI6MTU3NjUwNjkzNCwiZXhwIjoxNTc5MTg1MzM0fQ.MQ.b3807YrI-VuR1TiJZQAzjsDjNtUdG6uF1l5w99uHiUlyh5--tcyRh_LN7MqdzDCi2VfqnJ0X_QVjQyFAwS2gTA')
     }
     this.$store.commit("getGlobalItems")
     try{

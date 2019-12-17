@@ -1,4 +1,4 @@
-var DEBUG = false
+var DEBUG = true
 let host
 let port
 if (DEBUG) {
@@ -9,8 +9,8 @@ if (DEBUG) {
   port = ':443'
 }
 
-// host = 'https://2019-a16.iterator-traits.com'
-// port = ''
+host = 'https://2019-a16.iterator-traits.com'
+port = ''
 
 const appid = ''
 const appSecret = ''
