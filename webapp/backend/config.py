@@ -19,7 +19,6 @@ class Config():
     MAIL_USE_TLS = True
     MAIL_USERNAME = 'jameslahm17@gmail.com'
     MAIL_PASSWORD = 'dkcqjdrpmswxrjtw'
-    SESSION_TYPE='redis'
     appid='wxf3aa74b41b1f555c'
     appsecret='669223961b70204ffbd023015ea9decb'
 
@@ -34,6 +33,7 @@ class Development(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://  \
                             root:Waqing121!@localhost:3306/volunteers?charset=utf8'
+    SESSION_TYPE='redis'
     SESSION_REDIS=Redis(host='127.0.0.1',port=6379)
     
 
@@ -43,17 +43,25 @@ class TestConfig(Config):
     WTF_CSRF_ENABLED=False
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://  \
                             root:Waqing121!@localhost:3306/test?charset=utf8'
+    SESSION_TYPE='redis'
     SESSION_REDIS=Redis(host='127.0.0.1',port=6379)
 
 class ProductionConfig(Config):
     ENV='production'
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://  \
                             root:zhizaitsinghua@mysql:3306/volunteers?charset=utf8'
+    SESSION_TYPE='redis'
     SESSION_REDIS=Redis(host='redis',port=6379)
+
+class CIConfig(Config):
+    ENV='development'
+    SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://  \
+                            root@localhost:3306/test?charset=utf8'
 
 config = {
     'development': Development,
     'testing': TestConfig,
     'production': ProductionConfig,
-    'default': Development
+    'default': Development,
+    'travis':CIConfig
 }

@@ -3,9 +3,6 @@ language: python
 services:
   - mysql
 
-before_script:
-  - echo "USE mysql;\nALTER USER 'root'@'localhost'IDENTIFIED BY "Waqing121!";\nFLUSH PRIVILEGES;\n" | mysql -u root
-
 sudo: required
 branches:
   only:
