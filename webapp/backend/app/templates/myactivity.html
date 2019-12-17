@@ -1,724 +1,528 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../static/img/myactivity/tsinghua.png">
-    <title>志在清华</title>
-    <!-- Custom CSS -->
-    <link href="../static/css/style.min.css" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
-
-</head>
-
-<body>
+{% block page %}
+<div class="page-wrapper" id="content" style="display: block">
+    <script src="/static/js/bootstrap-fileinput.min.js"></script>
+    <link rel="stylesheet" href="/static/css/bootstrap-fileinput.min.css">
     <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
+    <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
-    <div class="preloader">
-        <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-5 align-self-center">
+                <h4 class="page-title">我的项目</h4>
+            </div>
+            <div class="col-7 align-self-center">
+                <div class="d-flex align-items-center justify-content-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="/">主页</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">我的项目</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
         </div>
     </div>
     <!-- ============================================================== -->
-    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- End Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
-    <div id="main-wrapper" data-navbarbg="skin6" data-theme="light" data-layout="vertical" data-sidebartype="full"
-        data-boxed-layout="full">
-        <!-- ============================================================== -->
-        <!-- Topbar header - style you can find in pages.scss -->
-        <!-- ============================================================== -->
-        <header class="topbar" data-navbarbg="skin6">
-            <nav class="navbar top-navbar navbar-expand-md navbar-light">
-                <div class="navbar-header" data-logobg="skin5">
-                    <!-- This is for the sidebar toggle which is visible on mobile only -->
-                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)">
-                        <i class="ti-menu ti-close"></i>
-                    </a>
-                    <!-- ============================================================== -->
-                    <!-- Logo -->
-                    <!-- ============================================================== -->
-                    <div class="navbar-brand">
-                        <a href="main" class="logo">
-                            <!-- Logo icon -->
-                            <b class="logo-icon">
-                                <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                                <i class="mdi mdi-heart"></i>
-                            </b>
-                            <!--End Logo icon -->
-                            <!-- Logo text -->
-                            <span class="logo-text">
-                                志在清华
-                            </span>
-                        </a>
-                    </div>
-                    <!-- ============================================================== -->
-                    <!-- End Logo -->
-                    <!-- ============================================================== -->
-                    <!-- ============================================================== -->
-                    <!-- Toggle which is visible on mobile only -->
-                    <!-- ============================================================== -->
-                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
-                        data-toggle="collapse" data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="ti-more"></i>
-                    </a>
+    <!-- ============================================================== -->
+    <!-- Modal -->
+    {% for activity in activities %}
+    <div class="modal fade" id="activity{{activity.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">项目详情</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <!-- ============================================================== -->
-                <!-- End Logo -->
-                <!-- ============================================================== -->
-                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin6">
-                    <!-- ============================================================== -->
-                    <!-- toggle and nav items -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav float-left mr-auto">
-                        <!-- ============================================================== -->
-                        <!-- Search -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item search-box">
-                            <a class="nav-link waves-effect waves-dark" href="javascript:void(0)">
-                                <div class="d-flex align-items-center">
-                                    <i class="mdi mdi-magnify font-20 mr-1"></i>
-                                    <div class="ml-1 d-none d-sm-block">
-                                        <span>搜索</span>
-                                    </div>
-                                </div>
-                            </a>
-                            <form class="app-search position-absolute">
-                                <input type="text" class="form-control" placeholder="Search &amp; enter">
-                                <a class="srh-btn">
-                                    <i class="ti-close"></i>
-                                </a>
-                            </form>
-                        </li>
-                    </ul>
-                    <!-- ============================================================== -->
-                    <!-- Right side toggle and nav items -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav float-right">
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href=""
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                                    src="../static/img/myactivity/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
-                            <div class="dropdown-menu dropdown-menu-right user-dd animated">
-                                <a class="dropdown-item" href="main"><i class="ti-user m-r-5 m-l-5"></i>
-                                    主页</a>
-                                <a class="dropdown-item" href="https://www.google.com/"><i
-                                        class="ti-close m-r-5 m-l-5"></i> 退出</a>
-                            </div>
-                        </li>
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
-                    </ul>
-                </div>
-            </nav>
-        </header>
-        <!-- ============================================================== -->
-        <!-- End Topbar header -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <aside class="left-sidebar" data-sidebarbg="skin5">
-            <!-- Sidebar scroll-->
-            <div class="scroll-sidebar">
-                <!-- Sidebar navigation-->
-                <nav class="sidebar-nav">
-                    <ul id="sidebarnav">
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="myactivity"
-                                aria-expanded="false">
-                                <i class="mdi mdi-clipboard-account"></i>
-                                <span class="hide-menu">我的项目</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="createactivity"
-                                aria-expanded="false">
-                                <i class="mdi mdi-new-box"></i>
-                                <span class="hide-menu">新建项目</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="information"
-                                aria-expanded="false">
-                                <i class="mdi mdi-information-outline"></i>
-                                <span class="hide-menu">消息中心</span>
-                            </a>
 
-                    </ul>
-                </nav>
-                <!-- End Sidebar navigation -->
-            </div>
-            <!-- End Sidebar scroll-->
-        </aside>
-        <!-- ============================================================== -->
-        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Page wrapper  -->
-        <!-- ============================================================== -->
-        <div class="page-wrapper">
-            <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <div class="page-breadcrumb">
-                <div class="row">
-                    <div class="col-5 align-self-center">
-                        <h4 class="page-title">我的项目</h4>
-                    </div>
-                    <div class="col-7 align-self-center">
-                        <div class="d-flex align-items-center justify-content-end">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item">
-                                        <a href="main">主页</a>
-                                    </li>
-                                    <li class="breadcrumb-item active" aria-current="page">我的项目</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">项目详情</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+                <div class="modal-body">
 
-                        <div class="modal-body">
+                    <div class="tab-content">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist" style="padding-left: 10px;">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home{{activity.id}}"
+                                    role="tab" aria-controls="home" aria-selected="true">项目信息</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile{{activity.id}}"
+                                    role="tab" aria-controls="profile" aria-selected="false">成员管理</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages{{activity.id}}"
+                                    role="tab" aria-controls="messages" aria-selected="false">招募消息</a>
+                            </li>
+                        </ul>
 
-                            <div class="tab-content">
-                                <ul class="nav nav-tabs" id="myTab" role="tablist" style="padding-left: 10px;">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home"
-                                            role="tab" aria-controls="home" aria-selected="true">项目信息</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile"
-                                            role="tab" aria-controls="profile" aria-selected="false">成员管理</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages"
-                                            role="tab" aria-controls="messages" aria-selected="false">招募消息</a>
-                                    </li>
-                                </ul>
+                        <div class="tab-pane active" id="home{{activity.id}}" role="tabpanel"
+                            aria-labelledby="home-tab">
 
-                                <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-
-                                    <div class="card" style="width: 45rem;">
-                                        <div class="card-body">
-                                            <h5 class="card-title">校园志愿讲解</h5>
-                                            <h6 class="card-subtitle mb-2 text-muted">项目编号：XSWL12345</h6>
-                                            <div class="row">
-                                                <div class="col-sm-5">
-                                                    <div class="card">
-                                                        <img src="../static/img/myactivity/thu2.jpeg" class="card-img-top"
-                                                            alt="...">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title">项目简介</h5>
-                                                            <p class="card-text">招募校园讲解志愿者，在国庆期间提供讲解服务，每年参与的人数超过1000人。
-                                                                <a href="#" class="btn btn-success"
-                                                                    style="float:right">修改
-                                                                </a>
-                                                            </p>
-                                                        </div>
-                                                        <button class="btn btn-lg btn-info btn-block">招募公告</button>
-                                                        <button class="btn btn-lg btn-primary btn-block">导入成员</button>
-                                                        <button class="btn btn-lg btn-secondary btn-block"
-                                                            disabled>申请结项</button>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-7">
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <ul class="list-group list-group-flush">
-                                                                <li class="list-group-item">状态：待审核 <a href="#"
-                                                                        class="btn btn-success"
-                                                                        style="float:right">修改</a></li>
-                                                                <li class="list-group-item">招募时间：2019.11.23-2019.11.23<a
-                                                                        href="#" class="btn btn-success"
-                                                                        style="float:right">修改</a></li>
-                                                                <li class="list-group-item">活动时间：2019.11.23-2019.11.23<a
-                                                                        href="#" class="btn btn-success"
-                                                                        style="float:right">修改</a></li>
-                                                                <li class="list-group-item">活动类别：公益 <a href="#"
-                                                                        class="btn btn-success"
-                                                                        style="float:right">修改</a></li>
-                                                                <li class="list-group-item">负责单位：校团委志愿组 <a href="#"
-                                                                        class="btn btn-success"
-                                                                        style="float:right">修改</a></li>
-                                                                <li class="list-group-item">负责人：董明珠<a href="#"
-                                                                        class="btn btn-success"
-                                                                        style="float:right">修改</a></li>
-                                                                <li class="list-group-item">联系电话：18842438984<a href="#"
-                                                                        class="btn btn-success"
-                                                                        style="float:right">修改</a></li>
-                                                                <li class="list-group-item">邮箱：3213213213@qq.com <a
-                                                                        href="#" class="btn btn-success"
-                                                                        style="float:right">修改</a></li>
-                                                                <li class="list-group-item"><a href="#"
-                                                                        class="btn btn-danger"
-                                                                        style="float:right">删除项目</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                    <div class="col-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h4 class="card-title">志愿者申请</h4>
-                                                <h6 class="card-subtitle">在这里查看志愿者加入您的项目的申请。</h6>
-                                            </div>
-                                            <div class="table-responsive">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">姓名</th>
-                                                            <th scope="col">学号</th>
-                                                            <th scope="col">院系</th>
-                                                            <th scope="col">工作职位</th>
-                                                            <th scope="col">工作时间</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr class="table-success" style="cursor:pointer;"
-                                                            onclick="$('#personModal').modal('toggle')">
-                                                            <th scope="row">王俊凯</th>
-                                                            <td>2017323283</td>
-                                                            <td>经管学院</td>
-                                                            <td>流动志愿者</td>
-                                                            <td>2019.11.20</td>
-                                                        </tr>
-                                                        <tr class="table-success" style="cursor:pointer;"
-                                                            onclick="$('#personModal').modal('toggle')">
-                                                            <th scope="row">王源</th>
-                                                            <td>2017523283</td>
-                                                            <td>辆载学院</td>
-                                                            <td>流动志愿者</td>
-                                                            <td>2019.11.20</td>
-                                                        </tr>
-                                                        <tr style="cursor:pointer;"
-                                                            onclick="$('#personModal').modal('toggle')">
-                                                            <th scope="row">马云</th>
-                                                            <td>2017326673</td>
-                                                            <td>土木系</td>
-                                                            <td>固定志愿者</td>
-                                                            <td>2019.11.20</td>
-                                                        </tr>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
-                                    <div class="col-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h4 class="card-title">志愿者申请</h4>
-                                                <h6 class="card-subtitle">在这里查看志愿者加入您的项目的申请。</h6>
-                                            </div>
-                                            <div class="table-responsive">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">消息类型</th>
-                                                            <th scope="col">用户类型</th>
-                                                            <th scope="col">用户名称</th>
-                                                            <th scope="col">相关项目</th>
-                                                            <th scope="col">时间</th>
-                                                            <th scope="col">消息状态</th>
-                                                            <th scope="col">操作</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr class="table-success" style="cursor:pointer;"
-                                                            onclick="$('#messageModal').modal('toggle')">
-                                                            <th scope="row">志愿申请</th>
-                                                            <td>志愿者</td>
-                                                            <td>奥巴马</td>
-                                                            <td>校园志愿讲解</td>
-                                                            <td>2019.11.20 22:36</td>
-                                                            <td>未读</td>
-                                                            <td>回复</td>
-                                                        </tr>
-                                                        <tr class="table-success" style="cursor:pointer;"
-                                                            onclick="$('#messageModal').modal('toggle')">
-                                                            <th scope="row">志愿申请</th>
-                                                            <td>志愿者</td>
-                                                            <td>特朗普</td>
-                                                            <td>校园志愿讲解</td>
-                                                            <td>2019.11.20 12:36</td>
-                                                            <td>未读</td>
-                                                            <td>回复</td>
-                                                        </tr>
-                                                        <tr style="cursor:pointer;"
-                                                            onclick="$('#messageModal').modal('toggle')">
-                                                            <th scope="row">志愿申请</th>
-                                                            <td>志愿者</td>
-                                                            <td>马克思</td>
-                                                            <td>校园志愿讲解</td>
-                                                            <td>2019.11.20 22:36</td>
-                                                            <td>已读</td>
-                                                            <td>回复</td>
-                                                        </tr>
-                                                        <tr style="cursor:pointer;"
-                                                            onclick="$('#messageModal').modal('toggle')">
-                                                            <th scope="row">志愿申请</th>
-                                                            <td>志愿者</td>
-                                                            <td>马克思</td>
-                                                            <td>校园志愿讲解</td>
-                                                            <td>2019.11.20 22:36</td>
-                                                            <td>已读</td>
-                                                            <td>回复</td>
-                                                        </tr>
-                                                        <tr style="cursor:pointer;"
-                                                            onclick="$('#messageModal').modal('toggle')">
-                                                            <th scope="row">志愿申请</th>
-                                                            <td>志愿者</td>
-                                                            <td>马克思</td>
-                                                            <td>校园志愿讲解</td>
-                                                            <td>2019.11.20 22:36</td>
-                                                            <td>已读</td>
-                                                            <td>回复</td>
-                                                        </tr>
-
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-primary">确认</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal message-->
-            <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="messageModalLabel">消息详情</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="card" style="width: 45rem;">
+                            <form class="card" style="width: 45rem;" method='POST' enctype="multipart/form-data" oninput='starttime.setCustomValidity(/^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\s+(2[0-3]|0[0-9]|1[0-9]):[0-5][0-9]:[0-5][0-9]$/.test(starttime.value)?"":"请输入YYYY-MM-DD HH-MM-SS的日期格式")'>
                                 <div class="card-body">
-                                    <h5 class="card-title">项目：校园志愿讲解</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">消息时间：2019.11.20 19:56</h6>
-
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">申请项目</th>
-                                                <th scope="col">申请职位</th>
-                                                <th scope="col">申请日期</th>
-                                                <th scope="col">姓名</th>
-                                                <th scope="col">学号</th>
-                                                <th scope="col">院系</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="table-success">
-                                                <th scope="row">校园志愿讲解</th>
-                                                <td>流动志愿者</td>
-                                                <td>2019.11.20</td>
-                                                <td>王俊凯</td>
-                                                <td>201919991999</td>
-                                                <td>软件学院</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-
-                                    <p class="card-text">申请理由：我爱志愿，我真的很爱志愿，希望你们可以收留我这个可怜的孩子嘤嘤嘤。</p>
-                                    <a href="#" class="card-link">志愿者详情</a>
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-success">同意申请</button>
-                            <button type="button" class="btn btn-danger">拒绝申请</button>
-                            <button type="button" class="btn btn-info">回复</button>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-primary">确认</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal person-->
-            <div class="modal fade" id="personModal" tabindex="-1" role="dialog" aria-labelledby="personModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="personModalLabel">项目详情</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-
-                        <div class="modal-body">
-
-                            <div class="card" style="width: 45rem;">
-                                <div class="card-body">
-                                    <h5 class="card-title">王俊凯</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">2017123423</h6>
+                                    <!-- <h5 class="card-title">{{activity.title}}</h5> -->
+                                    <!-- <h6 class="card-subtitle mb-2 text-muted">项目编号：{{activity.AID}}</h6> -->
                                     <div class="row">
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-5">
                                             <div class="card">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">个人简介</h5>
-                                                    <p class="card-text" rows="10">这个人很懒，什么也没说。
-                                                    </p>
+                                                <div class="fileinput fileinput-new" data-provides="fileinput" id="uploadImageDiv">
+                                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                                        <img src="{{activity.thumb}}" alt="" />
+                                                    </div>
+                                                    <div class="fileinput-preview fileinput-exists thumbnail"
+                                                        style="max-width: 200px; max-height: 150px;"></div>
+                                                    <div class="row">
+                                                        <span class="btn default btn-file" class='col-sm-6'>
+                                                            <button class="btn btn-secondary btn-file"
+                                                                class="fileinput-new">选择图片</button>
+                                                            <input type="file" name="thumb" id="uploadImage" />
+                                                        </span>
+                                                    </div>
+                                                    <a href="#" class="btn default fileinput-exists" data-dismiss="fileinput">移除</a>
+                                                    <span>您可以上传图片更改活动图片</span>
                                                 </div>
-                                                <button class="btn btn-lg btn-info btn-block">发送消息</button>
-                                                <button class="btn btn-lg btn-primary btn-block">更改职位</button>
-                                                <button class="btn btn-lg btn-secondary btn-block" disabled>招募邀请</button>
+                                                <div id="titleImageError" style="color: #a94442"></div>
+                                                <div class="fileinput fileinput-new" data-provides="fileinput" id="uploadImageDiv">
+                                                        <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                                            <img src="{{activity.qrcode}}" alt="" />
+                                                        </div>
+                                                        <div class="fileinput-preview fileinput-exists thumbnail"
+                                                            style="max-width: 200px; max-height: 150px;"></div>
+                                                        <div class="row">
+                                                            <span class="btn default btn-file" class='col-sm-6'>
+                                                                <button class="btn btn-secondary btn-file"
+                                                                    class="fileinput-new">选择图片</button>
+                                                                <input type="file" name="qrcode" id="uploadImage" />
+                                                            </span>
+                                                        </div>
+                                                        <a href="#" class="btn default fileinput-exists" data-dismiss="fileinput">移除</a>
+                                                        <span>您可以上传二维码更改活动二维码</span>
+                                                    </div>
+                                                    <div id="titleImageError" style="color: #a94442"></div>
+                                                {% if activity.type=='created' %}
+                                                <button class="btn btn-lg btn-secondary btn-block"
+                                                     onclick="applyFinish({{activity.id}})">申请结项</button>
+                                                {% else %}
+                                                <button class="btn btn-lg btn-secondary btn-block"
+                                                     disabled onclick="applyFinish({{activity.id}})">申请结项</button>
+                                                {% endif %}
+                                                <a href="/api/activities/{{activity.id}}/createQrCode" class="btn btn-lg btn-secondary btn-block"
+                                                     >生成签到二维码</a>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-7">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <ul class="list-group list-group-flush">
-                                                        <li class="list-group-item">院系：软件学院 </li>
-                                                        <li class="list-group-item">微信号：18811382555</li>
-                                                        <li class="list-group-item">邮箱：345323232@qq.com</li>
-                                                        <li class="list-group-item">联系电话：18811382555 </li>
-                                                        <li class="list-group-item">加入项目：校园志愿讲解（XSWL12345）</li>
-                                                        <li class="list-group-item">工作职位：流动志愿者</li>
-                                                        <li class="list-group-item">工作时间：2019.11.22</li>
-                                                        <li class="list-group-item"><a href="#" class="btn btn-danger"
-                                                                style="float:right">删除成员</a></li>
-                                                    </ul>
+                                                    <div class="form-control">
+                                                        <input name='id' value={{activity.id}} hidden>
+                                                        状态：{%if activity.type=='creating'%}
+                                                        <input readonly class="form-control form-control-line"
+                                                            value="未审批">
+                                                            {%elif activity.type=='created'%}
+                                                            <input readonly class="form-control form-control-line"
+                                                            value="已通过审批">
+                                                            {%elif activity.type=='refused'%}
+                                                            <input readonly class="form-control form-control-line"
+                                                            value="未通过审批">
+                                                            {%elif activity.type=='finished'%}
+                                                            <input readonly class="form-control form-control-line"
+                                                            value="已结项">
+                                                            {% endif %}
+                                                        活动日期：<input name="starttime"
+                                                            class="form-control form-control-line"  name='starttime'
+                                                            value="{{activity.starttime.__str__()}}">
+                                                        管理单位：<input readonly class="form-control form-control-line"
+                                                            value={{activity.team.teamName}}>
+                                                        负责人：<input name="managePerson"
+                                                            class="form-control form-control-line"
+                                                            value={{activity.managePerson}} name='managePerson'>
+                                                        联系电话：<input name="managePhone"
+                                                            class="form-control form-control-line"
+                                                            value={{activity.managePhone}} name='managePhone'>
+                                                        <!-- <li class="list-group-item">邮箱：{{activity.email}} <a href="#"
+                                                                class="btn btn-success" style="float:right">修改</a></li> -->
+                                                        项目简介 <textarea name='content'
+                                                            class="form-control" rows="7">{{activity.content}}</textarea>
+                                                        <input type="submit" class="btn btn-success" value="保存">
+                                                        <button class="btn btn-danger"
+                                                            onclick="deleteActivity({{activity.id}});return false;">删除项目
+                                                            </ul>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            </form>
                         </div>
+                        <div class="tab-pane" id="profile{{activity.id}}" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">
+                                            成员列表{{activity.appliedRecruits.__str__()+'/'+activity.totalRecruits.__str__()}}
+                                        </h4>
+                                        <h6 class="card-subtitle">在这里查看已经加入您项目的志愿者。</h6>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">姓名</th>
+                                                    <th scope="col">学号</th>
+                                                    <th scope="col">院系</th>
+                                                    <!--th scope="col">工作职位</th-->
+                                                    <th scope="col">志愿工时</th>
+                                                    <th scope='col'>是否签到</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for userActivity in activity.userActivities %}
+                                                {% if userActivity.type=='applied' or userActivity.type=='finished' %}
+                                                <tr class="table-success" style="cursor:pointer;"
+                                                    onclick="$('#userActivity{{userActivity.id}}').modal('toggle')">
+                                                    <th scope="row">{{userActivity.user.userName}}</th>
+                                                    <td>{{userActivity.user.schoolId}}</td>
+                                                    <td>{{userActivity.user.department}}</td>
+                                                    <!--td>{{userActivity.user.job}}</td-->
+                                                    <td onclick="event.stopPropagation()">
+                                                        <input type="number" class="volunteerHours" class="form-control" value={{userActivity.hours}}>
+                                                    </td>
+                                                    {% if userActivity.isSignIn %}
+                                                    <td>已签到</td>
+                                                    {% else %}
+                                                    <td>未签到</td>
+                                                    {% endif %}
+                                                </tr>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-primary">确认</button>
+
+                        </div>
+                        <div class="tab-pane" id="messages{{activity.id}}" role="tabpanel"
+                            aria-labelledby="messages-tab">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">志愿者申请</h4>
+                                        <h6 class="card-subtitle">在这里查看志愿者加入您的项目的申请。</h6>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">消息类型</th>
+                                                    <th scope="col">用户类型</th>
+                                                    <th scope="col">用户名称</th>
+                                                    <th scope="col">相关项目</th>
+                                                    <th scope="col">时间</th>
+                                                    <th scope="col">消息状态</th>
+                                                    <th scope="col">操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for userActivity in activity.userActivities %}
+                                                {% if userActivity.type=='applying' %}
+                                                <tr class="table-success" style="cursor:pointer;"
+                                                    onclick="$('#userActivityApply{{userActivity.id}}').modal('toggle')">
+                                                    <th scope="row">志愿申请</th>
+                                                    <td>志愿者</td>
+                                                    <td>{{userActivity.user.userName}}</td>
+                                                    <td>{{userActivity.activity.title}}</td>
+                                                    <td>{{userActivity.applyTime}}</td>
+                                                    {% if userActivity.isRead %}
+                                                    <td>已读</td>
+                                                    {% else %}
+                                                    <td>未读</td>
+                                                    {% endif %}
+                                                    <td>回复</td>
+                                                </tr>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="update();updateVolunteerHours({{activity.id}})" data-dismiss="modal">关闭</button>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
-            <div class="container-fluid">
-                <!-- ============================================================== -->
-                <!-- Start Page Content -->
-                <!-- ============================================================== -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">项目列表</h4>
-                                <h6 class="card-subtitle">您可以查看您的志愿活动信息</h6>
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" style='text-align: center;'>项目</th>
-                                                <th scope="col">项目编号</th>
-                                                <th scope="col">负责单位</th>
-                                                <th scope="col">活动类别</th>
-                                                <th scope="col">负责人</th>
-                                                <th scope="col">状态</th>
-                                                <th scope="col">操作</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr style="cursor:pointer;" onclick="$('#exampleModal').modal('toggle')">
-                                                <td class=“w-25”>
-                                                    <div class="card mb-3" style="max-width: 450px;">
-                                                        <div class="row no-gutters">
-                                                            <div class="col-md-4">
-                                                                <img src="../static/img/myactivity/thu2.jpeg"
-                                                                    class="d-block w-100" alt="...">
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <div class="card-body">
-                                                                    <h5 class="card-title">校园志愿讲解</h5>
-                                                                    <p class="card-text">
-                                                                        招募校园讲解志愿者，在国庆期间提供讲解服务，每年参与的人数超过1000人。</p>
-                                                                    <p class="card-text"><small
-                                                                            class="text-muted">更新于3分钟之前</small></p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+    <!-- Modal message-->
+    {% for userActivity in activity.userActivities %}
+    <div class="modal fade" id="userActivityApply{{userActivity.id}}" tabindex="-1" role="dialog"
+        aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">消息详情</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
-                                                </td>
-                                                <td style='vertical-align: middle;'>XSWL12345</td>
-                                                <td style='vertical-align: middle;'>校团委志愿组</td>
-                                                <td style='vertical-align: middle;'>公益</td>
-                                                <td style='vertical-align: middle;'>小王子</td>
-                                                <td style='vertical-align: middle;'>待审核</td>
-                                                <td style='vertical-align: middle;'><a href="url">查看</a></td>
-                                            </tr>
-                                            <tr style="cursor:pointer;" onclick="$('#exampleModal').modal('toggle')">
-                                                <td class=“w-25”>
-                                                    <div class="card mb-3" style="max-width: 450px;">
-                                                        <div class="row no-gutters">
-                                                            <div class="col-md-4">
-                                                                <img src="../static/img/myactivity/thu1.jpg" class="d-block w-100"
-                                                                    alt="...">
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <div class="card-body">
-                                                                    <h5 class="card-title">敬老院服务</h5>
-                                                                    <p class="card-text">
-                                                                        招募敬老院服务志愿者，预计将前往XX敬老院，持续时间1整天，招募人数10人左右。</p>
-                                                                    <p class="card-text"><small
-                                                                            class="text-muted">更新于3分钟之前</small></p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                <div class="modal-body">
+                    <div class="card" style="width: 45rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">项目：{{userActivity.activity.title}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">消息时间：时间</h6>
 
-                                                </td>
-                                                <td style='vertical-align: middle;'>XSWL12346</td>
-                                                <td style='vertical-align: middle;'>软件学院志愿组</td>
-                                                <td style='vertical-align: middle;'>公益</td>
-                                                <td style='vertical-align: middle;'>小王子</td>
-                                                <td style='vertical-align: middle;'>审核通过</td>
-                                                <td style='vertical-align: middle;'><a href="url">查看</a></td>
-                                            </tr>
-                                            <tr style="cursor:pointer;" onclick="$('#exampleModal').modal('toggle')">
-                                                <td class=“w-25”>
-                                                    <div class="card mb-3" style="max-width: 450px;">
-                                                        <div class="row no-gutters">
-                                                            <div class="col-md-4">
-                                                                <img src="../static/img/myactivity/thu3.jpg" class="d-block w-100"
-                                                                    alt="...">
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <div class="card-body">
-                                                                    <h5 class="card-title">校庆嘉宾接待</h5>
-                                                                    <p class="card-text">
-                                                                        招募校庆嘉宾接待志愿者，在校庆期间期间接待外宾，需要经过1天的培训。</p>
-                                                                    <p class="card-text"><small
-                                                                            class="text-muted">更新于3分钟之前</small></p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">申请项目</th>
+                                        <!--th scope="col">申请职位</th-->
+                                        <th scope="col">申请日期</th>
+                                        <th scope="col">姓名</th>
+                                        <th scope="col">学号</th>
+                                        <th scope="col">院系</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-success">
+                                        <th scope="row">{{userActivity.activity.title}}</th>
+                                        <!--td>工作职位</td-->
+                                        <td>{{userActivity.workdate}}</td>
+                                        <td>{{userActivity.user.userName}}</td>
+                                        <td>{{userActivity.user.schoolId}}</td>
+                                        <td>{{userActivity.user.department}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-                                                </td>
-                                                <td style='vertical-align: middle;'>XSWL12347</td>
-                                                <td style='vertical-align: middle;'>校学生会</td>
-                                                <td style='vertical-align: middle;'>公益</td>
-                                                <td style='vertical-align: middle;'>王五</td>
-                                                <td style='vertical-align: middle;'>待审核</td>
-                                                <td style='vertical-align: middle;'><a href="url">查看</a></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            <p class="card-text">{{userActivity.content}}</p>
+                            <a href="#" class="card-link">志愿者详情</a>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success"
+                        onclick="replyApply({{userActivity.id}},'1')">同意</button>
+                    <button type="button" class="btn btn-danger"
+                        onclick="replyApply({{userActivity.id}},'0')">拒绝</button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="update()" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- Modal person-->
+    {% for userActivity in activity.userActivities %}
+    <div class="modal fade" id="userActivity{{userActivity.id}}" tabindex="-1" role="dialog"
+        aria-labelledby="personModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="personModalLabel">项目详情</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="card" style="width: 45rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{userActivity.user.userName}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{userActivity.user.schoolId}}</h6>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">个人简介</h5>
+                                            <p class="card-text" rows="10">{{userActivity.user.profile}}
+                                            </p>
+                                            <div class="card">
+                                                <img src="{{userActivity.user.avatar}}" class="card-img-top"
+                                                    alt="...">
+                                                        <!-- <button class="btn btn-lg btn-info btn-block">招募公告</button>
+                                                        <button class="btn btn-lg btn-primary btn-block">导入成员</button> -->
+                                            </div>
+                                        </div>
+                                        <!-- <button class="btn btn-lg btn-info btn-block">发送消息</button>
+                                        <button class="btn btn-lg btn-primary btn-block">更改职位</button>
+                                        <button class="btn btn-lg btn-secondary btn-block" disabled>招募邀请</button> -->
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">院系：{{userActivity.user.department}} </li>
+                                                <li class="list-group-item">微信号：{{userActivity.user.wx}}</li>
+                                                <li class="list-group-item">邮箱：{{userActivity.user.email}}</li>
+                                                <li class="list-group-item">联系电话：{{userActivity.user.phone}} </li>
+                                                <li class="list-group-item">加入项目：{{userActivity.activity.title}}
+                                                </li>
+                                                <!-- <li class="list-group-item">工作职位：工作岗位</li>
+                                                <li class="list-group-item">工作时间：工作时间</li> -->
+                                                <li class="list-group-item"><a href="#" class="btn btn-danger"
+                                                        style="float:right"
+                                                        onclick="deleteMember({{userActivity.id}});return false;">删除成员</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
-                <!-- ============================================================== -->
-                <!-- End Right sidebar -->
-                <!-- ============================================================== -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="update()" data-dismiss="modal">关闭</button>
+                </div>
             </div>
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- End footer -->
-            <!-- ============================================================== -->
+        </div>
+    </div>
+    {% endfor %}
+
+    {% endfor %}
+
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">项目列表</h4>
+                        <h6 class="card-subtitle">您可以查看您的志愿活动信息</h6>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style='text-align: center;'>项目</th>
+                                        <th scope="col">项目编号</th>
+                                        <th scope="col">负责人</th>
+                                        <th scope="col">状态</th>
+                                        <th scope="col">开始日期</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for activity in activities %}
+                                    <tr style="cursor:pointer;" onclick="$('#activity{{activity.id}}').modal('toggle')">
+                                        <td class=“w-25”>
+                                            <div class="card mb-3" style="max-width: 450px;">
+                                                <div class="row no-gutters" style="align-items: center;">
+                                                    <div class="col-md-4">
+                                                        <img src="{{activity.thumb}}" class="d-block w-100" alt="...">
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">{{activity.title}}</h5>
+                                                            <p class="card-text">
+                                                                {{activity.content}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                        <td style='vertical-align: middle;'>{{activity.AID}}</td>
+                                        <td style='vertical-align: middle;'>{{activity.managePerson}}</td>
+                                        {% if activity.type=='creating' %}
+                                        <td style='vertical-align: middle;'>未审批</td>
+                                        {% elif activity.type=='created' %}
+                                        <td style='vertical-align: middle;'>已批准</td>
+                                        {% elif activity.type=='refused' %}
+                                        <td style='vertical-align: middle;'>未批准</td>
+                                        {% elif activity.type=='finished' %}
+                                        <td style='vertical-align: middle;'>已完成</td>
+                                        {% endif %} 
+                                        <td style='vertical-align: middle;'>{{activity.starttime}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    {%import 'activitypages.html' as pg%}
+                                    {{pg.my_paginate(pagination,'main.myactivity')}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- ============================================================== -->
-        <!-- End Page wrapper  -->
+        <!-- End PAge Content -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Right sidebar -->
+        <!-- ============================================================== -->
+        <!-- .right-sidebar -->
+        <!-- ============================================================== -->
+        <!-- End Right sidebar -->
         <!-- ============================================================== -->
     </div>
     <!-- ============================================================== -->
-    <!-- End Wrapper -->
+    <!-- End Container fluid  -->
     <!-- ============================================================== -->
     <!-- ============================================================== -->
-    <!-- All Jquery -->
+    <!-- footer -->
     <!-- ============================================================== -->
-    <script src="../static/assets/libs/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="../static/assets/libs/popper.js/dist/umd/popper.min.js"></script>
-    <script src="../static/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="../static/assets/extra-libs/sparkline/sparkline.js"></script>
-    <!--Wave Effects -->
-    <script src="../static/js/waves.js"></script>
-    <!--Menu sidebar -->
-    <script src="../static/js/sidebarmenu.js"></script>
-    <!--Custom JavaScript -->
-    <script src="../static/js/custom.min.js"></script>
-</body>
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+</div>
+{% endblock %}
 
-</html>
+{% block script %}
+{{super()}}
+<script src="https://unpkg.com/axios@0.19.0/dist/axios.min.js"></script>
+<script>
+    axios.defaults.withCredentials = true;
+    var deleteActivity = function (id) {
+        axios.get("/api/activities/deleteActivity", { params: { 'id': id } }).then((res) => {
+            alert("删除成功");
+        })
+    }
+    var deleteMember = function (id) {
+        axios.get("/api/activities/deleteMember", { params: { 'id': id } }).then((res) => {
+            alert("删除成功");
+        })
+    }
+    var replyApply = function (id, res) {
+        axios.get("/api/activities/replyApply", { params: { 'id': id, 'res': res } }).then((res) => {
+            alert("回复成功")
+        })
+    }
+    var update=function(){
+        setTimeout('$("#main").load("/myactivity #content")',500)
+    }
+    var updateVolunteerHours=function(id){
+        var arr=$(".volunteerHours").map(function(){return this.value}).get()
+        axios.post("/api/activities/updateVolunteerHours", { 'id': id, 'hours': arr  }).then((res) => {
+            
+        })
+    }
+    var applyFinish=function(id){
+        axios.get("/api/activities/applyFinish",{ params: { 'id': id} }).then(res=>{
+            alert("申请成功")
+        })
+    }
+</script>
+{% endblock %}

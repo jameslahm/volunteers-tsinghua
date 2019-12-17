@@ -30,11 +30,19 @@ export default {
   },
   methods: {
     'bindClick': function() {
-      this.$store.commit('changeInfo',this.info);
-      $Message({
-        content:'保存成功',
-        type:'success'
-      })
+      if(this.$store.state.token!=undefined){
+        this.$store.commit('changeInfo',this.info)
+        $Message({
+          content:'保存成功',
+          type:'success'
+        })
+      }
+      else{
+        $Message({
+          content:'抱歉，您的登录凭证已失效，请重新登录',
+          type:'warning'
+        })
+      }
     },
     'changeInput':function(event){
       this.info[event.target.id]=event.target.detail.value

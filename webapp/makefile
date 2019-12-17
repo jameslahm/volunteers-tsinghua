@@ -12,3 +12,6 @@ migrate:
 
 upgrade:
 	python backend/manage.py db upgrade
+
+shell:
+	python backend/manage.py shell
