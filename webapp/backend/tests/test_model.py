@@ -77,7 +77,7 @@ class ModelTestCase(unittest.TestCase):
 
     def test_team_token(self):
         new_team = Team.query.filter_by(teamName='testTeam').first()
-        token = new_team.generate_reset_token(expiration=3600 * 24 * 30)
+        token = new_team.generate_reset_token(expiration=3600)
         self.assertIsNotNone(token)
         self.assertTrue(new_team.verify_reset_token(token))
     def test_introcode(self):

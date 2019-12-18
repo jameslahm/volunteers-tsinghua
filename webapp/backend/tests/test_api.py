@@ -85,3 +85,34 @@ class APITestCase(unittest.TestCase):
             url_for('api.get_user_messages',id=test_user.id),
         )
         self.assertEqual(200,response4.status_code)
+
+    def test_mess(self):
+        test_user = User.query.filter_by(userName='testUser').first()
+        test_team = Team.query.filter_by(teamName='testTeam').first()
+        test_activity = Activity.query.filter_by(AID='998').first()
+
+        test_ua = UserActivity(user=test_user, applyTime='2017-04-09', content="test ua", activity=test_activity,
+                                  type='applied')
+        test_mess = Message(user=test_user, activity=test_activity,
+                            content="test message", time='2017-04-09', isRead=False)
+
+        db.session.add_all([test_mess, test_ua])
+        db.session.commit()
+
+        mess_info = {"token": test_user.generate_auth_token(expiration=3600 * 24 * 30)}
+        response = current_app.test_client().post(
+            url_for('api.change_message_isread', id=test_mess.id),
+            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            data=json.dumps(mess_info))
+        self.assertEqual(200, response.status_code)
+
+        response = current_app.test_client().post(
+            url_for('api.delete_message', id=test_mess.id),
+            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            data=json.dumps(mess_info))
+        self.assertIsNone(Message.query.filter_by(content="test message").first())
+        self.assertEqual(200, response.status_code)
+
+        Message.query.filter_by(content="test message").delete()
+        UserActivity.query.filter_by(content="test ua").delete()
+        db.session.commit()
