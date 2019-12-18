@@ -76,7 +76,8 @@ class ClientTestCase(unittest.TestCase):
         IntroCode.query.filter_by(code="12345678").delete()
         db.session.commit()
 
-    def test_profile(self):
+
+    def test_webprofile(self):
         response = current_app.test_client().post(
             'auth/login',
             data={"email": "1436472425@qq.com", "password": "123456", "remember_me": 0})
