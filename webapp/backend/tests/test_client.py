@@ -79,15 +79,25 @@ class ClientTestCase(unittest.TestCase):
     def test_profile(self):
         response = current_app.test_client().post(
             'auth/login',
-            data={"email": "test@team", "password": "123456", "remember_me": 0})
+            data={"email": "1436472425@qq.com", "password": "123456", "remember_me": 0})
         self.assertIsNotNone(response.data)
-
         response2 = current_app.test_client().get(url_for('main.index'))
         self.assertIsNotNone(response2.data)
         self.assertNotEqual(response.data, response2.data)
+        response3 = current_app.test_client().post(
+            'main/index',
+            data={
+                "avatar": "(binary)",
+                "teamName": "996",
+                "email": "1436472425@qq.com",
+                "phone": None,
+                "password": None ,
+                "description": None
+        }
+        )
+        self.assertIsNotNone(response3.data)
 
-        # 没有上传thumd，无法测试createactivity
-        '''data = {"title": "test_acti", "location": "test_loc",
+        data = {"title": "test_acti", "location": "test_loc",
                 "startdate": '2017-04-09', "starttime": '15:25', "enddate": '2017-04-09', "endtime": '15:25',
                 'totalRecruits': '10', 'content': 'helloworld',
                 'managePerson': 'spb', 'manageEmail': 'spb@tsinghua', 'managePhone': "1233564"}
@@ -98,4 +108,8 @@ class ClientTestCase(unittest.TestCase):
             follow_redirects=True
         )
         self.assertIsNotNone(Activity.query.filter_by(managePerson='spb').first())
-        Activity.query.filter_by(managePerson='spb').first().delete()'''
+        Activity.query.filter_by(managePerson='spb').first().delete()
+
+        response4 = current_app.test_client().get(url_for('main.information'))
+        self.assertIsNotNone(response4.data)
+

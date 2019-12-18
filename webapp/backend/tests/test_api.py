@@ -39,10 +39,18 @@ class APITestCase(unittest.TestCase):
             url_for('auth.login'),
             data={"email": "test@team", "password": "123456", "remember_me": 0}
         )
-        response = current_app.test_client().get(
+        response2 = current_app.test_client().get(
             url_for('api.deleteActivity', id=Activity.query.filter_by(AID='998').first().id))
         # self.assertEqual(200, response.status_code)
         # self.assertIsNone(Activity.query.filter_by(AID='998').first())
+        response3 = current_app.test_client().get(
+            url_for('api.deleteMember',id=Activity.query.filter_by(AID='998').first().id))
+        #self.assertEqual(200, response3.status_code)
+        response4 = current_app.test_client().get(
+            url_for('api.get_activity_info',id=Activity.query.filter_by(AID='998').first().id))
+        #self.assertEqual(200, response4.status_code)
+        response5 = current_app.test_client().get(
+            url_for('api.get_activities'))
         current_app.test_client().get(url_for('auth.logout'))
 
     def test_user(self):
@@ -57,3 +65,22 @@ class APITestCase(unittest.TestCase):
                 data=json.dumps(user_info) )
         # response code 400
         self.assertEqual(200, response.status_code)
+        response2 = current_app.test_client().get(
+            url_for('api.get_user_activities',id=test_user.id),
+        )
+        self.assertEqual(200,response2.status_code)
+        apply_info = {
+            "id":10,
+            "content": "",
+            "token": user_info['token']
+        }
+        response3 = current_app.test_client().post(
+            url_for('api.user_apply',id=test_user.id),
+            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            data=apply_info
+        )
+        self.assertEqual(200,response3.status_code)
+        response4 = current_app.test_client().get(
+            url_for('api.get_user_messages',id=test_user.id),
+        )
+        self.assertEqual(200,response4.status_code)
