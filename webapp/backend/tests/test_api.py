@@ -88,7 +88,6 @@ class APITestCase(unittest.TestCase):
 
     def test_mess(self):
         test_user = User.query.filter_by(userName='testUser').first()
-        test_team = Team.query.filter_by(teamName='testTeam').first()
         test_activity = Activity.query.filter_by(AID='998').first()
 
         test_ua = UserActivity(user=test_user, applyTime='2017-04-09', content="test ua", activity=test_activity,
@@ -116,3 +115,14 @@ class APITestCase(unittest.TestCase):
         Message.query.filter_by(content="test message").delete()
         UserActivity.query.filter_by(content="test ua").delete()
         db.session.commit()
+
+    def test_auth(self):
+        test_user = User.query.filter_by(userName='testUser').first()
+        user_token = {"token": test_user.generate_auth_token(expiration=3600 * 24 * 30)}
+        response = current_app.test_client().get(
+            url_for('api.verifyToken'),
+            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            data=json.dumps(user_token))
+        # self.assertNotIn('error', str(response.data))
+        self.assertEqual(200, response.status_code)
+        print(str(response.data))
