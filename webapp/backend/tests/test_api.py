@@ -20,6 +20,7 @@ class APITestCase(unittest.TestCase):
                                 endtime='2017-04-09 15:30', location="testLocation",
                                 title="testActivity", content="testContent", managePerson="testManager",
                                 managePhone=110, manageEmail='test@activity')
+        
         db.session.add_all([new_user, new_team, new_activity])
         db.session.commit()
 
@@ -70,14 +71,14 @@ class APITestCase(unittest.TestCase):
         )
         self.assertEqual(200,response2.status_code)
         apply_info = {
-            "id":10,
+            "id":1,
             "content": "",
             "token": user_info['token']
         }
         response3 = current_app.test_client().post(
             url_for('api.user_apply',id=test_user.id),
             headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
-            data=apply_info
+            data=json.dumps(apply_info)
         )
         self.assertEqual(200,response3.status_code)
         response4 = current_app.test_client().get(

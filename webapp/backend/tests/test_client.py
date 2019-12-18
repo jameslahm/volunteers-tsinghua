@@ -61,8 +61,7 @@ class ClientTestCase(unittest.TestCase):
 
         response = current_app.test_client().post(
             url_for('auth.register'),
-            data=data,
-            follow_redirects=True
+            data=data
         )
         json_data = response.data
 
@@ -88,7 +87,6 @@ class ClientTestCase(unittest.TestCase):
         response3 = current_app.test_client().post(
             'main/index',
             data={
-                "avatar": "(binary)",
                 "teamName": "996",
                 "email": "1436472425@qq.com",
                 "phone": None,
@@ -97,20 +95,4 @@ class ClientTestCase(unittest.TestCase):
         }
         )
         self.assertIsNotNone(response3.data)
-
-        data = {"title": "test_acti", "location": "test_loc",
-                "startdate": '2017-04-09', "starttime": '15:25', "enddate": '2017-04-09', "endtime": '15:25',
-                'totalRecruits': '10', 'content': 'helloworld',
-                'managePerson': 'spb', 'manageEmail': 'spb@tsinghua', 'managePhone': "1233564"}
-        current_app.test_client().get(url_for('main.createactivity'))
-        response3 = current_app.test_client().post(
-            url_for('main.createactivity'),
-            data=data,
-            follow_redirects=True
-        )
-        self.assertIsNotNone(Activity.query.filter_by(managePerson='spb').first())
-        Activity.query.filter_by(managePerson='spb').first().delete()
-
-        response4 = current_app.test_client().get(url_for('main.information'))
-        self.assertIsNotNone(response4.data)
 

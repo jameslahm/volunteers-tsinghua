@@ -20,7 +20,7 @@ class ModelTestCase(unittest.TestCase):
                                 endtime='2017-04-09 15:30', location="testLocation",
                                 title="testActivity", content="testContent", managePerson="testManager",
                                 managePhone=110, manageEmail='test@activity')
-        new_message = Message(user=new_user, team=new_team, activity=new_activity, content='hao',
+        new_message = Message(user=new_user, activity=new_activity, content='hao',
                     time='2017-04-09 15:30', isRead=False)
         db.session.add_all([new_user, new_team, new_activity,new_message])
         db.session.commit()
@@ -84,7 +84,7 @@ class ModelTestCase(unittest.TestCase):
         new_intro_code = IntroCode(code="12345678")
         db.session.add_all([new_intro_code])
         db.session.commit()
-        self.assertTrue(Introcode.verify_code('12345678'))
+        self.assertTrue(IntroCode.verify_code('12345678'))
         IntroCode.query.filter_by(code="12345678").delete()
     def test_search_activity(self):
         self.assertIsNotNone(Activity.search('2017-04-09 15:25', 'time'))
