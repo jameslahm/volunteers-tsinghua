@@ -1,6 +1,6 @@
 from flask import current_app, jsonify, url_for
 from app import create_app, db
-from app.model import (User, Team, Activity, Message, UserActivity, IntroCode)
+from app.model import (User, Team, Activity, Message, UserActivity, IntroCode, Suggestion)
 
 import unittest, random, json
 
@@ -126,3 +126,14 @@ class APITestCase(unittest.TestCase):
         # self.assertNotIn('error', str(response.data))
         self.assertEqual(200, response.status_code)
         print(str(response.data))
+
+    def test_suggestion(self):
+        info = {"content": "test suggestion"}
+        response = current_app.test_client().post(
+            url_for('api.verifyToken'),
+            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            data=json.dumps(info)
+        )
+        t = Suggestion.query.filter_by(content="test suggestion").first()
+        self.assertIsNone(t)
+        Suggestion.query.filter_by(content="test suggestion").delete()
