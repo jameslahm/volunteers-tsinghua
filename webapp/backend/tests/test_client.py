@@ -92,7 +92,7 @@ class ClientTestCase(unittest.TestCase):
                 "phone": None,
                 "password": None ,
                 "description": None
-        }
+            }
         )
         self.assertIsNotNone(response3.data)
 

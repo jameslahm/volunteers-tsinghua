@@ -130,10 +130,10 @@ class APITestCase(unittest.TestCase):
     def test_suggestion(self):
         info = {"content": "test suggestion"}
         response = current_app.test_client().post(
-            url_for('api.verifyToken'),
+            url_for('api.suggestions'),
             headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
             data=json.dumps(info)
         )
         t = Suggestion.query.filter_by(content="test suggestion").first()
-        self.assertIsNone(t)
+        self.assertIsNotNone(t)
         Suggestion.query.filter_by(content="test suggestion").delete()

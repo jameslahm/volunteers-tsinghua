@@ -66,8 +66,9 @@ def deleteActivity():
 def deleteMember():
     id=request.args.get('id')
     userA=UserActivity.query.filter_by(id=id).first()
-    db.session.delete(userA)
-    db.session.commit()
+    if(userA):
+        db.session.delete(userA)
+        db.session.commit()
     return jsonify({})
 
 @api.route('/activities/replyApply',methods=['GET'])
@@ -76,6 +77,8 @@ def replyApply():
     id=request.args.get('id')
     res=request.args.get('res')
     userA=UserActivity.query.filter_by(id=id).first()
+    if not userA:
+        return jsonify({})
     if res=='1':
         userA.type='applied'
         userA.activity.appliedRecruits+=1
@@ -94,8 +97,9 @@ def replyApply():
 def changeIsRead():
     id=request.args.get('id')
     activity=Activity.query.filter_by(id=id).first()
-    activity.isRead=True
-    db.session.commit()
+    if activity:
+        activity.isRead=True
+        db.session.commit()
     return jsonify({})
 
 @api.route('/activities/updateVolunteerHours',methods=['POST'])

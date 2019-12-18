@@ -426,7 +426,7 @@
                                 </thead>
                                 <tbody>
                                     {% for activity in activities %}
-                                    <tr style="cursor:pointer;" onclick="$('#activity{{activity.id}}').modal('toggle')">
+                                    <tr style="cursor:pointer;" onclick="$('#activity{{activity.id}}').modal('toggle')" id="tr">
                                         <td class=“w-25”>
                                             <div class="card mb-3" style="max-width: 450px;">
                                                 <div class="row no-gutters" style="align-items: center;">
