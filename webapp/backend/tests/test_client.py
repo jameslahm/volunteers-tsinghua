@@ -3,7 +3,7 @@ from app import create_app, db
 from app.model import (User, Team, Activity, Message, UserActivity, IntroCode)
 
 import unittest, random, json
-
+import time
 
 class ClientTestCase(unittest.TestCase):
 
@@ -61,10 +61,11 @@ class ClientTestCase(unittest.TestCase):
 
         response = current_app.test_client().post(
             url_for('auth.register'),
-            data=data,
-            follow_redirects=True
+            data=data
         )
         json_data = response.data
+
+        time.sleep(2)
 
         new_team = Team.query.filter_by(email="test@register").first()
         self.assertIsNotNone(new_team)
@@ -76,26 +77,24 @@ class ClientTestCase(unittest.TestCase):
         IntroCode.query.filter_by(code="12345678").delete()
         db.session.commit()
 
-    def test_profile(self):
+
+    def test_webprofile(self):
         response = current_app.test_client().post(
             'auth/login',
-            data={"email": "test@team", "password": "123456", "remember_me": 0})
+            data={"email": "1436472425@qq.com", "password": "123456", "remember_me": 0})
         self.assertIsNotNone(response.data)
-
         response2 = current_app.test_client().get(url_for('main.index'))
         self.assertIsNotNone(response2.data)
         self.assertNotEqual(response.data, response2.data)
-
-        # 没有上传thumd，无法测试createactivity
-        '''data = {"title": "test_acti", "location": "test_loc",
-                "startdate": '2017-04-09', "starttime": '15:25', "enddate": '2017-04-09', "endtime": '15:25',
-                'totalRecruits': '10', 'content': 'helloworld',
-                'managePerson': 'spb', 'manageEmail': 'spb@tsinghua', 'managePhone': "1233564"}
-        current_app.test_client().get(url_for('main.createactivity'))
         response3 = current_app.test_client().post(
-            url_for('main.createactivity'),
-            data=data,
-            follow_redirects=True
+            'main/index',
+            data={
+                "teamName": "996",
+                "email": "1436472425@qq.com",
+                "phone": None,
+                "password": None ,
+                "description": None
+            }
         )
-        self.assertIsNotNone(Activity.query.filter_by(managePerson='spb').first())
-        Activity.query.filter_by(managePerson='spb').first().delete()'''
+        self.assertIsNotNone(response3.data)
+
