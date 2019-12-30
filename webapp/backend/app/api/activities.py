@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, jsonify,request,current_
 from ..model import Activity,UserActivity,Message
 from . import api
 from .. import db
-from flask_login import login_required
+from flask_login import login_required,current_user
 from .authentication import verify_token
 
 
@@ -57,8 +57,11 @@ def get_activity_members(id):
 def deleteActivity():
     id=request.args.get('id')
     activity=Activity.query.filter_by(id=id).first()
-    db.session.delete(activity)
-    db.session.commit()
+    if not activity:
+        return jsonify({'error':'no activity'})
+    if(activity.team==current_user):
+        db.session.delete(activity)
+        db.session.commit()
     return jsonify({})
 
 @api.route('/activities/deleteMember',methods=['GET'])
@@ -67,10 +70,11 @@ def deleteMember():
     id=request.args.get('id')
     userA=UserActivity.query.filter_by(id=id).first()
     if(userA):
-        db.session.delete(userA)
         activity=Activity.query.filter_by(id=userA.activity.id).first()
-        activity.appliedRecruits=activity.appliedRecruits-1
-        db.session.commit()
+        if(activity.team==current_user):
+            db.session.delete(userA)
+            activity.appliedRecruits=activity.appliedRecruits-1
+            db.session.commit()
     return jsonify({})
 
 @api.route('/activities/replyApply',methods=['GET'])
@@ -82,16 +86,19 @@ def replyApply():
     if not userA:
         return jsonify({})
     if res=='1':
-        userA.type='applied'
-        userA.activity.appliedRecruits+=1
-        message=Message(user=userA.user,activity=userA.activity,content='恭喜您，您申请参加的活动:{}，已被活动负责人批准，请及时扫描下方二维码加入活动群'.format(userA.activity.title))
-
+        if(userA.activity.team==current_user):
+            userA.type='applied'
+            userA.activity.appliedRecruits+=1
+            message=Message(user=userA.user,activity=userA.activity,content='恭喜您，您申请参加的活动:{}，已被活动负责人批准，请及时扫描下方二维码加入活动群'.format(userA.activity.title))
+            db.session.add(message)
+            db.session.commit()
     else:
-        userA.type='refused'
-        message=Message(user=userA.user,activity=userA.activity,content="抱歉，很遗憾的通知您，您申请参加的活动:{}，已被活动负责人拒绝".format(userA.activity.title))
-        db.session.delete(userA)
-    db.session.add(message)
-    db.session.commit()
+        if(userA.activity.team==current_user):
+            userA.type='refused'
+            message=Message(user=userA.user,activity=userA.activity,content="抱歉，很遗憾的通知您，您申请参加的活动:{}，已被活动负责人拒绝".format(userA.activity.title))
+            db.session.delete(userA)
+            db.session.add(message)
+            db.session.commit()
     return jsonify({})
 
 @api.route('/activities/changeIsRead',methods=['GET'])
@@ -100,8 +107,9 @@ def changeIsRead():
     id=request.args.get('id')
     activity=Activity.query.filter_by(id=id).first()
     if activity:
-        activity.isRead=True
-        db.session.commit()
+        if activity.team==current_user:
+            activity.isRead=True
+            db.session.commit()
     return jsonify({})
 
 @api.route('/activities/updateVolunteerHours',methods=['POST'])
@@ -111,7 +119,9 @@ def updateVolunteerHours():
     id=int(data.get('id'))
     activity=Activity.query.filter_by(id=id).first()
     if(not activity):
-        return jsonify({'error':'error'})
+        return jsonify({'error':'no activity'})
+    if not activity.team==current_user:
+        return jsonify({})
     hours=data.get('hours')
     hours=[int(x) for x in hours]
     for i,userA in enumerate(activity.userActivities):
@@ -125,6 +135,8 @@ def applyFinish():
     id=request.args.get('id')
     activity=Activity.query.filter_by(id=id).first()
     if(not activity):
+        return jsonify({})
+    if not activity.team==current_user:
         return jsonify({})
     activity.isApplyFinish=True
     db.session.commit()
@@ -152,6 +164,7 @@ def createQrCode(id):
 def deleteMessage():
     id=request.args.get('id')
     activity=Activity.query.filter_by(id=id).first()
-    activity.isMessage=False
-    db.session.commit()
+    if activity.team==current_user:
+        activity.isMessage=False
+        db.session.commit()
     return jsonify({})
