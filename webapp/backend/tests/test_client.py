@@ -3,7 +3,7 @@ from app import create_app, db
 from app.model import (User, Team, Activity, Message, UserActivity, IntroCode)
 
 import unittest, random, json
-
+import time
 
 class ClientTestCase(unittest.TestCase):
 
@@ -64,6 +64,8 @@ class ClientTestCase(unittest.TestCase):
             data=data
         )
         json_data = response.data
+
+        time.sleep(2)
 
         new_team = Team.query.filter_by(email="test@register").first()
         self.assertIsNotNone(new_team)

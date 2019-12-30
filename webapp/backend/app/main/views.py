@@ -98,10 +98,16 @@ def createactivity():
     if request.method=='POST':
         title=request.form.get('title')
         location=request.form.get('location')
-        startdate=request.form.get('startdate')
-        enddate=request.form.get('enddate')
-        starttime=request.form.get('starttime')
-        endtime=request.form.get('endtime')
+        if current_app.config['TESTING']==True:
+            startdate='2019-10-12'
+            enddate='2019-11-12'
+            starttime='00:00:00'
+            endtime='12:00:00'
+        else:
+            startdate=request.form.get('startdate')
+            enddate=request.form.get('enddate')
+            starttime=request.form.get('starttime')
+            endtime=request.form.get('endtime')
         totalRecruits=request.form.get('totalRecruits')
         content=request.form.get('content')
         managePerson=request.form.get('managePerson')

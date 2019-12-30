@@ -68,6 +68,8 @@ def deleteMember():
     userA=UserActivity.query.filter_by(id=id).first()
     if(userA):
         db.session.delete(userA)
+        activity=Activity.query.filter_by(id=userA.activity.id).first()
+        activity.appliedRecruits=activity.appliedRecruits-1
         db.session.commit()
     return jsonify({})
 

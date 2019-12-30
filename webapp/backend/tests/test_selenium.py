@@ -56,8 +56,6 @@ class SeleniumTestCase(unittest.TestCase):
             new_UserActivity=UserActivity(user=new_user,activity=new_activity,content='123')
             db.session.add(new_UserActivity)
             db.session.commit()
-            print(new_UserActivity.id)
-            print(UserActivity.query.filter_by(id=1).first())
 
             # start the Flask server in a thread
             cls.server_thread = threading.Thread(target=cls.app.run,
@@ -66,6 +64,7 @@ class SeleniumTestCase(unittest.TestCase):
 
             # give the server a second to ensure it is up
             time.sleep(1)
+
 
     @classmethod
     def tearDownClass(cls):
@@ -107,16 +106,22 @@ class SeleniumTestCase(unittest.TestCase):
         self.client.find_element_by_name('manageEmail').send_keys('123@123.com')
         self.client.find_element_by_name('managePhone').send_keys('123')
         self.client.find_element_by_name('totalRecruits').send_keys('10')
-        print("??????????")
         self.client.find_element_by_name('submit').click()
+        activity=Activity.query.filter_by(title='123').first()
+        self.assertIsNotNone(activity)
         self.client.get('http://127.0.0.1:5000/api/activities/replyApply?id=1&res=0')
         self.client.get('http://127.0.0.1:5000/api/activities/replyApply?id=1&res=1')
+
         self.client.get('http://127.0.0.1:5000/api/activities/deleteMember?id=1')
+
         self.client.get('http://127.0.0.1:5000/api/activities/changeIsRead?id=1')
+
         self.client.get('http://127.0.0.1:5000/api/activities/applyFinish?id=1')
+
         self.client.get('http://127.0.0.1:5000/api/activities/1/createQrCode')
         self.client.get('http://127.0.0.1:5000/api/activities/deleteMessage?id=1')
         self.client.get('http://127.0.0.1:5000/api/activities/deleteActivity?id=1')
+
         self.client.get('http://127.0.0.1:5000/auth/reset')
         self.client.find_element_by_name('email').send_keys('test@team')
         self.client.find_element_by_name('submit').click()
