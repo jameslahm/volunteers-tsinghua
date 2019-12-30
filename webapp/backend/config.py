@@ -22,8 +22,6 @@ class Config():
     # MAIL_PASSWORD = 'dkcqjdrpmswxrjtw'
     MAIL_USERNAME = '1366463855@qq.com'
     MAIL_PASSWORD = 'esvtsnvurjelbaai'
-    appid='wxf3aa74b41b1f555c'
-    appsecret='669223961b70204ffbd023015ea9decb'
     TESTING=False
 
 

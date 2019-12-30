@@ -20,6 +20,7 @@
 			<i-input v-model="password" title="密码" type="password" placeholder="password"></i-input>
 			<i-button @click='bindClick2()' size="default" type="primary">登录</i-button>
 		</view>
+		<small style="font-size:10px">&emsp;Tips:&emsp;您可以直接点击登录按钮进入清华学号认证</small>
 	</div>
 </template>
 
