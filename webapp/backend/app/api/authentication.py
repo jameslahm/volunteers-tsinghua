@@ -14,16 +14,6 @@ def verifyToken():
         return jsonify({'error':'invaild token'})
     return jsonify({})
 
-@api.route('/token',methods=['POST','GET'])
-def get_token():
-    data=request.form
-    id=data.get('id') or 1
-    # password=data.get('password')
-    #加入清华认证 
-    user=User.query.filter_by(id=id).first()
-    token=user.generate_auth_token(expiration=3600*24*30)
-    return jsonify({'token':token,'expiration':str(3600*24*30)})
-
 @api.route('/verifyTHU',methods=['POST'])
 def verifyTHU():
     data=request.json

@@ -20,3 +20,5 @@ test_report/
 .coverage
 coverage.xml
 
+.VSCodeCounter
+

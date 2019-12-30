@@ -6,7 +6,7 @@ class Config():
     SECRET_KEY = os.getenv('SECRET_KEY') or "hard to guess"
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     FLASKY_MAIL_SUBJECT_PREFIX = '[SE]'
-    FLASKY_MAIL_SENDER = os.getenv('FLASK_MAIL_SENDER') or 'SE'
+    FLASKY_MAIL_SENDER = os.getenv('FLASK_MAIL_SENDER') or '1366463855@qq.com'
     FLASK_ADMIN = os.getenv('FLASK_ADMIN') or 'volunteers-tsinghua@example.com'
     FLASK_ADMIN_PASSWORD = os.getenv('FLASK_ADMIN_PASSWORD') or '123456'
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg','bmp'])
@@ -14,13 +14,17 @@ class Config():
     FLASK_ACTIVITY_PER_PAGE=5
     FLASK_WX_PER_PAGE=20
     UPLOAD_FOLDER=basedir+'/app/static/img/'
-    MAIL_SERVER = 'smtp.gmail.com'
+    # MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_SERVER = 'smtp.qq.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
-    MAIL_USERNAME = 'jameslahm17@gmail.com'
-    MAIL_PASSWORD = 'dkcqjdrpmswxrjtw'
+    # MAIL_USERNAME = 'jameslahm17@gmail.com'
+    # MAIL_PASSWORD = 'dkcqjdrpmswxrjtw'
+    MAIL_USERNAME = '1366463855@qq.com'
+    MAIL_PASSWORD = 'esvtsnvurjelbaai'
     appid='wxf3aa74b41b1f555c'
     appsecret='669223961b70204ffbd023015ea9decb'
+    TESTING=False
 
 
     @staticmethod
