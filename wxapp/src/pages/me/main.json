@@ -4,6 +4,7 @@
         "i-cell-group":"../../static/iview/cell-group/index",
         "i-input": "../../static/iview/input/index",
         "i-button": "../../static/iview/button/index",
-        "i-message": "../../static/iview/message/index"
+        "i-message": "../../static/iview/message/index",
+        "i-load-more": "../../static/iview/load-more/index"
     }
 }
