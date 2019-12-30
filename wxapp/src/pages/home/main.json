@@ -4,6 +4,7 @@
         "i-card":"../../static/iview/card/index",
         "i-icon": "../../static/iview/icon/index",
         "i-sticky": "../../static/iview/sticky/index",
-        "i-sticky-item": "../../static/iview/sticky-item/index"
+        "i-sticky-item": "../../static/iview/sticky-item/index",
+        "i-page": "../../static/iview/page/index"
     }
 }

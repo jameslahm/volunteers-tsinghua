@@ -8,19 +8,19 @@
     <i-panel v-if="current==='0'">
       <view style="padding:15px;">
         <div v-for="(item,index) in applyingItems" :key=index style="padding-bottom:15px">
-          <i-card full @click='bindClick(item)' :title="item.title" :extra="item.leaderName" :thumb="item.thumb" i-class="card-thumb">
-            <view slot="content">{{item.description}}</view>
-            <view slot="footer">{{item.time+" "+item.location}}</view>
+          <i-card full @click='bindClick(item)' :title="item.teamName" :extra="item.appliedRecruits+'/'+item.totalRecruits" i-class="card-thumb">
+            <view slot="content">{{item.title}}</view>
+            <view slot="footer">{{item.starttime+" "+item.location}}</view>
           </i-card>
         </div>
       </view>
     </i-panel>
     <i-panel v-if="current==='1'">
       <view style="padding:15px;">
-        <div v-for="(item,index) in applyedItems" :key=index style="padding-bottom:15px">
-          <i-card full @click='bindClick(item)' :title="item.title" :extra="item.leaderName" :thumb="item.thumb" i-class="card-thumb">
-            <view slot="content">{{item.description}}</view>
-            <view slot="footer">{{item.time+" "+item.location}}</view>
+        <div v-for="(item,index) in appliedItems" :key=index style="padding-bottom:15px">
+          <i-card full @click='bindClick(item)' :title="item.teamName" :extra="item.appliedRecruits+'/'+item.totalRecruits" i-class="card-thumb">
+            <view slot="content">{{item.title}}</view>
+            <view slot="footer">{{item.starttime+" "+item.location}}</view>
           </i-card>
         </div>
       </view>
@@ -28,9 +28,9 @@
     <i-panel v-if="current==='2'">
       <view style="padding:15px;">
         <div v-for="(item,index) in endedItems" :key=index style="padding-bottom:15px">
-          <i-card full @click='bindClick(item)' :title="item.title" :extra="item.leaderName" :thumb="item.thumb" i-class="card-thumb">
-            <view slot="content">{{item.description}}</view>
-            <view slot="footer">{{item.time+" "+item.location}}</view>
+          <i-card full @click='bindClick(item)' :title="item.teamName" :extra="item.appliedRecruits+'/'+item.totalRecruits" i-class="card-thumb">
+            <view slot="content">{{item.title}}</view>
+            <view slot="footer">{{item.starttime+" "+item.location}}</view>
           </i-card>
         </div>
       </view>
@@ -52,11 +52,9 @@ export default {
     }
   },
   computed: {
-    'applyedItems': function () {
-      return this.$store.state.items.filter((item) => {
-        let date=new Date(item.time)
-        let now=new Date()
-        return item.type === 'applyed' && now.getTime()< date.getTime()+86400000
+    'appliedItems': function () {
+      return this.$store.state.items.filter((item,index) => {
+        return item.type === 'applied'
       })
     },
     'applyingItems': function () {
@@ -66,9 +64,7 @@ export default {
     },
     'endedItems':function(){
       return this.$store.state.items.filter((item) => {
-        let date=new Date(item.time)
-        let now=new Date()
-        return item.type === 'applyed' && now.getTime()>= date.getTime()+86400000
+        return item.type === 'finished'
       })
     }
   },
@@ -86,17 +82,7 @@ export default {
       this.selected[parseInt(this.current)]='selected'
     }
   },
-  onLoad (options) {
-    wx.login({
-      success: res => {
-        console.log(res)
-        this.$store.commit('getUser', 123) //参数为code
-      },
-      fail: () => { console.log('error') },
-      complete: () => {}
-    })
-  },
-  created () {
+  onShow () {
     this.$store.commit('getItems')
   }
 }
