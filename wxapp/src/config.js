@@ -2,15 +2,12 @@ var DEBUG = false
 let host
 let port
 if (DEBUG) {
-  host = 'http://127.0.0.1'
+  host = ''
   port = ':5000'
 } else {
-  host = 'https://2019-a16.iterator-traits.com'
+  host = ''
   port = ':443'
 }
-
-host = 'https://2019-a16.iterator-traits.com'
-port = ''
 
 const appid = ''
 const appSecret = ''

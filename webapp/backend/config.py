@@ -6,7 +6,7 @@ class Config():
     SECRET_KEY = os.getenv('SECRET_KEY') or "hard to guess"
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     FLASKY_MAIL_SUBJECT_PREFIX = '[SE]'
-    FLASKY_MAIL_SENDER = os.getenv('FLASK_MAIL_SENDER') or '1366463855@qq.com'
+    FLASKY_MAIL_SENDER = os.getenv('FLASK_MAIL_SENDER') 
     FLASK_ADMIN = os.getenv('FLASK_ADMIN') or 'volunteers-tsinghua@example.com'
     FLASK_ADMIN_PASSWORD = os.getenv('FLASK_ADMIN_PASSWORD') or '123456'
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg','bmp'])
@@ -14,14 +14,11 @@ class Config():
     FLASK_ACTIVITY_PER_PAGE=5
     FLASK_WX_PER_PAGE=20
     UPLOAD_FOLDER=basedir+'/app/static/img/'
-    # MAIL_SERVER = 'smtp.gmail.com'
     MAIL_SERVER = 'smtp.qq.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
-    # MAIL_USERNAME = 'jameslahm17@gmail.com'
-    # MAIL_PASSWORD = 'dkcqjdrpmswxrjtw'
-    MAIL_USERNAME = '1366463855@qq.com'
-    MAIL_PASSWORD = 'esvtsnvurjelbaai'
+    MAIL_USERNAME = ''
+    MAIL_PASSWORD = ''
     TESTING=False
 
 
@@ -34,7 +31,7 @@ class Development(Config):
     ENV='development'
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://  \
-                            root:Waqing121!@localhost:3306/volunteers?charset=utf8'
+                            root:password@localhost:3306/volunteers?charset=utf8'
     SESSION_TYPE='redis'
     SESSION_REDIS=Redis(host='127.0.0.1',port=6379)
     
@@ -44,14 +41,14 @@ class TestConfig(Config):
     ENV='development'
     WTF_CSRF_ENABLED=False
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://  \
-                            root:Waqing121!@localhost:3306/test?charset=utf8'
+                            root:password!@localhost:3306/test?charset=utf8'
     SESSION_TYPE='redis'
     SESSION_REDIS=Redis(host='127.0.0.1',port=6379)
 
 class ProductionConfig(Config):
     ENV='production'
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://  \
-                            root:zhizaitsinghua@mysql:3306/volunteers?charset=utf8'
+                            root:password@mysql:3306/volunteers?charset=utf8'
     SESSION_TYPE='redis'
     SESSION_REDIS=Redis(host='redis',port=6379)
 
