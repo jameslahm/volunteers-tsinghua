@@ -34,7 +34,7 @@ mysql-connector==2.2.9
 mysql-connector-python==8.0.18
 mysqlclient==1.4.6
 passlib==1.7.2
-protobuf==3.10.0
+protobuf==3.18.3
 pycodestyle==2.5.0
 pycparser==2.19
 pycryptodome==3.9.4
